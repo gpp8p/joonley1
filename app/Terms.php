@@ -60,4 +60,43 @@ class Terms extends Model
 
 
     }
+
+    public function addDefaultTerms($companyId, $termsId)
+    {
+        if(DB::table('defaultterms')
+            ->where('terms_id', $termsId)
+            ->where('company_id', $companyId)->exists())
+        {
+            throw new Exception('That default term already exists'.$companyId.'-'. $termsId);
+        }
+        try {
+            $newDefaultTerms = DB::table('defaultterms')->insertGetId([
+                'terms_id' => $termsId,
+                'company_id' => $companyId,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('New default terms failed because: '.$e->getMessage());
+        }
+    }
+
+    public function removeDefaultTerms($companyId, $termsId)
+    {
+        if(!DB::table('defaultterms')
+            ->where('terms_id', $termsId)
+            ->where('company_id', $companyId)->exists())
+        {
+            throw new Exception('That default terms does not exist:'.$companyId.'-'. $termsId);
+        }
+        try {
+            $nrd = DB::table('defaultterms')
+                ->where('terms_id', $termsId)
+                ->where('company_id', $companyId)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Default terms record could not be deleted because:'.$e->getMessage());
+        }
+        return $nrd;
+    }
+
 }

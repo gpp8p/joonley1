@@ -39,6 +39,32 @@ class TermsTest extends TestCase
         $detetedTermsRecords = $thisTerms->removeTerm($newTerm->id);
         $this->assertTrue($detetedTermsRecords>0);
         $this->assertFalse(DB::table('terms')->where('slug', 'net60')->exists());
+        $net30Terms = DB::table('terms')->where('slug', 'net30')->first();
+        $company = DB::table('company')->where('name', 'Rings With Bing')->first();
+        try {
+            $newDefaultTermsId = $thisTerms->addDefaultTerms($company->id, $net30Terms->id);
+        } catch (Exception $e) {
+            if(!$e->getMessage()=='That default term already exists')
+            {
+                $this->assertTrue(false);
+            }
+        }
+        $newTerm = DB::table('terms')->where('slug', 'sellerpays')->first();
+        try {
+            $newDefaultTermsId = $thisTerms->addDefaultTerms($company->id, $newTerm->id);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+
+        try {
+            $detetedDefaultTermsRecords = $thisTerms->removeDefaultTerms($company->id, $newTerm->id);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($detetedDefaultTermsRecords>0);
+
+
+
 
 
     }
