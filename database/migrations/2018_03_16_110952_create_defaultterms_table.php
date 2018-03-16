@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTermsTable extends Migration
+class CreateDefaulttermsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTermsTable extends Migration
      */
     public function up()
     {
-        Schema::create('terms', function (Blueprint $table) {
+        Schema::create('defaultterms', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('specification',128);
-            $table->string('slug', 32);
-            $table->unsignedInteger('termstype_id');
+            $table->unsignedInteger('terms_id');
+            $table->unsignedInteger('company_id');
             $table->timestamps();
-
         });
     }
 
@@ -30,6 +28,6 @@ class CreateTermsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('terms');
+        Schema::dropIfExists('defaultterms');
     }
 }

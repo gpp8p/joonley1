@@ -5,6 +5,9 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Exception;
+
 
 class TermsTest extends TestCase
 {
@@ -25,6 +28,18 @@ class TermsTest extends TestCase
         $this->assertTrue($thisTermsList[0]->specification == "buyer pays for shipping");
         $this->assertTrue($thisTermsList[0]->id == 1);
 
-//        $newTermId = $thisTerms->addTerm("Net 60-day", 2, 6);
+        try {
+            $newTermId = $thisTerms->addTerm("Net 60-day", 2, 'net60');
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $newTerm = DB::table('terms')->where('slug', 'net60')->first();
+        $this->assertTrue($newTerm->id == $newTermId);
+        $this->assertTrue(DB::table('terms')->where('slug', 'net60')->exists());
+        $detetedTermsRecords = $thisTerms->removeTerm($newTerm->id);
+        $this->assertTrue($detetedTermsRecords>0);
+        $this->assertFalse(DB::table('terms')->where('slug', 'net60')->exists());
+
+
     }
 }

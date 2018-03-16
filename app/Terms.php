@@ -19,13 +19,44 @@ class Terms extends Model
 
     public function getTerms($termsTypeSlug)
     {
-        $query = "select terms.id, terms.specification from terms, termstype where termstype_id = termstype.id and termstype.slug=?";
+        $query = "select terms.id, terms.specification, terms.slug from terms, termstype where termstype_id = termstype.id and termstype.slug=?";
         $termsFound = DB::select($query, [$termsTypeSlug]);
         return $termsFound;
     }
 
-    public function addTerm($specification, $termsTypeId, $productId)
+    public function addTerm($specification, $termsTypeId, $slug)
     {
+        try {
+            $newTermId = DB::table('terms')->insertGetId([
+                'specification' => $specification,
+                'termstype_id' => $termsTypeId,
+                'slug'=>$slug,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('Term insert failed because'.$e->getMessage());
+        }
+        return $newTermId;
+    }
+
+    public function removeTerm($termId)
+    {
+        $termToDelete = DB::table('terms')->where('id', $termId)->first();
+        if(DB::table('defaultterms')->where('terms_id', $termToDelete->id)->exists())
+        {
+            throw new Exception($termToDelete->specification.' has existing default associations - cannopt be deleted');
+        }
+        if(DB::table('hasterms')->where('terms_id', $termToDelete->id)->exists())
+        {
+            throw new Exception($termToDelete->specification.' has existing product associations - cannopt be deleted');
+        }
+        if(DB::table('orderterms')->where('terms_id', $termToDelete->id)->exists())
+        {
+            throw new Exception($termToDelete->specification.' has existing order associations - cannopt be deleted');
+        }
+        $nrd = DB::table('terms')->where('id', '=', $termId)->delete();
+        return $nrd;
 
 
     }
