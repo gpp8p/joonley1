@@ -39,8 +39,9 @@ class CompanyTest extends TestCase
             $this->assertTrue(true);
         }
         try {
-            $newCompanyId = $thisCompany->addNewCompany('New Company Name3', 'newweb.com', '999-999-9999', 2, 1);
+            $newCompanyId = $thisCompany->addNewCompany('New Company Name3', 'newweb.com', '999-999-9999', 2, 1, '98989898.jpg');
         } catch (Exception $e) {
+            echo($e->getMessage());
             $this->assertTrue(false);
         }
         try {

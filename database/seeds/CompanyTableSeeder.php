@@ -17,6 +17,7 @@ class CompanyTableSeeder extends Seeder
         DB::table('company')->insert([
             'name'=>    'Rings With Bing',
             'website'=> 'www.rings.com',
+            'icon'=>'12345678.jpg',
             'phone'=> $faker->phoneNumber,
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
@@ -26,6 +27,7 @@ class CompanyTableSeeder extends Seeder
         DB::table('company')->insert([
             'name'=>    'Shop till you drop',
             'website'=> 'www.shopanddrop.com',
+            'icon'=>'2476831.jpg',
             'phone'=> $faker->phoneNumber,
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
@@ -35,6 +37,7 @@ class CompanyTableSeeder extends Seeder
         DB::table('company')->insert([
             'name'=>    'Trinkets Unlimited',
             'website'=> 'www.trinkets.com',
+            'icon'=>'987654321.jpg',
             'location_id'=>$thisCompany->id,
             'phone'=> $faker->phoneNumber,
             'created_at'=>\Carbon\Carbon::now(),
@@ -44,6 +47,7 @@ class CompanyTableSeeder extends Seeder
         DB::table('company')->insert([
             'name'=>    'Junk From China',
             'website'=> 'www.chinajunk.com',
+            'icon'=>'6666543.jpg',
             'phone'=> $faker->phoneNumber,
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
@@ -53,6 +57,7 @@ class CompanyTableSeeder extends Seeder
         DB::table('company')->insert([
             'name'=>    'Accessories Today',
             'website'=> 'www.accessories.com',
+            'icon'=>'23465432.jpg',
             'phone'=> $faker->phoneNumber,
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),

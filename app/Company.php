@@ -21,7 +21,7 @@ class Company extends Model
         return $companyNames;
     }
 
-    public function addNewCompany($companyName, $companyWeb, $companyPhone, $companyLocationId, $companyTypeId)
+    public function addNewCompany($companyName, $companyWeb, $companyPhone, $companyLocationId, $companyTypeId,$icon)
     {
         try {
             $this->getCompanyByName($companyName);
@@ -30,6 +30,7 @@ class Company extends Model
             $newCompanyId = DB::table('company')->insertGetId([
                 'name'=>  $companyName,
                 'website'=> $companyWeb,
+                'icon'=>$icon,
                 'phone'=> $companyPhone,
                 'location_id'=>$companyLocationId,
                 'created_at'=>\Carbon\Carbon::now(),
