@@ -149,4 +149,23 @@ class Terms extends Model
 
     }
 
+    public function addDefaultTermsToProduct($companyId, $productId)
+    {
+        $termsToAdd = DB::table('defaultterms')
+            ->where('company_id', $companyId)->get();
+        DB::beginTransaction();
+        $numberOfTermsAdded=0;
+        try {
+            foreach ($termsToAdd as $thisTermToAdd) {
+                $this->addHasTerms($productId, $thisTermToAdd->terms_id);
+                $numberOfTermsAdded++;
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Adding of default terms to product failed:'.$e->getMessage());
+        }
+        DB::commit();
+        return $numberOfTermsAdded;
+    }
+
 }

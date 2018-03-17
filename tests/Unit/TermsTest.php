@@ -81,5 +81,23 @@ class TermsTest extends TestCase
         $this->assertTrue($termsDeleted>0);
         $termsReturned = $thisTerms->getTermsForProductId($product->id);
         $this->assertTrue($termsReturned[0]->slug == "buyerpays");
+        $company = DB::table('company')->where('name', 'Rings With Bing')->first();
+        $product = DB::table('product')->where('name', 'Silver inlaid ring')->first();
+        try {
+            $termsAdded = $thisTerms->addDefaultTermsToProduct($company->id, $product->id);
+        } catch (Exception $e) {
+            echo($e->getMessage());
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($termsAdded>0);
+        try {
+            $nrd = DB::table('hasterms')
+                ->where('product_id', $product->id)->delete();
+        } catch (Exception $e) {
+            echo('Product terms record could not be deleted because:'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+
+
     }
 }
