@@ -21,7 +21,7 @@ class HasTermsSeeder extends Seeder
         ]);
 
         $productReference = DB::table('product')->where('name', 'Gold pinky ring')->first();
-        $termReference = DB::table('terms')->where('specification', 'seller pays for shipping')->first();
+        $termReference = DB::table('terms')->where('specification', 'Net 30-day')->first();
         DB::table('hasterms')->insert([
             'product_id'=>$productReference->id,
             'terms_id'=>$termReference->id,

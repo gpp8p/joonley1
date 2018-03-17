@@ -99,4 +99,54 @@ class Terms extends Model
         return $nrd;
     }
 
+    public function addHasTerms($productId, $termsId)
+    {
+        if(DB::table('hasterms')
+            ->where('terms_id', $termsId)
+            ->where('product_id', $productId)->exists())
+        {
+            throw new Exception('That product term already exists'.$productId.'-'. $termsId);
+        }
+        try {
+            $newDefaultTerms = DB::table('hasterms')->insertGetId([
+                'terms_id' => $termsId,
+                'product_id' => $productId,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('New product terms failed because: '.$e->getMessage());
+        }
+        return $newDefaultTerms;
+    }
+
+    public function removeHasTerms($productId, $termsId)
+    {
+        if(!DB::table('hasterms')
+            ->where('terms_id', $termsId)
+            ->where('product_id', $productId)->exists())
+        {
+            throw new Exception('That product terms does not exist:'.$productId.'-'. $termsId);
+        }
+        try {
+            $nrd = DB::table('hasterms')
+                ->where('terms_id', $termsId)
+                ->where('product_id', $productId)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Product terms record could not be deleted because:'.$e->getMessage());
+        }
+        return $nrd;
+    }
+    public function getTermsForProductId($productId)
+    {
+        $query ='select terms.specification as specification, terms.slug as slug, termstype.name as type from terms, hasterms, termstype '.
+        'where terms.id = hasterms.terms_id '.
+        'and terms.termstype_id = termstype.id '.
+        'and hasterms.product_id = ?';
+
+        $termsFound = DB::select($query, [$productId]);
+        return $termsFound;
+
+    }
+
 }

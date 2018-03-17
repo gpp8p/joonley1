@@ -62,10 +62,24 @@ class TermsTest extends TestCase
             $this->assertTrue(false);
         }
         $this->assertTrue($detetedDefaultTermsRecords>0);
-
-
-
-
-
+        $product = DB::table('product')->where('name', 'Gold pinky ring')->first();
+        $terms = DB::table('terms')->where('slug', 'sellerpays')->first();
+        try {
+            $newTermsId = $thisTerms->addHasTerms($product->id, $terms->id);
+            if($newTermsId ==NULL)
+            {
+                $this->assertTrue(false);
+            }
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        try {
+            $termsDeleted = $thisTerms->removeHasTerms($product->id, $terms->id);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($termsDeleted>0);
+        $termsReturned = $thisTerms->getTermsForProductId($product->id);
+        $this->assertTrue($termsReturned[0]->slug == "buyerpays");
     }
 }
