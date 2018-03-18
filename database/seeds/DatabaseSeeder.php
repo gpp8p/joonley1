@@ -47,5 +47,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ShipInfoSeeder::class);
         $this->call(DefaultTermsSeeder::class);
         $this->call(HasOptionsSeeder::class);
+        $this->call(DefaultOptionsSeeder::class);
     }
 }
