@@ -28,5 +28,36 @@ class Options extends Model
 
     }
 
+    public function getOptionsByOptionTypeId($id){
+        $optionTypes = DB::table('options')->where('optiontype_id', $id)->get();
+        return $optionTypes;
+    }
+
+    public function addOption($optionSpecification, $optionTypeSlug)
+    {
+        if(!DB::table('optiontype')->where('slug', $optionTypeSlug)->exists())
+        {
+            throw new Exception($optionTypeSlug.' option type not found');
+        }
+        $thisOptionType = DB::table('optiontype')->where('slug', $optionTypeSlug)->get();
+        $thisOptionTypeId  = $thisOptionType[0]->id;
+        if(DB::table('options')->where('id', $thisOptionTypeId)->where('specification',$optionSpecification) ->exists())
+        {
+            throw new Exception($optionSpecification.' of type'.$optionTypeSlug.' already exists');
+        }
+
+        try {
+            $newOptionId = DB::table('options')->insertGetId([
+                'specification' => $optionSpecification,
+                'optiontype_id' => $thisOptionTypeId,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('New options could not be created:'.$e->getMessage());
+        }
+        return $newOptionId;
+    }
+
 
 }

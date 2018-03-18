@@ -21,6 +21,14 @@ class OptionsTest extends TestCase
         $this->assertTrue($allOptionTypes[0]->name=="Color");
         $allOptions = $thisOptions->getOptionsBySlug('size');
         $this->assertTrue($allOptions[1]->specification == 'medium');
+        $allOptions = $thisOptions->getOptionsByOptionTypeId(2);
+        $this->assertTrue($allOptions[1]->specification == 'medium');
+        try {
+            $thisOptions->addOption('huge', 'size');
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+
 
     }
 }
