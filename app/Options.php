@@ -109,5 +109,84 @@ class Options extends Model
         return $newDefaultOptionsId;
     }
 
+    public function deleteDefaultOption($option, $productType)
+    {
+        if(!DB::table('defaultoptions')->where('options_id',$option->id)->where('producttype_id',$productType->id)->exists())
+        {
+            throw new Exception('Default option does not exist');
+        }
+        try {
+            $nrd = DB::table('defaultoptions')->where('options_id', $option->id)->where('producttype_id', $productType->id)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Could not delete this default option:'.$e->getMessage());
+        }
+        return $nrd;
+    }
 
+    public function addProductOption($option, $product)
+    {
+        if(DB::table('hasoptions')->where('options_id',$option->id)->where('product_id', $product->id)->exists())
+        {
+            throw new Exception('That product is already linked to this option');
+        }
+        try {
+            $newProductOptionId = DB::table('hasoptions')->insertGetId([
+                'options_id' => $option->id,
+                'product_id' => $product->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('Could not add this option:'.$e->getMessage());
+        }
+    }
+
+    public function deleteProductOption($option, $product)
+    {
+        if(!DB::table('hasoptions')->where('options_id',$option->id)->where('product_id', $product->id)->exists())
+        {
+            throw new Exception('That product is not linked to this option');
+        }
+        try {
+            $nrd = DB::table('hasoptions')->where('options_id', $option->id)->where('product_id', $product->id)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Could not link this option to this product:'.$e->getMessage());
+        }
+        return $nrd;
+
+    }
+
+    public function linkDefaultOptionsToProduct($productType, $product)
+    {
+        $query = 'select options.id from options, defaultoptions '.
+                'where options.id = defaultoptions.options_id '.
+                'and defaultoptions.producttype_id = ? ';
+
+        $optionsFound = DB::select($query, [$productType->id]);
+        $linksCreated = [];
+        foreach($optionsFound as $optionId)
+        {
+            try {
+                $linksCreated[] = DB::table('hasoptions')->insertGetId([
+                    'product_id' => $product->id,
+                    'options_id' => $optionId->id,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now(),
+                ]);
+            } catch (Exception $e) {
+                throw new Exception('Could not create new link:'.$e->getMessage());
+            }
+        }
+        return $linksCreated;
+    }
+
+    public function removeOptionLinksFromProduct($product)
+    {
+        try {
+            $nrd = DB::table('hasoptions')->where('product_id', $product->id)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Could not remove the links:'.$e->getMessage());
+        }
+        return $nrd;
+    }
 }

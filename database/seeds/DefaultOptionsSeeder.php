@@ -37,5 +37,32 @@ class DefaultOptionsSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        $optionReference = DB::table('options')->where('specification', 'large')->first();
+        $productTypeReference = DB::table('producttype')->where('name', 'Chains')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $optionReference = DB::table('options')->where('specification', 'medium')->first();
+        $productTypeReference = DB::table('producttype')->where('name', 'Chains')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $optionReference = DB::table('options')->where('specification', 'small')->first();
+        $productTypeReference = DB::table('producttype')->where('name', 'Chains')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
     }
 }

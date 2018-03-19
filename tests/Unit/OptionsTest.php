@@ -50,14 +50,53 @@ class OptionsTest extends TestCase
         } catch (Exception $e) {
             $this->assertTrue(true);
         }
+        // test adding a default option
         $thisProductType = DB::table('producttype')->where('name','Chains')->get();
         try {
-            $thisDefaultOptionId = $thisOptions->addDefaultOption($allOptions[1], $thisProductType[0]);
+            $thisDefaultOptionId = $thisOptions->addDefaultOption($allOptions[3], $thisProductType[0]);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-
-
+        // test deleting a default option
+        try {
+            $defaultRecordsDeleted = $thisOptions->deleteDefaultOption($allOptions[3], $thisProductType[0]);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        // test catching an attempt to delete a non-existent default option
+        $this->assertTrue($defaultRecordsDeleted>0);
+        try {
+            $defaultRecordsDeleted = $thisOptions->deleteDefaultOption($allOptions[3], $thisProductType[0]);
+            $this->assertTrue(false);
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+        }
+        $thisProduct = DB::table('product')->where('name', 'Leather Necklace')->get();
+        try {
+            $productOptionId = $thisOptions->addProductOption($allOptions[3], $thisProduct[0]);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        try {
+            $productOptionsDeleted = $thisOptions->deleteProductOption($allOptions[3], $thisProduct[0]);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($productOptionsDeleted>0);
+        $productType = DB::table('producttype')->where('name', 'Chains')->first();
+        $product = DB::table('product')->where('name', 'Leather Necklace')->first();
+        try {
+            $defaultOptionsLinkedToProduct = $thisOptions->linkDefaultOptionsToProduct($productType, $product);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue(count($defaultOptionsLinkedToProduct)>0);
+        try {
+            $numberOfDeletedLinks = $thisOptions->removeOptionLinksFromProduct($product);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue(count($defaultOptionsLinkedToProduct)==$numberOfDeletedLinks);
 
 
     }
