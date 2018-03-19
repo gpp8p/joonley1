@@ -28,6 +28,13 @@ class OptionsTest extends TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        try {
+            $recordsDeleted = $thisOptions->removeOption('huge', 'size');
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($recordsDeleted>0);
+
 
 
     }
