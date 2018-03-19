@@ -71,18 +71,21 @@ class OptionsTest extends TestCase
         } catch (Exception $e) {
             $this->assertTrue(true);
         }
+        // test adding a product option
         $thisProduct = DB::table('product')->where('name', 'Leather Necklace')->get();
         try {
             $productOptionId = $thisOptions->addProductOption($allOptions[3], $thisProduct[0]);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        // test deleting a product option
         try {
             $productOptionsDeleted = $thisOptions->deleteProductOption($allOptions[3], $thisProduct[0]);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
         $this->assertTrue($productOptionsDeleted>0);
+        // test creating links to a product from an option set using the set of default options for that type
         $productType = DB::table('producttype')->where('name', 'Chains')->first();
         $product = DB::table('product')->where('name', 'Leather Necklace')->first();
         try {
@@ -90,6 +93,7 @@ class OptionsTest extends TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
+        // test removing those links
         $this->assertTrue(count($defaultOptionsLinkedToProduct)>0);
         try {
             $numberOfDeletedLinks = $thisOptions->removeOptionLinksFromProduct($product);
