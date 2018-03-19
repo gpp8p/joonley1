@@ -90,5 +90,24 @@ class Options extends Model
         return $nrd;
     }
 
+    public function addDefaultOption($option, $productType)
+    {
+        if(DB::table('defaultoptions')->where('options_id',$option->id)->where('producttype_id',$productType->id)->exists())
+        {
+            throw new Exception('Default option already exists');
+        }
+        try {
+            $newDefaultOptionsId = DB::table('defaultoptions')->insertGetId([
+                'options_id' => $option->id,
+                'producttype_id' => $productType->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('New default option could not be created:'.$e->getMessage());
+        }
+        return $newDefaultOptionsId;
+    }
+
 
 }
