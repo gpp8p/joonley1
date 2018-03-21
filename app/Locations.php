@@ -22,7 +22,7 @@ class Locations extends Model
 
     public function getProductsByLocation($locationId)
     {
-        $query = 'select product.id, product.name, product.description, medialink.url from product, medialink, collectionhas, collection, hascollection, company, locations '.
+        $query = 'select product.id, product.name, product.description, medialink.url from product, medialink, collectionhas, collection, hascollection, company, locations, producthaslinks '.
             'where collectionhas.product_id = product.id '.
             'and collectionhas.collection_id = collection.id '.
             'and hascollection.collection_id = collection.id '.
@@ -30,7 +30,8 @@ class Locations extends Model
             'and company.location_id = locations.id '.
             'and locations.id=? '.
             'and medialink.pertainsto=\'product\' '.
-            'and medialink.reference_id = product.id ';
+            'and producthaslinks.product_id = product.id '.
+            'and producthaslinks.medialink_id = medialink.id';
 
         echo($query);
         $products = DB::select($query, [$locationId]);

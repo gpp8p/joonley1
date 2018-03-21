@@ -32,10 +32,12 @@ class ProductType extends Model
 
     public function productsWithType($categoryId)
     {
-        $query = 'select product.id, product.name, product.description, medialink.url from product, medialink '.
+        $query = 'select product.id, product.name, product.description, medialink.url from product, medialink, producthaslinks '.
         'where product.type_id = ? '.
         'and medialink.pertainsto=\'product\' '.
-        'and medialink.reference_id = product.id';
+        'and producthaslinks.product_id = product.id '.
+        'and producthaslinks.medialink_id = medialink.id';
+
 
         $products =  DB::select($query, [$categoryId]);
         return $products;

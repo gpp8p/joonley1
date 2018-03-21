@@ -11,10 +11,9 @@ class MediaLinkSeeder extends Seeder
      */
     public function run()
     {
-        $reference = DB::table('product')->where('name', 'Gold pinky ring')->first();
+
         $type = DB::table('mediatype')->where('slug', 'image')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
             'mediatype_id'=>$type->id,
             'pertainsto'=>'product',
             'url'=>'http://mymedia.com/ring5',
@@ -22,10 +21,10 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $reference = DB::table('product')->where('name', 'Zirconium ring')->first();
+
         $type = DB::table('mediatype')->where('slug', 'image')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
+
             'mediatype_id'=>$type->id,
             'pertainsto'=>'product',
             'url'=>'http://mymedia.com/ring6',
@@ -33,10 +32,10 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $reference = DB::table('product')->where('name', 'Silver inlaid ring')->first();
+
         $type = DB::table('mediatype')->where('slug', 'image')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
+
             'mediatype_id'=>$type->id,
             'pertainsto'=>'product',
             'url'=>'http://mymedia.com/ring6',
@@ -44,10 +43,10 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $reference =  DB::table('collection')->where('slug', 'fcollect1')->first();
+
         $type = DB::table('mediatype')->where('slug', 'website')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
+
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
             'url'=>'http://fashion.com/fcollect1',
@@ -55,10 +54,10 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $reference =  DB::table('collection')->where('slug', 'fcollect1')->first();
+
         $type = DB::table('mediatype')->where('slug', 'icon')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
+
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
             'url'=>'http://fashion.com/compicon.jpg',
@@ -66,10 +65,10 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $reference =  DB::table('collection')->where('slug', 'fcollect1')->first();
+
         $type = DB::table('mediatype')->where('slug', 'icon')->first();
         DB::table('medialink')->insert([
-            'reference_id'=>$reference->id,
+
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
             'url'=>'http://fashion.com/compicon2.jpg',
