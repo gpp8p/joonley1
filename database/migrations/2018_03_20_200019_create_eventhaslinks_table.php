@@ -15,6 +15,8 @@ class CreateEventhaslinksTable extends Migration
     {
         Schema::create('eventhaslinks', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('event_id');
+            $table->unsignedInteger('medialink_id');
             $table->timestamps();
         });
     }

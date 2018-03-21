@@ -48,5 +48,6 @@ class DatabaseSeeder extends Seeder
         $this->call(DefaultTermsSeeder::class);
         $this->call(HasOptionsSeeder::class);
         $this->call(DefaultOptionsSeeder::class);
+        $this->call(ProductHasLinksSeeder::class);
     }
 }

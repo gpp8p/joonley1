@@ -55,5 +55,28 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $reference =  DB::table('collection')->where('slug', 'fcollect1')->first();
+        $type = DB::table('mediatype')->where('slug', 'icon')->first();
+        DB::table('medialink')->insert([
+            'reference_id'=>$reference->id,
+            'mediatype_id'=>$type->id,
+            'pertainsto'=>'collection',
+            'url'=>'http://fashion.com/compicon.jpg',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $reference =  DB::table('collection')->where('slug', 'fcollect1')->first();
+        $type = DB::table('mediatype')->where('slug', 'icon')->first();
+        DB::table('medialink')->insert([
+            'reference_id'=>$reference->id,
+            'mediatype_id'=>$type->id,
+            'pertainsto'=>'collection',
+            'url'=>'http://fashion.com/compicon2.jpg',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
     }
 }

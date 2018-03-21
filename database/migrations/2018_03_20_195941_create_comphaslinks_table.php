@@ -15,6 +15,8 @@ class CreateComphaslinksTable extends Migration
     {
         Schema::create('comphaslinks', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('medialink_id');
             $table->timestamps();
         });
     }

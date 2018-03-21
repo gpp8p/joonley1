@@ -15,6 +15,8 @@ class CreateMsghaslinksTable extends Migration
     {
         Schema::create('msghaslinks', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('message_id');
+            $table->unsignedInteger('medialink_id');
             $table->timestamps();
         });
     }

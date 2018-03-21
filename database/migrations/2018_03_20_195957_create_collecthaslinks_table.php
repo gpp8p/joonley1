@@ -15,6 +15,8 @@ class CreateCollecthaslinksTable extends Migration
     {
         Schema::create('collecthaslinks', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('collection_id');
+            $table->unsignedInteger('medialink_id');
             $table->timestamps();
         });
     }

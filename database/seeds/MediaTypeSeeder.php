@@ -35,6 +35,15 @@ class MediaTypeSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
 
+        DB::table('mediatype')->insert([
+            'name' => 'Icon',
+            'slug' => 'icon',
+            'description'=> 'identifying icon',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+
+
 
     }
 }
