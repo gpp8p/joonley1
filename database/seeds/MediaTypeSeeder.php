@@ -43,6 +43,15 @@ class MediaTypeSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
 
+        DB::table('mediatype')->insert([
+            'name' => 'No Media',
+            'slug' => 'nomedia',
+            'description'=> 'for situations where there is no media',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+
+
 
 
     }

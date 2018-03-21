@@ -156,7 +156,8 @@ class Options extends Model
 
     }
 
-    public function linkDefaultOptionsToProduct($productType, $product)
+
+    public function linkDefaultOptionsToProduct($productType, $productId)
     {
         $query = 'select options.id from options, defaultoptions '.
                 'where options.id = defaultoptions.options_id '.
@@ -168,7 +169,7 @@ class Options extends Model
         {
             try {
                 $linksCreated[] = DB::table('hasoptions')->insertGetId([
-                    'product_id' => $product->id,
+                    'product_id' => $productId,
                     'options_id' => $optionId->id,
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now(),

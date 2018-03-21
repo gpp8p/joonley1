@@ -49,4 +49,68 @@ class Product extends Model
 
 
     }
+
+    public function addProductUsingDefaults($productType, $productName, $productDescription, $productMediaUrl, $productMediaType, $productCompany, $productCollection,$productContainedAs)
+    {
+        if(!DB::table('hascollection')->where('company_id',$productCompany->id)->where('collection_id', $productCollection->id)->exists())
+        {
+            throw new Exception($productCompany->name.' does not have collection '.$productCollection->name);
+        }
+        DB::beginTransaction();
+
+        try {
+            $newProductId = DB::table('product')->insertGetId([
+                'name' => $productName,
+                'type_id' => $productType->id,
+                'description' => $productDescription,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not add this product:'.$e->getMessage());
+        }
+        if($productMediaType->slug != 'nomedia')
+        {
+            $thisMediaLink = new \App\MediaLink;
+            try {
+                $newMediaLinkId = $thisMediaLink->addMediaLink($productType, 'product', $productMediaUrl);
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new Exception('Could not add media link:'.$e->getMessage());
+            }
+            try {
+                DB::table('producthaslinks')->insert([
+                    'product_id' => $newProductId,
+                    'medialink_id' => $newMediaLinkId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new Exception('Could not associate new media link with new product'.$e->getMessage());
+            }
+            $thisTerms = new \App\Terms;
+            try {
+                $termsAdded = $thisTerms->addDefaultTermsToProduct($productCompany->id, $newProductId);
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new Exception('Could not add default terms to this product'.$e->getMessage());
+            }
+            $thisOptions = new \App\Options;
+            try {
+                $defaultOptionsLinkedToProduct = $thisOptions->linkDefaultOptionsToProduct($productType, $newProductId);
+            } catch (Exception $e) {
+                DB::rollback();
+                throw new Exception('Could not associate default options with new product:'.$e->getMessage());
+            }
+            DB::commit();
+            return $newProductId;
+
+        }
+
+
+
+
+    }
 }

@@ -89,7 +89,7 @@ class OptionsTest extends TestCase
         $productType = DB::table('producttype')->where('name', 'Chains')->first();
         $product = DB::table('product')->where('name', 'Leather Necklace')->first();
         try {
-            $defaultOptionsLinkedToProduct = $thisOptions->linkDefaultOptionsToProduct($productType, $product);
+            $defaultOptionsLinkedToProduct = $thisOptions->linkDefaultOptionsToProduct($productType, $product->id);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }

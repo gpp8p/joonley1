@@ -76,6 +76,15 @@ class MediaLinkSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $type = DB::table('mediatype')->where('slug', 'nomedia')->first();
+        DB::table('medialink')->insert([
+
+            'mediatype_id'=>$type->id,
+            'pertainsto'=>'*',
+            'url'=>'http://nomedia/nomedia.jpg',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
 
     }
 }

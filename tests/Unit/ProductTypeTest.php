@@ -23,7 +23,7 @@ class ProductTypeTest extends TestCase
         $subList = $thisProductType->subCategoryMembersAndIds(12);
         $this->assertTrue(count($subList)==0);
         $productList = $thisProductType->productsWithType(5);
-        $this->assertTrue(count($productList)==3);
+        $this->assertTrue($productList[0]->name=="Gold pinky ring");
 
     }
 }
