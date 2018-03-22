@@ -32,6 +32,7 @@ class Product extends Model
         $productsFound = DB::select($query, [$categoryId]);
         return $productsFound;
     }
+    
 
     public function getCompanyProducts($companyId)
     {
