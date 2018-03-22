@@ -60,6 +60,24 @@ class Collections extends Model
         return $thisCollection;
     }
 
+    public function addProductToCollection($productId, $collectionId, $containedAsId)
+    {
+        if(!DB::table('collectionhas')->where('product_id', $productId)->where('collection_id',$collectionId)->where('containedas_id',$containedAsId )->exists())
+        {
+            try {
+                DB::table('collectionhas')->insert([
+                    'product_id' => $productId,
+                    'collection_id' => $collectionId,
+                    'containedas_id' => $containedAsId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now(),
+                ]);
+            } catch (Exception $e) {
+                throw new Exception('Could not link to collection'.$e->getMessage());
+            }
+        }
+    }
+
 
     public function removeCollection($collectionId)
     {

@@ -32,7 +32,7 @@ class Product extends Model
         $productsFound = DB::select($query, [$categoryId]);
         return $productsFound;
     }
-    
+
 
     public function getCompanyProducts($companyId)
     {
@@ -91,6 +91,12 @@ class Product extends Model
                 DB::rollBack();
                 throw new Exception('Could not associate new media link with new product'.$e->getMessage());
             }
+            $thisCollection = new \App\Collections;
+            try {
+                $thisCollection->addProductToCollection($newProductId, $productCollection->id, $productContainedAs->id);
+            } catch (Exception $e) {
+                throw new Exception('Could not add product to collection:'.$e->getMessage());
+            }
             $thisTerms = new \App\Terms;
             try {
                 $termsAdded = $thisTerms->addDefaultTermsToProduct($productCompany->id, $newProductId);
@@ -109,9 +115,45 @@ class Product extends Model
             return $newProductId;
 
         }
+    }
 
-
-
+    public function removeProduct($productId)
+    {
+        DB::beginTransaction();
+        $linkedMedia = DB::table('producthaslinks')->where('product_id',$productId)->get();
+        // if no other medialink rows are linked to this product id, delete the medialink row
+        foreach($linkedMedia as $thisLinkedMedia)
+        {
+            $thisMediaLinkId = $thisLinkedMedia->id;
+            if(!DB::table('producthaslinks')->where('medialink_id',$thisMediaLinkId)->where('product_id','!=',$productId)->exists())
+            {
+                try {
+                    DB::table('medialink')->where('id', $thisMediaLinkId)->delete();
+                } catch (Exception $e) {
+                    DB::rollBack();
+                    throw new Exception('Could not remove medialink row'.$e->getMessage());
+                }
+            }
+        }
+        try {
+            $nrd = DB::table('hasoptions')->where('product_id', $productId)->delete();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not remove option link row'.$e->getMessage());
+        }
+        try {
+            $nrd = DB::table('hasterms')->where('product_id', $productId)->delete();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not remove terms linnk row'.$e->getMessage());
+        }
+        try {
+            $nrd = DB::table('product')->where('id', $productId)->delete();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not removeproduct row'.$e->getMessage());
+        }
+        DB::commit();
 
     }
 }

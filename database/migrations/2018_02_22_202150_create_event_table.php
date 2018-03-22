@@ -29,7 +29,7 @@ class CreateEventTable extends Migration
             $table->text('comment');
             $table->timestamps();
 
-            $table->foreign('eventtype_id')->references('id')->on('eventtype')->onDelete('cascade');
+//            $table->foreign('eventtype_id')->references('id')->on('eventtype')->onDelete('cascade');
         });
     }
 
