@@ -37,7 +37,35 @@ class ProductTest extends TestCase
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
-
-// TODO - include cleanup here
+        try {
+            $nrd = DB::table('hasoptions')->where('product_id', $newProductId)->delete();
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($nrd>0);
+        try {
+            $nrd = DB::table('hasterms')->where('product_id', $newProductId)->delete();
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($nrd>0);
+        try {
+            $nrd = DB::table('producthaslinks')->where('product_id', $newProductId)->delete();
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($nrd>0);
+        try {
+            $nrd = DB::table('medialink')->where('url', $productMediaUrl)->delete();
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($nrd>0);
+        try {
+            $nrd = DB::table('product')->where('id', $newProductId)->delete();
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue($nrd>0);
     }
 }
