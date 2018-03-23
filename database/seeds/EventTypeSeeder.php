@@ -68,6 +68,14 @@ class EventTypeSeeder extends Seeder
             'description'=>'A new company was added'
         ]);
 
+        DB::table('eventtype')->insert([
+            'name'=>'New Product',
+            'slug'=>'newproduct',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+            'description'=>'A new product was added'
+        ]);
+
 
 
 
