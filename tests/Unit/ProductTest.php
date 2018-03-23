@@ -43,7 +43,7 @@ class ProductTest extends TestCase
         $this->assertTrue(DB::table('collectionhas')->where('product_id',$newProductId)->exists());
         $this->assertTrue(DB::table('hasoptions')->where('product_id',$newProductId)->exists());
         $this->assertTrue(DB::table('hasterms')->where('product_id',$newProductId)->exists());
-
+/*
         try {
             $thisProduct->removeProduct($newProductId);
         } catch (Exception $e) {
@@ -55,5 +55,6 @@ class ProductTest extends TestCase
         $this->assertFalse(DB::table('collectionhas')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasoptions')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasterms')->where('product_id',$newProductId)->exists());
+*/
     }
 }

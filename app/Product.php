@@ -148,6 +148,12 @@ class Product extends Model
             throw new Exception('Could not remove terms linnk row'.$e->getMessage());
         }
         try {
+            $nrd = DB::table('collectionhas')->where('product_id', $productId)->delete();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('Could not remove collection association row'.$e->getMessage());
+        }
+        try {
             $nrd = DB::table('product')->where('id', $productId)->delete();
         } catch (Exception $e) {
             DB::rollBack();
