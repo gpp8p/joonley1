@@ -76,4 +76,15 @@ class ShipInfo extends Model
         DB::commit();
         return $rupd;
     }
+
+    public function getShipInfoById($shipInfoId)
+    {
+        if(!DB::table('shipinfo')->where('id', $shipInfoId)->exists())
+        {
+            throw new Exception('Shipping Information record with id ='.$shipInfoId.' does not exist');
+        }
+        $existingShipInfoRcd = (array) DB::table('shipinfo')->where('id', $shipInfoId)->first();
+        return $existingShipInfoRcd;
+
+    }
 }

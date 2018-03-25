@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
         $this->call(TermsTypeSeeder::class);
         $this->call(MediaLinkSeeder::class);
         $this->call(OptionSeeder::class);
+        $this->call(ShippingTypeOptionSeeder::class);
         $this->call(EventTypeSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(MessageTypeSeeder::class);
         $this->call(MessageSeeder::class);
         $this->call(MessageToSeeder::class);
-        $this->call(ShippingTypeOptionSeeder::class);
         $this->call(OrdersSeeder::class);
         $this->call(OrderContainsSeeder::class);
         $this->call(OrderOptionsSeeder::class);

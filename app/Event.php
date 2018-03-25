@@ -18,6 +18,7 @@ class Event extends Model
             'from_user_id'=>0,
             'billing_id'=>0,
             'shipping_id'=>0,
+            'shiptype_id'=>0,
             'company_id'=>0,
             'collection_id'=>0,
             'product_id'=>0,

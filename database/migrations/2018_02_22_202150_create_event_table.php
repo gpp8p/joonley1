@@ -18,6 +18,7 @@ class CreateEventTable extends Migration
             $table->unsignedInteger('from_user_id');
             $table->unsignedInteger('billing_id');
             $table->unsignedInteger('shipping_id');
+            $table->unsignedInteger('shiptype_id');
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('collection_id');
             $table->unsignedInteger('product_id');

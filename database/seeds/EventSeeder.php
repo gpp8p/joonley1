@@ -17,11 +17,13 @@ class EventSeeder extends Seeder
             ->where('users.id', 25)->first();
         $eventType = DB::table('eventtype')->where('slug', 'newuser')->first();
         $company = DB::table('company')->where('name', 'Rings With Bing')->first();
+        $shipType = DB::table('shiptype')->where('slug','air2')->first();
         DB::table('event')->insert([
 
             'from_user_id'=>$initUser->id,
             'billing_id'=>0,
             'shipping_id'=>0,
+            'shiptype_id'=>$shipType->id,
             'company_id'=>$company->id,
             'collection_id'=>0,
             'product_id'=>0,
@@ -44,6 +46,7 @@ class EventSeeder extends Seeder
             'from_user_id'=>$initUser->id,
             'billing_id'=>0,
             'shipping_id'=>0,
+            'shiptype_id'=>$shipType->id,
             'company_id'=>$company->id,
             'collection_id'=>0,
             'product_id'=>0,
@@ -66,6 +69,7 @@ class EventSeeder extends Seeder
             'from_user_id'=>$initUser->id,
             'billing_id'=>0,
             'shipping_id'=>0,
+            'shiptype_id'=>$shipType->id,
             'company_id'=>$company->id,
             'collection_id'=>0,
             'product_id'=>0,

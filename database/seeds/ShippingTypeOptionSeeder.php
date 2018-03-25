@@ -13,7 +13,6 @@ class ShippingTypeOptionSeeder extends Seeder
     {
         $product = DB::table('product')->where('name', 'Gold pinky ring')->first();
         DB::table('shiptype')->insert([
-            'product_id'=>$product->id,
             'slug'=>'upsground',
             'name'=>'ups ground',
             'description'=>'UPS ground',
@@ -22,7 +21,6 @@ class ShippingTypeOptionSeeder extends Seeder
         ]);
 
         DB::table('shiptype')->insert([
-            'product_id'=>$product->id,
             'slug'=>'air2',
             'name'=>'second day air',
             'description'=>'Second day air',
@@ -31,7 +29,6 @@ class ShippingTypeOptionSeeder extends Seeder
         ]);
 
         DB::table('shiptype')->insert([
-            'product_id'=>$product->id,
             'slug'=>'fedexovr',
             'name'=>'Fedex Overnight',
             'description'=>'Fedex Overnight Shipping',

@@ -15,7 +15,6 @@ class CreateShipTypeTable extends Migration
     {
         Schema::create('shiptype', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('product_id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
