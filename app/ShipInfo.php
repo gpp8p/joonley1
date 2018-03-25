@@ -60,6 +60,20 @@ class ShipInfo extends Model
     }
     public function editShipInfo($shipInfoId, $editInfo)
     {
+        if(!DB::table('shipinfo')->where('id', $shipInfoId)->exists())
+        {
+            throw new Exception('Shipping Information record with id ='.$shipInfoId.' does not exist');
+        }
+        $existingShipInfoRcd = (array) DB::table('shipinfo')->where('id', $shipInfoId)->first();
 
+        $updateData = array_merge($existingShipInfoRcd, $editInfo);
+        try {
+            DB::beginTransaction();
+            $rupd = DB::table('shipinfo')->where('id', $shipInfoId)->update($updateData);
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+        DB::commit();
+        return $rupd;
     }
 }

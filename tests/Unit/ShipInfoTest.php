@@ -65,7 +65,15 @@ class ShipInfoTest extends TestCase
             'lname' =>'edited lname',
             'fname' =>'edited fname',
         );
-        $thisShipInfo->editShipInfo($justAddedShippingInfo->id, $editInfo);
+        try {
+            $thisShipInfo->editShipInfo($justAddedShippingInfo->id, $editInfo);
+        } catch (Exception $e) {
+            echo('\n'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+        $testShipInfoRcd = DB::table('shipinfo')->where('id', $thisShipInfoId)->first();
+        $this->assertTrue($testShipInfoRcd->lname=='edited lname');
+        $this->assertTrue($testShipInfoRcd->fname=='edited fname');
         try {
             $rcdsRemoved = $thisShipInfo->removeShipInfo($thisShipInfoId);
         } catch (Exception $e) {
