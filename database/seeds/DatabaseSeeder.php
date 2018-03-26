@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MessageTypeSeeder::class);
         $this->call(MessageSeeder::class);
         $this->call(MessageToSeeder::class);
+        $this->call(OrderStatusSeeder::class);
         $this->call(OrdersSeeder::class);
         $this->call(OrderContainsSeeder::class);
         $this->call(OrderOptionsSeeder::class);

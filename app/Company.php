@@ -49,14 +49,12 @@ class Company extends Model
 
     public function getCompanyByName($companyName)
     {
-        $query = "select id from company where name = ?";
+        $thisCompany = DB::table('company')->where('name', $companyName)->first();
 
-        $thisCompanyId = DB::select($query, [$companyName]);
-
-        if($thisCompanyId==NULL){
+        if($thisCompany==NULL){
             throw new Exception($companyName.' not found');
         }else{
-            return $thisCompanyId[0]->id;
+            return $thisCompany->id;
         }
     }
 
