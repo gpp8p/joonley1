@@ -76,6 +76,15 @@ class EventTypeSeeder extends Seeder
             'description'=>'A new product was added'
         ]);
 
+        DB::table('eventtype')->insert([
+            'name'=>'Order Started',
+            'slug'=>'orderstart',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+            'description'=>'A new order was started'
+        ]);
+
+
 
 
 
