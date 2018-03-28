@@ -33,7 +33,6 @@ class Locations extends Model
             'and producthaslinks.product_id = product.id '.
             'and producthaslinks.medialink_id = medialink.id';
 
-        echo($query);
         $products = DB::select($query, [$locationId]);
         return $products;
     }

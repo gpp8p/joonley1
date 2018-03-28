@@ -16,6 +16,9 @@ class MessageSeeder extends Seeder
         $fromUser= DB::table('users')->where('name', 'gpp8p')->first();
         DB::table('message')->insert([
             'type_id'=>$messageType->id,
+            'title'=>'New User - Easter Kovacek',
+            'thread'=>true,
+            'parent_id'=>0,
             'event_id'=>$event->id,
             'from_id'=>$fromUser->id,
             'content'=>'Easter Kovacek was created as a new user',
@@ -28,6 +31,9 @@ class MessageSeeder extends Seeder
         $fromUser= DB::table('users')->where('name', 'gpp8p')->first();
         DB::table('message')->insert([
             'type_id'=>$messageType->id,
+            'title'=>'New Company: Rings with Bing',
+            'thread'=>true,
+            'parent_id'=>0,
             'event_id'=>$event->id,
             'from_id'=>$fromUser->id,
             'content'=>'Rings With Bing was added as a new company',
@@ -40,6 +46,9 @@ class MessageSeeder extends Seeder
         $fromUser= DB::table('users')->where('name', 'gpp8p')->first();
         DB::table('message')->insert([
             'type_id'=>$messageType->id,
+            'title'=>'New Collection',
+            'thread'=>true,
+            'parent_id'=>0,
             'event_id'=>$event->id,
             'from_id'=>$fromUser->id,
             'content'=>'Collection: Fall Ring Collection was added',

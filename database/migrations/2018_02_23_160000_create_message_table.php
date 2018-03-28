@@ -15,6 +15,9 @@ class CreateMessageTable extends Migration
     {
         Schema::create('message', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title', 64);
+            $table->boolean('thread');
+            $table->unsignedInteger('parent_id');
             $table->text('content');
             $table->unsignedInteger('type_id');
             $table->unsignedInteger('from_id');
