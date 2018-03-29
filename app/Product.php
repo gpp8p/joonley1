@@ -51,8 +51,25 @@ class Product extends Model
 
     }
 
-    public function addProductUsingDefaults($productType, $productName, $productDescription, $productMediaUrl, $productMediaType, $productCompany, $productCollection,$productContainedAs)
+    public function addProductUsingDefaults($productInfo)
     {
+
+        $productType = $productInfo['productType'];
+        $productName = $productInfo['productName'];
+        $productDescription = $productInfo['productDescription'];
+        $productMediaUrl = $productInfo['productMediaUrl'];
+        $productMediaType = $productInfo['productMediaType'];
+        $productCompany = $productInfo['productCompany'];
+        $productCollection = $productInfo['productCollection'];
+        $productContainedAs = $productInfo['productContainedAs'];
+        $productq1Price = $productInfo['productq1Price'];
+        $productq10Price = $productInfo['productq10Price'];
+        $productShippingWeight = $productInfo['productShippingWeight'];
+
+        if(!isset($productType, $productName,$productDescription, $productCompany, $productCollection, $productq1Price, $productq10Price, $productShippingWeight, $productMediaUrl, $productMediaType, $productContainedAs))
+        {
+            throw new Exception('Missing Parameters');
+        }
         if(!DB::table('hascollection')->where('company_id',$productCompany->id)->where('collection_id', $productCollection->id)->exists())
         {
             throw new Exception($productCompany->name.' does not have collection '.$productCollection->name);
@@ -64,6 +81,9 @@ class Product extends Model
                 'name' => $productName,
                 'type_id' => $productType->id,
                 'description' => $productDescription,
+                'price_q1'=>$productq1Price,
+                'price_q10'=>$productq10Price,
+                'ship_weight'=>$productShippingWeight,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ]);
@@ -85,7 +105,7 @@ class Product extends Model
                     'product_id' => $newProductId,
                     'medialink_id' => $newMediaLinkId,
                     'created_at' => \Carbon\Carbon::now(),
-                    'updated_at' => \Carbon\Carbon::now()
+                    'updated_at' => \Carbon\Carbon::now(),
                 ]);
             } catch (Exception $e) {
                 DB::rollBack();

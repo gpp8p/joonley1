@@ -18,6 +18,9 @@ class CreateProductTable extends Migration
             $table->string('name');
             $table->unsignedInteger('type_id');
             $table->text('description');
+            $table->decimal('price_q1', 8, 2);
+            $table->decimal('price_q10', 8, 2);
+            $table->unsignedInteger('ship_weight');
             $table->timestamps();
 
         });

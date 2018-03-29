@@ -32,9 +32,26 @@ class ProductTest extends TestCase
         $productCompany = DB::table('company')->where('name', 'Rings With Bing')->first();
         $productCollection = DB::table('collection')->where('name', 'Fall Ring Collection')->first();
         $productContainedAs = DB::table('containedas')->where('name','In Stock For Sale')->first();
+        $productq1Price = 10.95;
+        $productq10Price = 9.95;
+        $productShippingWeight = 0.25;
+        $productInfo = array(
+            'productType'=>$productType,
+            'productName'=>$productName,
+            'productDescription'=>$productDescription,
+            'productMediaUrl'=>$productMediaUrl,
+            'productMediaType'=>$productMediaType,
+            'productCompany'=>$productCompany,
+            'productCollection'=>$productCollection,
+            'productContainedAs'=>$productContainedAs,
+            'productq1Price'=>$productq1Price,
+            'productq10Price'=>$productq10Price,
+            'productShippingWeight'=>$productShippingWeight,
+        );
         try {
-            $newProductId = $thisProduct->addProductUsingDefaults($productType, $productName, $productDescription, $productMediaUrl, $productMediaType, $productCompany, $productCollection, $productContainedAs);
+            $newProductId = $thisProduct->addProductUsingDefaults($productInfo);
         } catch (Exception $e) {
+            echo('##'.$e->getMessage());
             $this->assertTrue(false);
         }
         $this->assertTrue(DB::table('product')->where('id',$newProductId)->exists());

@@ -18,6 +18,7 @@ class OrdersSeeder extends Seeder
             'status'=>$status->id,
             'shipping'=>10.95,
             'tax'=>2.50,
+            'discount'=>0.015,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -28,6 +29,7 @@ class OrdersSeeder extends Seeder
             'status'=>$status->id,
             'shipping'=>10.95,
             'tax'=>2.50,
+            'discount'=>0.015,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -38,6 +40,7 @@ class OrdersSeeder extends Seeder
             'status'=>$status->id,
             'shipping'=>10.95,
             'tax'=>2.50,
+            'discount'=>0.0,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

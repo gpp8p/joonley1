@@ -19,6 +19,7 @@ class CreateOrderTable extends Migration
             $table->unsignedInteger('cust_comp_id');
             $table->decimal('shipping',6,2);
             $table->decimal('tax',6,2);
+            $table->decimal('discount',8,3);
             $table->timestamps();
         });
     }

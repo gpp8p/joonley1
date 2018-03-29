@@ -31,6 +31,7 @@ class Orders extends Model
                 'status' => $startingOrderStatusId,
                 'shipping' => 0,
                 'tax' => 0,
+                'discount'=>0,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ]);
@@ -84,6 +85,11 @@ class Orders extends Model
             ->join('orderstatus', 'status','=', 'orderstatus.id')
             ->where('cust_comp_id',$companyId)->get();
         return $incompleteOrders;
+
+    }
+
+    public function addProductToOrder($orderId, $productToAdd, $optionsSelected, $thisShipTypeId, $quantity)
+    {
 
     }
 }

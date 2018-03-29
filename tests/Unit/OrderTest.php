@@ -48,5 +48,18 @@ class OrderTest extends TestCase
         }
         $this->assertTrue(!DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
 
+        $productToAdd = DB::table('product')->where('name', 'Parisian Blouse')->first();
+        $thisOptions = new \App\Options;
+        $optionTypeArray = $thisOptions->getDefaultOptionsForProducttype($productToAdd->type_id);
+        $optionsSelected = array($optionTypeArray['Color'][0][1],$optionTypeArray['Size'][0][1]);
+        $thisShipTypeId = DB::table('shiptype')->where('slug','air2')->first()->id;
+        $quantity = 5;
+        try {
+            $thisOrder->addProductToOrder($orderId, $productToAdd, $optionsSelected, $thisShipTypeId, $quantity);
+        } catch (Exception $e) {
+            echo('###Unable to add product:'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+
     }
 }
