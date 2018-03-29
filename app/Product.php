@@ -124,10 +124,11 @@ class Product extends Model
         // if no other medialink rows are linked to this product id, delete the medialink row
         foreach($linkedMedia as $thisLinkedMedia)
         {
-            $thisMediaLinkId = $thisLinkedMedia->id;
+            $thisMediaLinkId = $thisLinkedMedia->medialink_id;
             if(!DB::table('producthaslinks')->where('medialink_id',$thisMediaLinkId)->where('product_id','!=',$productId)->exists())
             {
                 try {
+                    echo('## deleting medialink-'.$thisMediaLinkId);
                     DB::table('medialink')->where('id', $thisMediaLinkId)->delete();
                 } catch (Exception $e) {
                     DB::rollBack();
@@ -135,6 +136,7 @@ class Product extends Model
                 }
             }
         }
+        DB::table('producthaslinks')->where('medialink_id',$thisMediaLinkId)->where('product_id',$productId)->delete();
         try {
             $nrd = DB::table('hasoptions')->where('product_id', $productId)->delete();
         } catch (Exception $e) {

@@ -49,11 +49,60 @@ class MessageTest extends TestCase
             echo('***'.$e->getMessage().'***');
             $this->assertTrue(false);
         }
+// testing a reply
+        $msginfo = array(
+            'to_id'=>$allUserNames[2]->id,
+            'parent_id'=>$newMessageId,
+            'thread'=>TRUE,
+            'from_id'=>$allUserNames[0]->id,
+            'content'=>'Here is a new company notification for you',
+            'type_id'=>$thisMessageTypeId,
+            'event_id'=>$thisEventId,
+            'title'=>'New Company',
+        );
+        try {
+            $replyMessageId = $thisMessage->addNewMessage($msginfo);
+        } catch (Exception $e) {
+            echo('***'.$e->getMessage().'***');
+            $this->assertTrue(false);
+        }
+        if(!DB::table('message')->where('parent_id',$newMessageId)->where('id',$replyMessageId)->exists())
+        {
+            echo('##Reply message could not be created');
+            $this->assertTrue(false);
+        }
+
+
         try {
             $thisMessage->removeMessage($newMessageId);
         } catch (Exception $e) {
             echo('***'.$e->getMessage().'***');
             $this->assertTrue(false);
         }
+        try {
+            $thisMessage->removeMessage($replyMessageId);
+        } catch (Exception $e) {
+            echo('***'.$e->getMessage().'***');
+            $this->assertTrue(false);
+        }
+        $msginfo = array(
+            'to_id'=>$allUserNames[2]->id,
+            'thread'=>TRUE,
+            'from_id'=>$allUserNames[0]->id,
+            'content'=>'Here is a new company notification for you',
+            'type_id'=>$thisMessageTypeId,
+            'event_id'=>$thisEventId,
+            'title'=>'New Company',
+        );
+        try {
+            $badMessageId = $thisMessage->addNewMessage($msginfo);
+            echo('## did not catch the parent_id missing test');
+            $this->assertTrue(false);
+        } catch (Exception $e) {
+            echo('***'.$e->getMessage().'***');
+            $this->assertTrue(true);
+        }
+
+
     }
 }

@@ -43,18 +43,18 @@ class ProductTest extends TestCase
         $this->assertTrue(DB::table('collectionhas')->where('product_id',$newProductId)->exists());
         $this->assertTrue(DB::table('hasoptions')->where('product_id',$newProductId)->exists());
         $this->assertTrue(DB::table('hasterms')->where('product_id',$newProductId)->exists());
-/*
+
         try {
             $thisProduct->removeProduct($newProductId);
         } catch (Exception $e) {
+            echo('## remove failed'.$e->getMessage());
             $this->assertTrue(false);
         }
         $this->assertFalse(DB::table('product')->where('id',$newProductId)->exists());
-        $this->assertFalse(DB::table('product')->where('description',$productDescription)->exists());
         $this->assertFalse(DB::table('medialink')->where('url',$productMediaUrl)->exists());
         $this->assertFalse(DB::table('collectionhas')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasoptions')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasterms')->where('product_id',$newProductId)->exists());
-*/
+
     }
 }

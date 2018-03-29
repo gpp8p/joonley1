@@ -35,11 +35,18 @@ class OrderTest extends TestCase
         $orderJustAddedId = DB::table('orders')->where('id',$orderId)->first()->id;
         $this->assertTrue($orderJustAddedId==$orderId);
         $this->assertTrue(DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
+
+        $productToAdd = DB::table('product')->where('name','Leather Necklace')->first();
+        $productOptions = DB::table('defaultoptions')->where('producttype_id',$productToAdd->type_id)->get();
+
+
+
         $thisOrder->removeStartingOrder($orderId);
         if(DB::table('orders')->where('id',$orderId)->exists())
         {
             $this->assertTrue(false);
         }
         $this->assertTrue(!DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
+
     }
 }
