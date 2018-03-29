@@ -102,6 +102,13 @@ class OptionsTest extends TestCase
         }
         $this->assertTrue(count($defaultOptionsLinkedToProduct)==$numberOfDeletedLinks);
 
+        $productType = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionTypeArray = $thisOptions->getDefaultOptionsForProducttype($productType->id);
+        $this->assertTrue(isset($optionTypeArray['Color']));
+        $this->assertTrue(isset($optionTypeArray['Color'][0]));
+        $this->assertTrue($optionTypeArray['Color'][0][0]=='Blue');
+        $this->assertTrue($optionTypeArray['Color'][0][1]==11);
+
 
     }
 }

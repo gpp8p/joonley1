@@ -53,6 +53,16 @@ class ProductSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $productType = DB::table('producttype')->where('name', 'Blouses')->first();
+        DB::table('product')->insert([
+            'name'=>'Parisian Blouse',
+            'type_id'=>$productType->id,
+            'description'=>'Latest fashion blouse from Paris',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
 
 
     }

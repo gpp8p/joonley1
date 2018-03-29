@@ -64,5 +64,76 @@ class DefaultOptionsSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'Red')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'White')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'Blue')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'size 6')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'size 7')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'size 8')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'size 9')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $productTypeReference = DB::table('producttype')->where('name', 'Blouses')->first();
+        $optionReference = DB::table('options')->where('specification', 'size 10')->first();
+        DB::table('defaultoptions')->insert([
+            'producttype_id'=>$productTypeReference->id,
+            'options_id'=>$optionReference->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
     }
 }

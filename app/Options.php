@@ -33,6 +33,28 @@ class Options extends Model
         return $optionTypes;
     }
 
+    public function getDefaultOptionsForProducttype($productType)
+    {
+        $query = 'select optiontype.name, options.specification, options.id from optiontype, options, defaultoptions '.
+                'where optiontype.id = options.optiontype_id '.
+                'and defaultoptions.options_id = options.id '.
+                'and defaultoptions.producttype_id = ? order by optiontype.name, options.specification';
+
+        $optionsFound =  DB::select($query, [$productType]);
+        $optionArray=array();
+        foreach($optionsFound as $thisOption)
+        {
+            $optionArrayElement = array($thisOption->specification, $thisOption->id);
+            if(!isset($optionArray[$thisOption->name]))
+            {
+                $optionArray[$thisOption->name] = array($optionArrayElement);
+            }else{
+                array_push($optionArray[$thisOption->name], $optionArrayElement);
+            }
+        }
+        return $optionArray;
+    }
+
     public function addOption($optionSpecification, $optionTypeSlug)
     {
         if(!DB::table('optiontype')->where('slug', $optionTypeSlug)->exists())

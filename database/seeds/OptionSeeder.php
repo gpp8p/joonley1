@@ -83,5 +83,32 @@ class OptionSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+
+        $type = DB::table('optiontype')->where('slug', 'color')->first();
+        DB::table('options')->insert([
+            'optiontype_id'=>$type->id,
+            'specification'=>'Red',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $type = DB::table('optiontype')->where('slug', 'color')->first();
+        DB::table('options')->insert([
+            'optiontype_id'=>$type->id,
+            'specification'=>'White',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        $type = DB::table('optiontype')->where('slug', 'color')->first();
+        DB::table('options')->insert([
+            'optiontype_id'=>$type->id,
+            'specification'=>'Blue',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
+
     }
 }
