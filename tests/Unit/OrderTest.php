@@ -36,17 +36,7 @@ class OrderTest extends TestCase
         $this->assertTrue($orderJustAddedId==$orderId);
         $this->assertTrue(DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
 
-        $productToAdd = DB::table('product')->where('name','Leather Necklace')->first();
-        $productOptions = DB::table('defaultoptions')->where('producttype_id',$productToAdd->type_id)->get();
 
-
-
-        $thisOrder->removeStartingOrder($orderId);
-        if(DB::table('orders')->where('id',$orderId)->exists())
-        {
-            $this->assertTrue(false);
-        }
-        $this->assertTrue(!DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
 
         $productToAdd = DB::table('product')->where('name', 'Parisian Blouse')->first();
         $thisOptions = new \App\Options;
@@ -55,9 +45,41 @@ class OrderTest extends TestCase
         $thisShipTypeId = DB::table('shiptype')->where('slug','air2')->first()->id;
         $quantity = 5;
         try {
-            $thisOrder->addProductToOrder($orderId, $productToAdd, $optionsSelected, $thisShipTypeId, $quantity);
+            $thisLineItemId = $thisOrder->addProductToOrder($orderId, $productToAdd, $optionsSelected, $thisShipTypeId, $quantity);
         } catch (Exception $e) {
             echo('###Unable to add product:'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+        if(!DB::table('ordercontains')->where('id',$thisLineItemId)->exists())
+        {
+            echo('##could not find newly added line item entry');
+            $this->assertTrue(false);
+        }
+        $lineItemAdded = DB::table('ordercontains')->where('id',$thisLineItemId)->first();
+        $this->assertTrue($lineItemAdded->product_id==$productToAdd->id);
+
+        if(!DB::table('orderoptions')->where('ord_contains_id',$thisLineItemId)->exists())
+        {
+            echo('##could not find newly added line item entry options');
+            $this->assertTrue(false);
+        }
+        $optionAdded =DB::table('orderoptions')->where('ord_contains_id',$thisLineItemId)->first();
+        $this->assertTrue($optionAdded->ord_contains_id==$thisLineItemId);
+
+        $thisOrder->removeStartingOrder($orderId);
+        if(DB::table('orders')->where('id',$orderId)->exists())
+        {
+            $this->assertTrue(false);
+        }
+        $this->assertTrue(!DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
+        if(DB::table('ordercontains')->where('id',$thisLineItemId)->exists())
+        {
+            echo('##Line item was not deleted');
+            $this->assertTrue(false);
+        }
+        if(DB::table('orderoptions')->where('ord_contains_id',$thisLineItemId)->exists())
+        {
+            echo('##Line item options were not deleted');
             $this->assertTrue(false);
         }
 

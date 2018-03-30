@@ -68,15 +68,21 @@ class Orders extends Model
         if($orderToRemove->status!=$startingOrderStatusId){
             throw new Exception('Order not in preparation status');
         }
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
             $nrd = DB::table('orders')->where('id', $orderId)->delete();
             $ned = DB::table('event')->where('order_id', $orderId)->delete();
-            DB::commit();
+            $lineItems = DB::table('ordercontains')->where('order_id',$orderId)->get();
+            foreach($lineItems as $li)
+            {
+                DB::table('orderoptions')->where('ord_contains_id',$li->id)->delete();
+            }
+            DB::table('ordercontains')->where('order_id',$orderId)->delete();
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception('Could not remove order:'.$e->getMessage());
         }
+        DB::commit();
     }
 
     public function getIncompleteOrders($companyId)
@@ -90,6 +96,38 @@ class Orders extends Model
 
     public function addProductToOrder($orderId, $productToAdd, $optionsSelected, $thisShipTypeId, $quantity)
     {
+        if($quantity<10)
+        {
+            $lineItemSubtotal = $quantity * $productToAdd->price_q1;
+        }else{
+            $lineItemSubtotal = $quantity * $productToAdd->price_q10;
+        }
+        DB::beginTransaction();
+        try {
+            $lineItemId = DB::table('ordercontains')->insertGetId([
+                'product_id' => $productToAdd->id,
+                'shiptype_id' => $thisShipTypeId,
+                'order_id' => $orderId,
+                'subtotal' => $lineItemSubtotal,
+                'quantity' => $quantity,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+            foreach($optionsSelected as $thisOptionSelected)
+            {
+                DB::table('orderoptions')->insert([
+                    'options_id'=>$thisOptionSelected,
+                    'ord_contains_id'=>$lineItemId,
+                    'created_at'=>\Carbon\Carbon::now(),
+                    'updated_at'=>\Carbon\Carbon::now()
+                ]);
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Line item could not be added:'.$e->getMessage());
+        }
+        DB::commit();
+        return $lineItemId;
 
     }
 }
