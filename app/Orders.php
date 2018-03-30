@@ -130,4 +130,15 @@ class Orders extends Model
         return $lineItemId;
 
     }
+
+    public function getLineItems($orderId)
+    {
+        $query = 'select ordercontains.id, product.name, ordercontains.quantity, product.price_q1, product.price_q10, ordercontains.subtotal '.
+                'from product, ordercontains '.
+                'where product.id = ordercontains.product_id '.
+                'and ordercontains.order_id = ?';
+
+        $lineItemsFound = DB::select($query, [$orderId]);
+        return $lineItemsFound;
+    }
 }

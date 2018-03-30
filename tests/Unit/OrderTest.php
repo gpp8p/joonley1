@@ -21,7 +21,7 @@ class OrderTest extends TestCase
         $this->assertTrue(true);
         $thisOrder = new \App\Orders;
 
-
+        // test adding a new order
         $company = DB::table('company')->where('name','Shop till you drop')->first();
         $user = DB::table('users')->where('name','gpp8p')->first();
         try {
@@ -37,7 +37,7 @@ class OrderTest extends TestCase
         $this->assertTrue(DB::table('event')->where('order_id',$orderId)->where('company_id',$company->id)->exists());
 
 
-
+        // test adding a product to this order
         $productToAdd = DB::table('product')->where('name', 'Parisian Blouse')->first();
         $thisOptions = new \App\Options;
         $optionTypeArray = $thisOptions->getDefaultOptionsForProducttype($productToAdd->type_id);
@@ -66,6 +66,12 @@ class OrderTest extends TestCase
         $optionAdded =DB::table('orderoptions')->where('ord_contains_id',$thisLineItemId)->first();
         $this->assertTrue($optionAdded->ord_contains_id==$thisLineItemId);
 
+        //test listing the products added
+        $currentLineItems = $thisOrder->getLineItems($orderId);
+        $this->assertTrue($currentLineItems[0]->name=='Parisian Blouse');
+
+
+        // test removing that product
         $thisOrder->removeStartingOrder($orderId);
         if(DB::table('orders')->where('id',$orderId)->exists())
         {
