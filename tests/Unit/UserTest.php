@@ -17,6 +17,10 @@ class UserTest extends TestCase
     {
         $thisUser = new \App\User;
         $thisUserList = $thisUser->getUserList();
-        $this->assertTrue(count($thisUserList)==34);
+        $this->assertTrue($thisUserList[0]->name=='gpp8p');
+        $this->assertTrue($thisUserList[0]->lname=='Pipkin');
+        $allUserInfo = $thisUser->getUserProfile('gpp8p');
+        $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],'gpp8p');
+        $this->assertTrue($access);
     }
 }

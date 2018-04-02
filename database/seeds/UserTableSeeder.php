@@ -12,10 +12,12 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        $thisUserRole = DB::table('userrole')->where('slug', 'admin')->first();
         $lastRcd =DB::table('users')->insertGetId([
             'name'=>    'gpp8p',
             'email'=>   'gpp8pvirginia@gmail.com',
             'password'=> Hash::make('n1tad0g'),
+            'userrole_id'=>$thisUserRole->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -49,6 +51,7 @@ class UserTableSeeder extends Seeder
         ]);
 
         $thisRole = DB::table('roles')->where('slug', 'user')->first();
+        $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
         $thisRoleId = $thisRole->id;
 
 
@@ -61,6 +64,7 @@ class UserTableSeeder extends Seeder
                 'name' => $faker->userName,
                 'email' => $faker->unique()->email,
                 'password'      => Hash::make('n1tad0g'),
+                'userrole_id'=>$thisUserRole->id,
                 'created_at'=>\Carbon\Carbon::now(),
                 'updated_at'=>\Carbon\Carbon::now()
             ]);
