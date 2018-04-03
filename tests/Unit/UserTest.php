@@ -5,6 +5,9 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Exception;
+use Faker\Factory as Faker;
 
 class UserTest extends TestCase
 {
@@ -22,5 +25,39 @@ class UserTest extends TestCase
         $allUserInfo = $thisUser->getUserProfile('gpp8p');
         $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],'gpp8p');
         $this->assertTrue($access);
+        $regularUser = DB::table('users')->where('id', 3)->first()->name;
+        $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
+        $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
+        $this->assertFalse($access);
+        $faker = Faker::create();
+        $thisUserInfo = array(
+            'name' => $faker->userName,
+            'email' => $faker->unique()->email,
+            'password_pw'=> 'n1tad0g',
+            'userrole_id'=>$thisUserRole->id,
+            'title' => $faker->title,
+            'admin' => FALSE,
+            'lname' => $faker->lastname,
+            'fname' => $faker->firstNameMale,
+            'addr1' =>$faker->address,
+            'addr2' =>$faker->secondaryAddress,
+            'addr3' =>$faker->secondaryAddress,
+            'city' => $faker->city,
+            'state' => $faker->state,
+            'zip' => $faker->postcode,
+            'country' => $faker->country,
+            'phone' => $faker->phoneNumber,
+        );
+        try {
+            $addedUserId = $thisUser->addUser($thisUserInfo);
+        } catch (Exception $e) {
+            echo('##'.$e->getMessage());
+            $this->assertFalse(false);
+        }
+        $userJustAdded = $thisUser->getUserProfile($thisUserInfo['name']);
+        $this->assertTrue($userJustAdded->email==$thisUserInfo['email']);
+        $deletedUserCount = $thisUser->removeUser($addedUserId);
+        $this->assertTrue($deletedUserCount==1);
+
     }
 }

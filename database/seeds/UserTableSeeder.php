@@ -43,12 +43,6 @@ class UserTableSeeder extends Seeder
 
         $thisRoleId = $thisRole->id;
 
-        DB::table('role_users')->insert([
-            'user_id'=>$lastRcd,
-            'role_id'=>$thisRoleId,
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-        ]);
 
         $thisRole = DB::table('roles')->where('slug', 'user')->first();
         $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
@@ -85,12 +79,7 @@ class UserTableSeeder extends Seeder
                 'created_at'=>\Carbon\Carbon::now(),
                 'updated_at'=>\Carbon\Carbon::now()
             ]);
-            DB::table('role_users')->insert([
-                'user_id'=>$lastRcd,
-                'role_id'=>$thisRoleId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
+
 
         }
 
