@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Role extends Model
 {
@@ -25,6 +26,11 @@ class Role extends Model
                 return true;
         }
         return false;
+    }
+
+    public function getRoleFromSlug($slug)
+    {
+        return DB::table('roles')->where('slug',$slug)->first();
     }
 
     private function hasPermission(string $permission) : bool

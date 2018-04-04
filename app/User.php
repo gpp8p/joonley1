@@ -107,6 +107,11 @@ class User extends Authenticatable
         return $usersFound[0];
     }
 
+    public function getUserByName($userName)
+    {
+        return DB::table('users')->where('name',$userName)->first();
+    }
+
     public function addUser($info)
     {
 
@@ -233,6 +238,29 @@ class User extends Authenticatable
 
         }
         DB::commit();
+    }
+
+    public function getUserCompanies($user)
+    {
+        $query = 'select company.id as comp_id, company.name as comp_name, companyrole.name as comp_role '.
+            'from users, userincompany, companyrole, company '.
+            'where company.id = userincompany.company_id '.
+            'and companyrole.id = userincompany.companyrole_id '.
+            'and userincompany.user_id = users.id '.
+            'and users.id=?';
+
+        $companiesFound = DB::select($query, [$user->id]);
+        return $companiesFound;
+
+    }
+
+    public function setUserRole($newUserRole, $userToChange)
+    {
+        try {
+            DB::table('users')->where('id', $userToChange->id)->update(['userrole_id' => $newUserRole->id]);
+        } catch (Exception $e) {
+            throw new Exception('Unable to update user role:'.$e->getMessage());
+        }
     }
 
 }

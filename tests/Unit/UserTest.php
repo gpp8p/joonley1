@@ -65,8 +65,23 @@ class UserTest extends TestCase
         $userJustEdited = $thisUser->getUserProfile($thisUserInfo['name']);
         $this->assertTrue($userJustEdited->addr1=='editedAddr1');
         $this->assertTrue($userJustEdited->addr2=='editedAddr2');
-//        $deletedUserCount = $thisUser->removeUser($addedUserId, $thisUserInfo['name']);
-//        $this->assertTrue($deletedUserCount==1);
+        $newUserRole = DB::table('userrole')->where('slug', 'admin')->first();
+        try {
+            $thisUser->setUserRole($newUserRole, $userToEdit);
+        } catch (Exception $e) {
+            echo('##'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+        echo('## new user role'.$userToEdit->userrole_id);
+        echo('## new role'.$newUserRole->id);
+        $this->assertTrue($userToEdit->userrole_id==$newUserRole->id);
+        $deletedUserCount = $thisUser->removeUser($addedUserId, $thisUserInfo['name']);
+        $this->assertTrue($deletedUserCount==1);
+        $testUser = DB::table('users')->where('name','gpp8p')->first();
+        $userCompanies = $thisUser->getUserCompanies($testUser);
+        $this->assertTrue($userCompanies[0]->comp_name == "Rings With Bing");
+
+
 
 
     }

@@ -39,12 +39,11 @@ Route::get('test', function () {
     }
 */
 
-    try {
-        $thisCollection->editCollection(3, 'More Fake Glory', 'fglory', 'Zirconimu rings for sale', 1, 'open', [2]);
-    } catch (Exception $e) {
-        echo($e->getMessage());
-    }
-
+    $thisUserClass = new \App\User;
+    $thisRoleClass = new \App\Role;
+    $thisRole = $thisRoleClass->getRoleFromSlug('admin');
+    $thisUser = $thisUserClass->getUserByName('rsanford ');
+    $thisUserClass->setUserRole($thisRole, $thisUser);
 
     return 'Hello World';
 });
