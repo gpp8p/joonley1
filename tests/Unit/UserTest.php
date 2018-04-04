@@ -56,8 +56,18 @@ class UserTest extends TestCase
         }
         $userJustAdded = $thisUser->getUserProfile($thisUserInfo['name']);
         $this->assertTrue($userJustAdded->email==$thisUserInfo['email']);
-        $deletedUserCount = $thisUser->removeUser($addedUserId);
-        $this->assertTrue($deletedUserCount==1);
+        $thisEditInfo = array (
+            'addr1'=>'editedAddr1',
+            'addr2'=>'editedAddr2',
+        );
+        $userToEdit = DB::table('users')->where('name', $userJustAdded->name)->first();
+        $thisUser->editUserProfile($userToEdit, $thisEditInfo);
+        $userJustEdited = $thisUser->getUserProfile($thisUserInfo['name']);
+        $this->assertTrue($userJustEdited->addr1=='editedAddr1');
+        $this->assertTrue($userJustEdited->addr2=='editedAddr2');
+//        $deletedUserCount = $thisUser->removeUser($addedUserId, $thisUserInfo['name']);
+//        $this->assertTrue($deletedUserCount==1);
+
 
     }
 }

@@ -94,9 +94,16 @@ class User extends Authenticatable
 
     public function getUserProfile($userName)
     {
-        $query = 'select * from users, userdetails, userrole where userdetails.user_id = users.id and users.userrole_id = userrole.id and users.name = ?';
+        $query = 'select users.id as uid,users.name as name,users.email as email,users.password as password, '.
+            'users.userrole_id as userrole_id, users.remember_token as users_remember_token, users.created_at as users_created_at, users.updated_at as users_updated_at, '.
+            'userdetails.admin,userdetails.title,userdetails.lname,userdetails.fname, '.
+            'userdetails.addr2,userdetails.addr3,userdetails.city,userdetails.addr1, '.
+            'userrole.name as userrole_name, '.
+            'userdetails.state,userdetails.zip,userdetails.country,userdetails.phone,userdetails.user_id, userdetails.created_at as userdetails_created_at, userdetails.updated_at as userdetails_updated_at  '.
+            'from users, userdetails, userrole where userdetails.user_id = users.id and users.userrole_id = userrole.id and users.name = ?';
+
         $usersFound = DB::select($query, [$userName]);
-        $usersFound[0]->name = $userName;
+//        $usersFound[0]->name = $userName;
         return $usersFound[0];
     }
 
@@ -127,7 +134,6 @@ class User extends Authenticatable
         }
 
         $mergedInformation = array_merge($defaultUserInfo, $info);
-
 
         DB::beginTransaction();
         try {
@@ -179,6 +185,54 @@ class User extends Authenticatable
         }
         DB::commit();
         return $nrd1;
+    }
+
+    public function editUserProfile($user, $editInfo)
+    {
+        if(!DB::table('users')->where('id', $user->id)->exists())
+        {
+            throw new Exception('That user cannot be found');
+        }
+        $existingProfile = (array) $this->getUserProfile($user->name);
+        $mergedProfileInformation=array_merge($existingProfile, $editInfo);
+        if(isset($editInfo['password']))
+        {
+            $mergedProfileInformation['password']= Hash::make($editInfo['password']);
+        }
+        DB::beginTransaction();
+        try {
+            DB::table('users')->where('id', $user->id)->update([
+                'name' => $mergedProfileInformation['name'],
+                'email' => $mergedProfileInformation['email'],
+                'password' => $mergedProfileInformation['password'],
+                'userrole_id' => $mergedProfileInformation['userrole_id'],
+                'created_at' => $mergedProfileInformation['users_created_at'],
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+
+            DB::table('userdetails')->where('user_id', $user->id)->update([
+                'title' => $mergedProfileInformation['title'],
+                'admin' => $mergedProfileInformation['admin'],
+                'lname' => $mergedProfileInformation['lname'],
+                'fname' => $mergedProfileInformation['fname'],
+                'addr1' => $mergedProfileInformation['addr1'],
+                'addr2' => $mergedProfileInformation['addr2'],
+                'addr3' => $mergedProfileInformation['addr3'],
+                'city' => $mergedProfileInformation['city'],
+                'state' => $mergedProfileInformation['state'],
+                'zip' => $mergedProfileInformation['zip'],
+                'country' => $mergedProfileInformation['country'],
+                'phone' => $mergedProfileInformation['phone'],
+                'user_id' => $user->id,
+                'created_at' => $mergedProfileInformation['userdetails_created_at'],
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not edit user:'.$e->getMessage());
+
+        }
+        DB::commit();
     }
 
 }
