@@ -39,11 +39,7 @@ Route::get('test', function () {
     }
 */
 
-    $thisUserClass = new \App\User;
-    $thisRoleClass = new \App\Role;
-    $thisRole = $thisRoleClass->getRoleFromSlug('admin');
-    $thisUser = $thisUserClass->getUserByName('yupton');
-    $thisUserClass->setUserRole($thisRole, $thisUser);
-
-    return 'Hello World';
+    $thisNestedCategory = new \App\NestedCategory;
+    $thisNestedCategory->addCategory('Handbags', 'ladies handbags', 'Select Product Category');
+    return 'done!';
 });
