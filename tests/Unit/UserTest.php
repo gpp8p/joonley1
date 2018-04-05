@@ -19,16 +19,23 @@ class UserTest extends TestCase
     public function testExample()
     {
         $thisUser = new \App\User;
+        // testing get user list
         $thisUserList = $thisUser->getUserList();
         $this->assertTrue($thisUserList[0]->name=='gpp8p');
         $this->assertTrue($thisUserList[0]->lname=='Pipkin');
+
+        //testing get user profile
         $allUserInfo = $thisUser->getUserProfile('gpp8p');
+
+        //testing has access
         $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],'gpp8p');
         $this->assertTrue($access);
         $regularUser = DB::table('users')->where('id', 3)->first()->name;
         $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
         $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
         $this->assertFalse($access);
+
+        // testing add user
         $faker = Faker::create();
         $thisUserInfo = array(
             'name' => $faker->userName,
@@ -56,6 +63,8 @@ class UserTest extends TestCase
         }
         $userJustAdded = $thisUser->getUserProfile($thisUserInfo['name']);
         $this->assertTrue($userJustAdded->email==$thisUserInfo['email']);
+
+        // testing user edit
         $thisEditInfo = array (
             'addr1'=>'editedAddr1',
             'addr2'=>'editedAddr2',
@@ -65,21 +74,48 @@ class UserTest extends TestCase
         $userJustEdited = $thisUser->getUserProfile($thisUserInfo['name']);
         $this->assertTrue($userJustEdited->addr1=='editedAddr1');
         $this->assertTrue($userJustEdited->addr2=='editedAddr2');
+        //testing set user role
         $newUserRole = DB::table('userrole')->where('slug', 'admin')->first();
-        try {
+       try {
             $thisUser->setUserRole($newUserRole, $userToEdit);
         } catch (Exception $e) {
             echo('##'.$e->getMessage());
             $this->assertTrue(false);
         }
-        echo('## new user role'.$userToEdit->userrole_id);
-        echo('## new role'.$newUserRole->id);
+        $userToEdit = DB::table('users')->where('name', $userJustAdded->name)->first();
         $this->assertTrue($userToEdit->userrole_id==$newUserRole->id);
+
+        //testing add user to company
+        $testCompanyRole = DB::table('companyrole')->where('slug','hbuyer')->first();
+        $testCompany = DB::table('company')->where('name','Rings With Bing')->first();
+        try {
+            $thisUser->addUserToCompany($userToEdit, $testCompany, $testCompanyRole);
+        } catch (Exception $e) {
+            echo($e->getMessage());
+            $this->assertTrue(false);
+        }
+        $companiesForThisUser = $thisUser->getUserCompanies($userToEdit);
+        $this->assertTrue($companiesForThisUser[0]->comp_name==$testCompany->name);
+        $this->assertTrue($companiesForThisUser[0]->comp_role==$testCompanyRole->name);
+
+        // testing remove user from company
+        try {
+            $thisUser->removeUserFromCompany($userToEdit, $testCompany);
+        } catch (Exception $e) {
+            echo($e->getMessage());
+            $this->assertTrue(false);
+        }
+        $companiesForThisUser = $thisUser->getUserCompanies($userToEdit);
+        $this->assertTrue(count($companiesForThisUser)==0);
+
+
+        //testing remove user
         $deletedUserCount = $thisUser->removeUser($addedUserId, $thisUserInfo['name']);
         $this->assertTrue($deletedUserCount==1);
         $testUser = DB::table('users')->where('name','gpp8p')->first();
         $userCompanies = $thisUser->getUserCompanies($testUser);
         $this->assertTrue($userCompanies[0]->comp_name == "Rings With Bing");
+
 
 
 

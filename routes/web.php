@@ -42,7 +42,7 @@ Route::get('test', function () {
     $thisUserClass = new \App\User;
     $thisRoleClass = new \App\Role;
     $thisRole = $thisRoleClass->getRoleFromSlug('admin');
-    $thisUser = $thisUserClass->getUserByName('rsanford ');
+    $thisUser = $thisUserClass->getUserByName('yupton');
     $thisUserClass->setUserRole($thisRole, $thisUser);
 
     return 'Hello World';

@@ -263,4 +263,30 @@ class User extends Authenticatable
         }
     }
 
+    public function addUserToCompany($user, $company, $companyRole)
+    {
+        try {
+            DB::table('userincompany')->insert([
+                'user_id' => $user->id,
+                'company_id' => $company->id,
+                'companyrole_id' => $companyRole->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            throw new Exception('Could not add user to company:'.$e->getMessage());
+        }
+    }
+
+    public function removeUserFromCompany($user, $company)
+    {
+        try {
+            DB::table('userincompany')->where('user_id', $user->id)->where('company_id', $company->id)->delete();
+        } catch (Exception $e) {
+            throw new Exception('Could not remove user from company:'.$e->getMessage());
+        }
+    }
+
+
+
 }
