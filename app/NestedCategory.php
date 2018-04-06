@@ -58,37 +58,73 @@ ENDQUERY;
         {
             throw new Exception('Parent:'.$parentNodeName.' not found');
         }
-        $nodeParent = DB::table('nested_category')->where('name',$parentNodeName)->first();
-        if($nodeParent->rgt >= $nodeParent->lft+1)
+        if(DB::table('nested_category')->where('name',$name)->exists())
         {
+            throw new Exception('Category:'.$name.' already exists');
+        }
 
-            try {
-                $lockQuery = "LOCK TABLE nested_category WRITE";
-                $q1 = 'UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > ?';
-                $q2 = 'UPDATE nested_category SET lft = lft + 2 WHERE lft > ?';
-                $unlockQuery = 'UNLOCK TABLES';
+        $nodeParent = DB::table('nested_category')->where('name',$parentNodeName)->first();
+        try {
+            $q1 = 'UPDATE nested_category SET rgt = rgt + 2 WHERE rgt > ?';
+            $q2 = 'UPDATE nested_category SET lft = lft + 2 WHERE lft > ?';
+            DB::beginTransaction();
+            DB::update($q1, [$nodeParent->lft]);
+            DB::update($q2, [$nodeParent->lft]);
+            $categoryId =DB::table('nested_category')->insertgetId([
+                'name'=>$name,
+                'description'=>$description,
+                'lft'=>$nodeParent->lft+1,
+                'rgt'=>$nodeParent->lft+2,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            DB::commit();
 
 
-                DB::beginTransaction();
-                DB::update($q1, [$nodeParent->lft]);
-                DB::update($q2, [$nodeParent->lft]);
-                $categoryId =DB::table('nested_category')->insertgetId([
-                    'name'=>$name,
-                    'description'=>$description,
-                    'lft'=>$nodeParent->lft+1,
-                    'rgt'=>$nodeParent->lft+2,
-                    'created_at'=>\Carbon\Carbon::now(),
-                    'updated_at'=>\Carbon\Carbon::now()
-                ]);
-                DB::commit();
+        } catch (Exception $e) {
 
+            DB::rollBack();
+            throw new Exception('Could not insert category:'.$e->getMessage());
+        }
+    }
 
-            } catch (Exception $e) {
+    public function deleteCategory($nodeName)
+    {
+        if(!DB::table('nested_category')->where('name',$nodeName)->exists())
+        {
+            throw new Exception('Category:'.$nodeName.' not found');
+        }
 
-                DB::rollBack();
-                throw new Exception('Could not insert category:'.$e->getMessage());
-            }
+        $node = DB::table('nested_category')->where('name',$nodeName)->first();
+        $leftPtr = $node->lft;
+        $rightPtr = $node->rgt;
+        $width = $rightPtr - $leftPtr + 1;
 
+        $q1 = 'DELETE FROM nested_category WHERE lft BETWEEN '.$leftPtr.' AND '.$rightPtr;
+        $q2 = 'UPDATE nested_category SET rgt = rgt - ? WHERE rgt > ?';
+        $q3 = 'UPDATE nested_category SET lft = lft - ? WHERE lft > ?';
+
+        try {
+            DB::beginTransaction();
+            $deleted = DB::delete($q1);
+            $affected = DB::update($q2,[$width,$rightPtr]);
+            $affected = DB::update($q3,[$width,$rightPtr]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception('Could not remove:'.$nodeName.' and sub categories because:'.$e->getMessage());
+        }
+        DB::commit();
+        return $deleted;
+    }
+
+    public function immediateParent($nodeName)
+    {
+        $query = 'SELECT parent.name, parent.id FROM nested_category AS node, nested_category AS parent WHERE node.lft BETWEEN parent.lft AND parent.rgt AND node.name = ? ORDER BY parent.lft';
+        $path =  DB::select($query, [$nodeName]);
+        if((count($path)-2)>0) {
+            return (array) $path[(count($path) - 2)];
+        }else{
+            return null;
         }
     }
 
