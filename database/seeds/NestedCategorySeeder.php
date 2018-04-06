@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use \App\NestedCategory;
 
 class NestedCategorySeeder extends Seeder
 {
@@ -19,5 +20,20 @@ class NestedCategorySeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now(),
             'description'=>'Product Category Top'
         ]);
+
+        $thisNestedCategory = new \App\NestedCategory;
+        $thisNestedCategory->addCategory('Handbags', 'ladies handbags', 'Select Product Category');
+        $thisNestedCategory->addCategory('Leather Purses', 'Leather Purses', 'Handbags');
+        $thisNestedCategory->addCategory('Decorative Handbags', 'Leather Purses', 'Handbags');
+        $thisNestedCategory->addCategory('Jewelry', 'Jewelry', 'Select Product Category');
+        $thisNestedCategory->addCategory('Rings', 'Rings', 'Jewelry');
+        $thisNestedCategory->addCategory('Chains', 'Chains', 'Jewelry');
+        $thisNestedCategory->addCategory('Bracelets', 'Bracelets', 'Select Product Category');
+        $thisNestedCategory->addCategory('Gold Bracelets', 'Gold Bracelets', 'Bracelets');
+        $thisNestedCategory->addCategory('Silver Bracelets', 'Silver Bracelets', 'Bracelets');
+        $thisNestedCategory->addCategory('Plastic Bracelets', 'Plastic Bracelets', 'Bracelets');
+        $thisNestedCategory->addCategory('Blouses', 'Blouses', 'Select Product Category');
+
+
     }
 }

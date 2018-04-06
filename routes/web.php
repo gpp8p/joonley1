@@ -40,6 +40,6 @@ Route::get('test', function () {
 */
 
     $thisNestedCategory = new \App\NestedCategory;
-    $thisNestedCategory->addCategory('Handbags', 'ladies handbags', 'Select Product Category');
+    $thisNestedCategory->addCategory('Jewelry', 'Jewelry', 'Select Product Category');
     return 'done!';
 });

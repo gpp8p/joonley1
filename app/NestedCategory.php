@@ -13,6 +13,10 @@ class NestedCategory extends Model
 
 public function findChildNodes($parentNodeName)
 {
+    if(!DB::table('nested_category')->where('name',$parentNodeName)->exists())
+    {
+        throw new Exception('Parent:'.$parentNodeName.' not found');
+    }
     $query = <<<ENDQUERY
 SELECT node.name, (COUNT(parent.name) - (sub_tree.depth + 1)) AS depth
 FROM nested_category AS node,
@@ -37,13 +41,25 @@ ENDQUERY;
 
 
     $categoriesFound = DB::select($query, [$parentNodeName]);
-    return $categoriesFound;
+    $returnValues = [];
+    foreach($categoriesFound as $thisCategoryFound)
+    {
+        if($thisCategoryFound->depth>0)
+        {
+            $returnValues[] = $thisCategoryFound->name;
+        }
+    }
+    return $returnValues;
 
 }
     public function addCategory($name, $description, $parentNodeName)
     {
+        if(!DB::table('nested_category')->where('name',$parentNodeName)->exists())
+        {
+            throw new Exception('Parent:'.$parentNodeName.' not found');
+        }
         $nodeParent = DB::table('nested_category')->where('name',$parentNodeName)->first();
-        if($nodeParent->rgt == $nodeParent->lft+1)
+        if($nodeParent->rgt >= $nodeParent->lft+1)
         {
 
             try {
