@@ -11,7 +11,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $productType = DB::table('producttype')->where('name', 'Rings')->first();
+        $productType = DB::table('nested_category')->where('name', 'Rings')->first();
         DB::table('product')->insert([
             'name'=>'Gold pinky ring',
             'type_id'=>$productType->id,
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $productType = DB::table('producttype')->where('name', 'Chains')->first();
+        $productType = DB::table('nested_category')->where('name', 'Chains')->first();
         DB::table('product')->insert([
             'name'=>'Mr. T. Gold chain',
             'type_id'=>$productType->id,
@@ -68,7 +68,7 @@ class ProductSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $productType = DB::table('producttype')->where('name', 'Blouses')->first();
+        $productType = DB::table('nested_category')->where('name', 'Blouses')->first();
         DB::table('product')->insert([
             'name'=>'Parisian Blouse',
             'type_id'=>$productType->id,

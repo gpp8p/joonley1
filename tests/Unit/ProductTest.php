@@ -20,11 +20,11 @@ class ProductTest extends TestCase
     {
         $this->assertTrue(true);
         $thisProduct = new \App\Product;
-        $sellableProducts = $thisProduct->getAllSellableProductsByCategory(5);
+        $sellableProducts = $thisProduct->getAllSellableProductsByCategory('Rings');
         $this->assertTrue($sellableProducts[1]->product=="Zirconium ring");
         $companyProducts = $thisProduct->getCompanyProducts(1);
         $this->assertTrue($companyProducts[1]->product=="Zirconium ring");
-        $productType = DB::table('producttype')->where('name', 'Rings')->first();
+        $productType = DB::table('nested_category')->where('name', 'Rings')->first();
         $productName = 'Diamond Ring';
         $productDescription = 'Flashy diamond ring perfect for engagements';
         $productMediaUrl = 'http://www.rings.com/12345.jpg';

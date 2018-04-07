@@ -47,6 +47,22 @@ class NestedCategoryTest extends TestCase
         $this->assertTrue($thisImmediateParent['name']=='Blouses');
         $rootImmediateParent = $thisNestedCategory->immediateParent('Select Product Category');
         $this->assertTrue($rootImmediateParent==null);
+
+        try {
+            $thisNestedCategory->addCategory('Tank Top', 'Skimpy tank top suitable for hookers', 'Summer Dress');
+        } catch (Exception $e) {
+            echo('##'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+
+        try {
+            $thisNestedCategory->addCategory('Transparent Shirt', 'Transparent shirt', 'Summer Dress');
+        } catch (Exception $e) {
+            echo('##'.$e->getMessage());
+            $this->assertTrue(false);
+        }
+
+
         // testing remove category
         try {
             $thisNestedCategory->deleteCategory('Summer Dress');
@@ -55,6 +71,9 @@ class NestedCategoryTest extends TestCase
             $this->assertTrue(false);
         }
         $this->assertFalse(DB::table('nested_category')->where('name','Summer Dress')->exists());
+        $this->assertFalse(DB::table('nested_category')->where('name','Tank Top')->exists());
+        $this->assertFalse(DB::table('nested_category')->where('name','Transparent Shirt')->exists());
+
 
 
 

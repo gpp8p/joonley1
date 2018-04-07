@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CollectionSeeder::class);
         $this->call(CompanyHasCollectionSeeder::class);
         $this->call(ProductTypeSeeder::class);
+        $this->call(NestedCategorySeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(ContainedAsSeeder::class);
         $this->call(CollectionContainsSeeder::class);
@@ -53,6 +54,5 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductHasLinksSeeder::class);
         $this->call(CompHasLinksSeeder::class);
         $this->call(CollectHasLinksSeeder::class);
-        $this->call(NestedCategorySeeder::class);
     }
 }

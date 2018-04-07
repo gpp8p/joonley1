@@ -51,7 +51,7 @@ class OptionsTest extends TestCase
             $this->assertTrue(true);
         }
         // test adding a default option
-        $thisProductType = DB::table('producttype')->where('name','Chains')->get();
+        $thisProductType = DB::table('nested_category')->where('name','Chains')->get();
         try {
             $thisDefaultOptionId = $thisOptions->addDefaultOption($allOptions[3], $thisProductType[0]);
         } catch (Exception $e) {
@@ -86,7 +86,7 @@ class OptionsTest extends TestCase
         }
         $this->assertTrue($productOptionsDeleted>0);
         // test creating links to a product from an option set using the set of default options for that type
-        $productType = DB::table('producttype')->where('name', 'Chains')->first();
+        $productType = DB::table('nested_category')->where('name', 'Chains')->first();
         $product = DB::table('product')->where('name', 'Leather Necklace')->first();
         try {
             $defaultOptionsLinkedToProduct = $thisOptions->linkDefaultOptionsToProduct($productType, $product->id);
@@ -102,7 +102,7 @@ class OptionsTest extends TestCase
         }
         $this->assertTrue(count($defaultOptionsLinkedToProduct)==$numberOfDeletedLinks);
 
-        $productType = DB::table('producttype')->where('name', 'Blouses')->first();
+        $productType = DB::table('nested_category')->where('name', 'Blouses')->first();
         $optionTypeArray = $thisOptions->getDefaultOptionsForProducttype($productType->id);
         $this->assertTrue(isset($optionTypeArray['Color']));
         $this->assertTrue(isset($optionTypeArray['Color'][0]));

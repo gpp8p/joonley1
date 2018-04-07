@@ -10,8 +10,9 @@ class Product extends Model
 {
     protected $table = 'product';
 
-    public function getAllSellableProductsByCategory($categoryId)
+    public function getAllSellableProductsByCategory($category)
     {
+        $categoryId = DB::table('nested_category')->where('name',$category)->first()->id;
         $query = 'select distinct product.name as product, product.description as description, medialink.url as media_url, mediatype.name as media_type, '.
                 'company.name as company , collection.name as collection, locations.name as location '.
                 'from product, medialink, mediatype, collectionhas, containedas, collection, '.
