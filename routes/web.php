@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/', 'IntroController@show')->name('intro');
 
 Route::get('test', function () {
 //    $thisCompany = new \App\Company;

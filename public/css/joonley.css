@@ -1,0 +1,72 @@
+.bodycss {
+    background-color: #f5dce8;
+}
+
+.hdr1 {
+    font-family: 'Caveat', cursive;
+    padding-top: 3px;
+    padding-bottom: 40px;
+    font-size: 30px;
+    font-weight: 400;
+
+}
+.line2px {
+    border-bottom: 2px solid black;
+}
+
+.alignleft {
+    float: left;
+}
+.alignright {
+    float: right;
+}
+
+.introTitle {
+    padding-top: 1em;
+    text-align:center;
+    font-family: 'Caveat', cursive;
+    font-size: 70px;
+    font-weight: 400;
+
+
+
+}
+
+
+.introBody {
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align:center;
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+
+.btn {
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 14;
+    -moz-border-radius: 14;
+    border-radius: 14px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    border: solid #1f628d 2px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
