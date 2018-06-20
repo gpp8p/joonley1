@@ -16,7 +16,12 @@
 
 <div class="hdr1 line2px">
     <span class="alignleft">Joonley</span>
-    <span class="alignright">Log In</span>
+    @guest
+        <span class="alignright">Log In</span>
+    @else
+            <span class="alignright">Log Out</span>
+    @endguest
+
 </div>
 
 <div>

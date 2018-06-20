@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class IntroController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         return view('jintro');
     }
