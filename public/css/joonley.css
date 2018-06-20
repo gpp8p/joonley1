@@ -1,9 +1,9 @@
 .bodycss {
-    background-color: #f5dce8;
+    background-color: #ffffff;
 }
 
 .hdr1 {
-    font-family: 'Caveat', cursive;
+    font-family: 'Fira Sans Condensed', sans-serif;
     padding-top: 3px;
     padding-bottom: 40px;
     font-size: 30px;
@@ -20,28 +20,62 @@
 .alignright {
     float: right;
 }
-
+.introsection {
+    padding-top: 3em;
+    padding-bottom: 15em;
+}
 .introTitle {
     padding-top: 1em;
     text-align:center;
-    font-family: 'Caveat', cursive;
-    font-size: 70px;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 50px;
     font-weight: 400;
-
-
-
+    line-height: 50px;
 }
+.introTitle2 {
+    text-align:left;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 50px;
+    line-height: 45px;
+}
+
+.introbody2 {
+    text-align:left;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+    line-height: 40px;
+}
+
+.introbody3 {
+    text-align:left;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+    line-height: 30px;
+    width: 50%;
+}
+
+.introbody4 {
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+    line-height: 30px;
+}
+.intro4 {
+    overflow: hidden;
+    margin-left: 50%;
+}
+
 
 
 .introBody {
     padding-top: 1em;
     padding-bottom: 2em;
     text-align:center;
-    font-family: 'Caveat', cursive;
+    font-family: 'Fira Sans Condensed', sans-serif;
     font-size: 20px;
     font-weight: 400;
 
 }
+
 
 .btn {
     background: #3498db;
@@ -50,14 +84,13 @@
     background-image: -ms-linear-gradient(top, #3498db, #2980b9);
     background-image: -o-linear-gradient(top, #3498db, #2980b9);
     background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
     font-family: Arial;
     color: #ffffff;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    border: solid #1f628d 2px;
+    font-size: 14px;
+    padding: 5px 15px 5px 15px;
     text-decoration: none;
 }
 
