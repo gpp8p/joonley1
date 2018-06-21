@@ -16,10 +16,18 @@
 
 .alignleft {
     float: left;
+    color: blue;
 }
 .alignright {
     float: right;
 }
+
+.logright {
+    float: right;
+    margin-right: 5px;
+}
+
+
 .introsection {
     padding-top: 3em;
     padding-bottom: 15em;
@@ -79,6 +87,18 @@
     margin-left: 50%;
 }
 
+.loglink1 {
+    text-decoration: none;
+    color:blue;
+}
+.loglink1:hover {
+    color:red;
+}
+
+.tm1 {
+    margin-top: 10px;
+}
+
 
 
 .introBody {
@@ -120,6 +140,7 @@
 }
 
 .pwentry {
+    padding-top: 5em;
     display: grid;
     height: 10vh;
     margin: 0;

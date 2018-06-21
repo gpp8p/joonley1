@@ -18,9 +18,12 @@
 <div class="hdr1 line2px">
     <span class="alignleft">Joonley</span>
     @guest
-        <span class="alignright">Log In</span>
+        <span class="logright"><a class="loglink1" href="{{ route('login') }}">Log In</a></span>
     @else
-            <span class="alignright">Log Out</span>
+            <span class="logright"><a href="{{ route('logout') }}" class="loglink1" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></span>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+
     @endguest
 
 </div>
