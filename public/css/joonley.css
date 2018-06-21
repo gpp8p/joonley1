@@ -54,6 +54,21 @@
     width: 50%;
 }
 
+.pwlabel {
+    display: block;
+    text-align: left;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 15px;
+    color: blue;
+    font-weight: 400;
+}
+
+.pwinput {
+    font-size:18pt;
+    height:30px;
+    margin-bottom: 5px;
+}
+
 .introbody4 {
     font-family: 'Fira Sans Condensed', sans-serif;
     font-size: 20px;
@@ -102,4 +117,15 @@
     background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
+}
+
+.pwentry {
+    display: grid;
+    height: 10vh;
+    margin: 0;
+    place-items: center center;
+}
+
+.block label { display: block;
+    text-align: left;
 }
