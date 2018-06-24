@@ -22,8 +22,8 @@
         <div align="left">
             <table border="0">
                 <tr>
-                    <td><a class="btn" href="">Apply To Sell</a></td>
-                    <td><a class="btn" href="">Sign Up To Buy</a></td>
+                    <td><a class="btn" href="/registerSeller">Apply To Sell</a></td>
+                    <td><a class="btn" href="/registerBuyer">Sign Up To Buy</a></td>
                 </tr>
             </table>
         </div>
@@ -46,9 +46,9 @@
 <div align="center">
     <table border="0">
         <tr>
-            <td><a class="btn" href="">Apply To Sell</a></td>
+            <td><a class="btn" href="registerSeller">Apply To Sell</a></td>
             <td><a class="btn" href="">Learn More</a></td>
-            <td><a class="btn" href="">Sign Up To Buy</a></td>
+            <td><a class="btn" href="registerBuyer">Sign Up To Buy</a></td>
         </tr>
     </table>
 </div>
@@ -70,7 +70,7 @@
     <div align="left">
         <table border="0">
             <tr>
-                <td><a class="btn" href="">Apply To Sell</a></td>
+                <td><a class="btn" href="registerSeller">Apply To Sell</a></td>
                 <td><a class="btn" href="">Learn More</a></td>
             </tr>
         </table>
@@ -96,7 +96,7 @@
             <div align="left">
                 <table border="0">
                     <tr>
-                        <td><a class="btn" href="">Sign Up To Buy</a></td>
+                        <td><a class="btn" href="registerBuyer">Sign Up To Buy</a></td>
                         <td><a class="btn" href="">Learn More</a></td>
                     </tr>
                 </table>

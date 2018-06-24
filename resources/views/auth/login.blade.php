@@ -2,12 +2,6 @@
 
 
 @section('content')
-    <script>
-        function formSubmit()
-        {
-            document.getElementById("loginForm").submit();
-        }
-    </script>
     <form method="POST" name="loginForm" action="{{ route('login') }}">
         {{ csrf_field() }}
         <div class="pwentry">

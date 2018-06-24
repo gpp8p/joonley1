@@ -147,6 +147,48 @@
     place-items: center center;
 }
 
+.frmentry {
+    padding-top: 5em;
+    display: grid;
+    height: 10vh;
+    margin: 0;
+
+}
+
+
+
+.frmlabel {
+    display: block;
+    text-align: left;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 15px;
+    color: blue;
+    font-weight: 400;
+}
+
+.frminput {
+    font-size:18pt;
+    height:30px;
+    margin-bottom: 5px;
+}
+.frminputta {
+    font-size:13pt;
+    text-align: left;
+}
+
+
 .block label { display: block;
     text-align: left;
+}
+
+.table2col {
+    width: 100%;
+    border: 0;
+}
+
+.selinput {
+    width: 50%;
+    font-size:15pt;
+    height:30px;
+    margin-bottom: 5px;
 }

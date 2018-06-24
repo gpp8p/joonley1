@@ -23,27 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/', 'IntroController@show')->name('intro');
 
-Route::get('test', function () {
-//    $thisCompany = new \App\Company;
-//    $thisCompanyId = 3;
-//    $thisCompany->editCompany($thisCompanyId, 'Cheap Trinkets Unlimited', 'www.cheaptrinkets.com', '451) 307-2650 x71724', 9, [1, 2]);
-//    $newCompanyId = $thisCompany->addNewCompany('New Company Name3', 'newweb.com', '999-999-9999', 2, 1);
-    $thisCollection = new \App\Collections;
+Route::get('/registerBuyer', 'SignUpBuyerController@showForm')->name('registerBuyer');
+Route::post('/regBuyer', 'SignUpBuyerController@processForm')->name('regBuyer');
 
-/*
-    try {
-        $collectionId = $thisCollection->addCollection('Fake Glory', 'fglory', 'Zirconimu rings for sale', 1, 'open', 2);
-    } catch (Exception $e) {
-        return 'exception'.$e->getMessage();
-    }
-    try {
-        $thisCollection->removeCollection($collectionId);
-    } catch (Exception $e) {
-        return 'exception'.$e->getMessage();
-    }
-*/
-
-    $thisNestedCategory = new \App\NestedCategory;
-    $thisNestedCategory->addCategory('Jewelry', 'Jewelry', 'Select Product Category');
-    return 'done!';
-});
+Route::get('/registerSeller', 'SignUpSellerController@showForm')->name('registerSeller');
+Route::post('/regSeller', 'SignUpSellerController@processForm')->name('regSeller');
