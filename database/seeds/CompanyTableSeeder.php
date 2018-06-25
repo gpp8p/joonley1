@@ -19,6 +19,7 @@ class CompanyTableSeeder extends Seeder
             'website'=> 'www.rings.com',
             'icon'=>'12345678.jpg',
             'phone'=> $faker->phoneNumber,
+            'reseller_id'=>'1234567890',
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -29,6 +30,7 @@ class CompanyTableSeeder extends Seeder
             'website'=> 'www.shopanddrop.com',
             'icon'=>'2476831.jpg',
             'phone'=> $faker->phoneNumber,
+            'reseller_id'=>'1234567890',
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -40,6 +42,7 @@ class CompanyTableSeeder extends Seeder
             'icon'=>'987654321.jpg',
             'location_id'=>$thisCompany->id,
             'phone'=> $faker->phoneNumber,
+            'reseller_id'=>'1234567890',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -49,6 +52,7 @@ class CompanyTableSeeder extends Seeder
             'website'=> 'www.chinajunk.com',
             'icon'=>'6666543.jpg',
             'phone'=> $faker->phoneNumber,
+            'reseller_id'=>'1234567890',
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -59,6 +63,7 @@ class CompanyTableSeeder extends Seeder
             'website'=> 'www.accessories.com',
             'icon'=>'23465432.jpg',
             'phone'=> $faker->phoneNumber,
+            'reseller_id'=>'1234567890',
             'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()

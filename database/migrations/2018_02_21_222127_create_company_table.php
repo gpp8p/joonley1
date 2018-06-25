@@ -19,6 +19,7 @@ class CreateCompanyTable extends Migration
             $table->string('website',128);
             $table->string('icon',128);
             $table->string ('phone', 64);
+            $table->string ('reseller_id', 64);
             $table->unsignedInteger('location_id');
             $table->timestamps();
 
