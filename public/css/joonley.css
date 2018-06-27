@@ -62,6 +62,16 @@
     width: 50%;
 }
 
+.bigTitleCentered {
+    align-content: center;
+    padding-top: 1em;
+    text-align:center;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 50px;
+    font-weight: 400;
+    line-height: 50px;
+}
+
 .pwlabel {
     display: block;
     text-align: left;

@@ -40,8 +40,8 @@
                         <div>
                             <label for="roleSelect" class = "frmlabel">Your Role:</label>
                             <select id="roleSelect" class="selinput">
-                                <option>Owner</option>
-                                <option>Buyer</option>
+                                <option value="1">Owner</option>
+                                <option value="2">Buyer</option>
                             </select>
                         </div>
                         <div>
