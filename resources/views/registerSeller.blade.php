@@ -19,7 +19,7 @@
                         </div>
                         <div align="left">
                             <label for="email" class = "frmlabel">Email:</label>
-                            <input id="email" type="text" class="frminput" name="email"  required>
+                            <input id="email" type="email" class="frminput" name="email"  required>
                         </div>
                         <div align="left">
                             <label for="phone" class = "frmlabel">Phone:</label>
@@ -47,7 +47,7 @@
                         </div>
                         <div>
                             <label for="strwebsite" class = "frmlabel">Company Website:</label>
-                            <input id="strwebsite" type="text" class="frminput" name="strwebsite"  required>
+                            <input id="strwebsite" type="url" class="frminput" name="strwebsite"  required>
                         </div>
                         <div>
                             <label for="stradr1" class = "frmlabel">Company Address 1:</label>
@@ -120,6 +120,10 @@
                         <div>
                             <label for="strzip" class = "frmlabel">Zipcode:</label>
                             <input id="strzip" type="text" class="frminput" name="strzip">
+                        </div>
+                        <div>
+                            <label for="country" class = "frmlabel">Country:</label>
+                            <input id="country" type="text" class="frminput" name="country">
                         </div>
                         <div>
                             <label for="strid" class = "frmlabel">Reseller Id:</label>

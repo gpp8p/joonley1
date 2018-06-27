@@ -18,7 +18,6 @@ class Registrations extends Migration
             $table->string('lname', 64 );
             $table->string('fname', 64 );
             $table->string('email', 254)->unique();
-            $table->string('fname', 64 );
             $table->mediumText('comment');
             $table->string('strname',64);
             $table->smallInteger('roleselected');
@@ -30,6 +29,7 @@ class Registrations extends Migration
             $table->string('strzip',32);
             $table->string('strid',32);
             $table->string('strestab',16);
+            $table->string('country',64);
             $table->char('reg_status',1);
             $table->char('buysell_type',1);
         });
