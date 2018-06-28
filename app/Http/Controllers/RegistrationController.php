@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,25 @@ class RegistrationController extends Controller
 
     public function showSellerForm() {
         return view('registerSeller');
+    }
+
+    public function checkUserId(Request $newUserIdRequest){
+        $inData =  $newUserIdRequest->all();
+        $newUserId = $inData['newUserId'];
+        $usr = new User();
+        if($usr->getUserByName($newUserId)!=null){
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'User Id Exists!'
+            );
+            return response()->json($returnData, 400);
+        }else{
+            $returnData = array(
+                'status' => 'Ok',
+                'message' => 'User Id Available!'
+            );
+            return response()->json($returnData, 200);
+        }
     }
 
     public function processBuyerForm(Request $buyerRequest){

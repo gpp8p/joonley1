@@ -2,7 +2,16 @@
 
 
 @section('content')
-
+    <script language='javascript' type='text/javascript'>
+        function check(input) {
+            if (input.value != document.getElementById('password').value) {
+                input.setCustomValidity('Password Must be Matching.');
+            } else {
+                // input is valid -- reset the error message
+                input.setCustomValidity('');
+            }
+        }
+    </script>
     <form method="POST" name="regSellerForm" action="{{ route('regSeller') }}">
         {{ csrf_field() }}
         <table class="table2col">
@@ -30,8 +39,8 @@
                             <input id="password" type="password" class="frminput"  name="password" required>
                         </div>
                         <div>
-                            <label for="passconfirm" class="frmlabel">Password (confirm):</label>
-                            <input id="passconfirm" type="password" class="frminput"  name="password" required>
+                            <label for="password_confirm" class="frmlabel">Password (confirm):</label>
+                            <input id="password_confirm" type="password" class="frminput"  name="password_confirm" oninput="check(this)" required>
                         </div>
                         <div align="left">
                             <label for="comment" class = "frmlabel">Comment:</label>

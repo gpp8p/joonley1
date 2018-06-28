@@ -24,6 +24,10 @@ class UserTest extends TestCase
         $this->assertTrue($thisUserList[0]->name=='gpp8p');
         $this->assertTrue($thisUserList[0]->lname=='Pipkin');
 
+        $ubn = $thisUser->getUserByName('gpp8p');
+        $this->assertTrue($ubn!=null);
+
+
         //testing get user profile
         $allUserInfo = $thisUser->getUserProfile('gpp8p');
 

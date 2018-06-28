@@ -92,6 +92,7 @@ class User extends Authenticatable
 
     }
 
+
     public function getUserProfile($userName)
     {
         $query = 'select users.id as uid,users.name as name,users.email as email,users.password as password, '.

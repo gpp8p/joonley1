@@ -25,6 +25,7 @@ Route::get('/', 'IntroController@show')->name('intro');
 
 Route::get('/registerBuyer', 'RegistrationController@showBuyerForm')->name('registerBuyer');
 Route::post('/regBuyer', 'RegistrationController@processBuyerForm')->name('regBuyer');
+Route::get('/checkId', 'RegistrationController@checkUserId')->name('checkId');
 
 Route::get('/registerSeller', 'RegistrationController@showSellerForm')->name('registerSeller');
 Route::post('/regSeller', 'RegistrationController@processSellerForm')->name('regSeller');
