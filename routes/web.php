@@ -29,3 +29,5 @@ Route::get('/checkId', 'RegistrationController@checkUserId')->name('checkId');
 
 Route::get('/registerSeller', 'RegistrationController@showSellerForm')->name('registerSeller');
 Route::post('/regSeller', 'RegistrationController@processSellerForm')->name('regSeller');
+
+Route::get('/reviewRegistrations', 'RegistrationController@showRegistrationRequests')->name('reviewRegistrations');

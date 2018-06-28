@@ -156,4 +156,13 @@ class RegistrationController extends Controller
 
     }
 
+    public function showRegistrationRequests(){
+        $outstandingRegistrationsList = getOutstandingRegistrations();
+        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+    }
+
+    private function getOutstandingRegistrations(){
+        return DB::table('users')->where('reg_status','A')->get();
+    }
+
 }
