@@ -4,7 +4,29 @@
 @section('content')
 
     <form method="POST" name="regBuyerForm" action="{{ route('regBuyer') }}">
-    {{ csrf_field() }}
+        <script language='javascript' type='text/javascript'>
+            function checkId(input) {
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: '/checkId',
+                    type: 'GET',
+                    /* send the csrf-token and the input to the controller */
+                    data: {message:input.value},
+                    dataType: 'json',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) {
+                        input.setCustomValidity('');
+                    },
+
+                    error: function (data) {
+                        input.setCustomValidity('Please try a different email This one is taken.');
+                    }
+                });
+
+            }
+        </script>
+
+        {{ csrf_field() }}
         <table class="table2col">
             <tr>
                 <td width="50%">
@@ -19,7 +41,7 @@
                         </div>
                         <div align="left">
                             <label for="email" class = "frmlabel">Email:</label>
-                            <input id="email" type="email" class="frminput" name="email"  required>
+                            <input id="email" type="email" class="frminput" name="email" onchange="checkId(this)" required>
                         </div>
                         <div align="left">
                             <label for="phone" class = "frmlabel">Phone:</label>

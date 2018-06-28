@@ -11,6 +11,26 @@
                 input.setCustomValidity('');
             }
         }
+
+        function checkId(input) {
+            $.ajax({
+                /* the route pointing to the post function */
+                url: '/checkId',
+                type: 'GET',
+                /* send the csrf-token and the input to the controller */
+                data: {message:input.value},
+                dataType: 'json',
+                /* remind that 'data' is the response of the AjaxController */
+                success: function (data) {
+                    input.setCustomValidity('');
+                },
+
+                error: function (data) {
+                    input.setCustomValidity('Please try a different email This one is taken.');
+                }
+            });
+
+        }
     </script>
     <form method="POST" name="regSellerForm" action="{{ route('regSeller') }}">
         {{ csrf_field() }}
@@ -28,7 +48,7 @@
                         </div>
                         <div align="left">
                             <label for="email" class = "frmlabel">Email:</label>
-                            <input id="email" type="email" class="frminput" name="email"  required>
+                            <input id="email" type="email" class="frminput" name="email" onchange="checkId(this)" required>
                         </div>
                         <div align="left">
                             <label for="phone" class = "frmlabel">Phone:</label>

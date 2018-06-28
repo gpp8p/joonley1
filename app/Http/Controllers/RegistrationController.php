@@ -22,7 +22,15 @@ class RegistrationController extends Controller
 
     public function checkUserId(Request $newUserIdRequest){
         $inData =  $newUserIdRequest->all();
-        $newUserId = $inData['newUserId'];
+        $newUserId = $inData['message'];
+        $regUserExists = DB::table('users')->where('email',$newUserId)->first();
+        if($regUserExists!=null){
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'User Id Exists!'
+            );
+            return response()->json($returnData, 400);
+        }
         $usr = new User();
         if($usr->getUserByName($newUserId)!=null){
             $returnData = array(
