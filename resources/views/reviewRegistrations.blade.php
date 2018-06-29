@@ -2,6 +2,7 @@
 
 
 @section('content')
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <script language='javascript' type='text/javascript'>
 
     </script>
