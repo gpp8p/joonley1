@@ -54,5 +54,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductHasLinksSeeder::class);
         $this->call(CompHasLinksSeeder::class);
         $this->call(CollectHasLinksSeeder::class);
+        $this->call(RegistrationsSeeder::class);
     }
 }
