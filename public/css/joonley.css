@@ -255,3 +255,19 @@
 
 }
 
+.panelRight1 {
+    margin-left: 15px;
+}
+
+.panelRightData {
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.vtop {
+    vertical-align: top;
+}
+
+
+

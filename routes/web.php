@@ -32,3 +32,4 @@ Route::post('/regSeller', 'RegistrationController@processSellerForm')->name('reg
 
 Route::get('/reviewRegistrations', 'RegistrationController@showRegistrationRequests')->name('reviewRegistrations');
 Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOneRegistration');
+Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
