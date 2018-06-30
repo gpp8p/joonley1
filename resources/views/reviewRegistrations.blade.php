@@ -57,7 +57,9 @@
                     </tr>
                  @endforeach
             </table>
+            <div class="alignright">
             {{ $outstandingRegistrations->links() }}
+            </div>
         </div>
 
         <div class="split right">
@@ -192,7 +194,7 @@
                         <form method="POST" name="approveReg" action="{{ route('approveReg') }}">
                             {{ csrf_field() }}
                             <input type="submit" class="btn"  value="Approve This Registration As:">
-                            <select id="approveRole" class="selinput">
+                            <select id="approveRole">
                                 <option value="admin">Administrator</option>
                                 <option value="adminedit">Admin. Editor</option>
                                 <option value="seller">Seller</option>

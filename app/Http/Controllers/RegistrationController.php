@@ -178,7 +178,7 @@ class RegistrationController extends Controller
     }
 
     private function getOutstandingRegistrations(){
-        return DB::table('registrations')->where('reg_status','A')->paginate(10);
+        return DB::table('registrations')->where('reg_status','A')->paginate(15);
     }
 
 }
