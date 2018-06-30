@@ -156,6 +156,22 @@ class RegistrationController extends Controller
 
     }
 
+    public function getOneRegistration(Request $regIdRequest){
+        $inData =  $regIdRequest->all();
+        $regId = $inData['regId'];
+        $thisRegistration = DB::table('registrations')->where('id',$regId)->first();
+        if($thisRegistration==null){
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'User Id does not Exist!'
+            );
+            return response()->json($returnData, 400);
+        }else{
+            return response()->json($thisRegistration, 200);
+        }
+
+    }
+
     public function showRegistrationRequests(){
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
         return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
