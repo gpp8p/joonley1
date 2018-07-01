@@ -197,6 +197,8 @@
                             <select id="approveRole">
                                 <option value="admin">Administrator</option>
                                 <option value="adminedit">Admin. Editor</option>
+                                <option value="adminmarket">Admin. Marketing</option>
+                                <option value="adminfeed">Admin. Feed</option>
                                 <option value="seller">Seller</option>
                                 <option value="buyer">Buyer</option>
                             </select>

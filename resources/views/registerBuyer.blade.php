@@ -22,7 +22,14 @@
                         input.setCustomValidity('Please try a different email This one is taken.');
                     }
                 });
-
+            }
+            function check(input) {
+                if (input.value != document.getElementById('password').value) {
+                    input.setCustomValidity('Password Must be Matching.');
+                } else {
+                    // input is valid -- reset the error message
+                    input.setCustomValidity('');
+                }
             }
         </script>
 
@@ -46,6 +53,14 @@
                         <div align="left">
                             <label for="phone" class = "frmlabel">Phone:</label>
                             <input id="phone" type="text" class="frminput" name="phone"  required>
+                        </div>
+                        <div>
+                            <label for="password" class="frmlabel">Password:</label>
+                            <input id="password" type="password" class="frminput"  name="password" required>
+                        </div>
+                        <div>
+                            <label for="password_confirm" class="frmlabel">Password (confirm):</label>
+                            <input id="password_confirm" type="password" class="frminput"  name="password_confirm" oninput="check(this)" required>
                         </div>
                         <div align="left">
                             <label for="comment" class = "frmlabel">Comment:</label>
