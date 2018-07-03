@@ -20,6 +20,13 @@ class CreateCompanyTable extends Migration
             $table->string('icon',128);
             $table->string ('phone', 64);
             $table->string ('reseller_id', 64);
+            $table->string('addr1',128 );
+            $table->string('addr2',128 )->nullable();
+            $table->string('addr3',128 )->nullable();
+            $table->string('city',64 );
+            $table->string('state',64 );
+            $table->string('zip',12 );
+            $table->string('country',64 )->nullable();
             $table->unsignedInteger('location_id');
             $table->timestamps();
 

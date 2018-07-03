@@ -36,7 +36,7 @@ class UserTest extends TestCase
         $this->assertTrue($access);
         $regularUser = DB::table('users')->where('id', 3)->first()->name;
         $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
-        $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
+        $thisUserRole = DB::table('userrole')->where('slug', 'buyer')->first();
         $this->assertFalse($access);
 
         // testing add user

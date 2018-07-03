@@ -33,3 +33,11 @@ Route::post('/regSeller', 'RegistrationController@processSellerForm')->name('reg
 Route::get('/reviewRegistrations', 'RegistrationController@showRegistrationRequests')->name('reviewRegistrations');
 Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOneRegistration');
 Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
+
+Route::get('test', function () {
+    $thisUser = new \App\User;
+    $regularUser = DB::table('users')->where('id', 3)->first()->name;
+    $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
+
+
+});

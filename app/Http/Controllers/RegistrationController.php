@@ -217,21 +217,13 @@ class RegistrationController extends Controller
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-        $udId = DB::table('userdetails')->insertGetId([
-            'lname'=>$thisRegistration->lname,
-            'fname'=>$thisRegistration->fname,
-            'addr1'=>$thisRegistration->straddr1,
-            'addr2'=>$thisRegistration->straddr2,
-            'city'=>$thisRegistration->strcity,
-            'state'=>$thisRegistration->strstate,
-            'zip'=>$thisRegistration->strzip,
-            'country'=>$thisRegistration->country,
-            'phone'=>$thisRegistration->phone,
-            'user_id'=>$lastRcd,
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now(),
-            'admin' => FALSE,
-        ]);
+        $companyFound = FALSE;
+        $thisCompany = DB::table('company')->where('website',$inData['strwebsite'])->first();
+        if($thisCompany==null){
+                        
+        }else{
+
+        }
 
 
 

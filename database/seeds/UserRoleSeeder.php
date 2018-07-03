@@ -53,7 +53,7 @@ class UserRoleSeeder extends Seeder
         DB::table('userrole')->insert([
             'name' => 'Seller',
             'slug' => 'seller',
-            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true, \"read-own-content\":true, \"update-own-content\":true, \"delete-own-content\":true}",
+            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data\":true, \"read-own-content\":true, \"update-own-content\":true, \"delete-own-content\":true}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
