@@ -19,8 +19,10 @@ class RegistrationsSeeder extends Seeder
         for ($i = 0; $i < $limit; $i++) {
             if ($i % 2 == 0) {
                 $regtype = 'B';
+                $rolesel = 2;
             }else{
                 $regtype = 'S';
+                $rolesel=1;
             }
             DB::table('registrations')->insert([
                 'fname' => $faker->lastname,
@@ -29,7 +31,7 @@ class RegistrationsSeeder extends Seeder
                 'phone' => $faker->phoneNumber,
                 'comment' => $faker->paragraph,
                 'strname' => $faker->company,
-                'roleselected' => 0,
+                'roleselected' => $rolesel,
                 'strwebsite' => $faker->url,
                 'straddr1' => $faker->address,
                 'straddr2' => $faker->secondaryAddress,

@@ -47,6 +47,27 @@ class RegistrationController extends Controller
         }
     }
 
+    public function checkCompanyWebURL(Request $newUserIdRequest)
+    {
+        $inData = $newUserIdRequest->all();
+        $newCompanyWebsiteURL = $inData['message'];
+        $regUserExists = DB::table('company')->where('website', $$newCompanyWebsiteURL)->first();
+        if ($regUserExists != null) {
+            $returnData = array(
+                'status' => 'error',
+                'message' => 'Company Exists!'
+            );
+            return response()->json($returnData, 400);
+        }
+        $returnData = array(
+            'status' => 'Ok',
+            'message' => 'Company Not on file!'
+        );
+        return response()->json($returnData, 200);
+
+    }
+
+
     public function processBuyerForm(Request $buyerRequest){
         $emptyRcd = [
             'fname'=>'',
@@ -180,5 +201,50 @@ class RegistrationController extends Controller
     private function getOutstandingRegistrations(){
         return DB::table('registrations')->where('reg_status','A')->paginate(15);
     }
+
+    public function approveRegistration(Request $regApprovalRequest){
+        $inData =  $regApprovalRequest->all();
+        $regId = $inData['applicantId'];
+        $thisRegistration = DB::table('registrations')->where('id',$regId)->first();
+
+
+        $thisUserRole = DB::table('userrole')->where('slug', $inData['approveRole'])->first();
+        $lastRcd =DB::table('users')->insertGetId([
+            'name'=>    strtolower($thisRegistration->fname.'.'.$thisRegistration->lname),
+            'email'=>   'gpp8pvirginia@gmail.com',
+            'password'=> Hash::make($thisRegistration->password),
+            'userrole_id'=>$thisUserRole->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        $udId = DB::table('userdetails')->insertGetId([
+            'lname'=>$thisRegistration->lname,
+            'fname'=>$thisRegistration->fname,
+            'addr1'=>$thisRegistration->straddr1,
+            'addr2'=>$thisRegistration->straddr2,
+            'city'=>$thisRegistration->strcity,
+            'state'=>$thisRegistration->strstate,
+            'zip'=>$thisRegistration->strzip,
+            'country'=>$thisRegistration->country,
+            'phone'=>$thisRegistration->phone,
+            'user_id'=>$lastRcd,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+            'admin' => FALSE,
+        ]);
+
+
+
+
+
+
+
+
+
+        $outstandingRegistrationsList = $this->getOutstandingRegistrations();
+        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+
+    }
+
 
 }

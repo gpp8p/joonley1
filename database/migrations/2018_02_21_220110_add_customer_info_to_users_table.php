@@ -16,12 +16,12 @@ class AddCustomerInfoToUsersTable extends Migration
         Schema::create('userdetails', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('admin');
-            $table->string('title', 10);
+            $table->string('title', 10)->nullable();
             $table->string('lname', 64);
             $table->string('fname',64 );
             $table->string('addr1',128 );
-            $table->string('addr2',128 );
-            $table->string('addr3',128 );
+            $table->string('addr2',128 )->nullable();
+            $table->string('addr3',128 )->nullable();
             $table->string('city',64 );
             $table->string('state',64 );
             $table->string('zip',12 );

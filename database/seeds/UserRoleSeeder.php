@@ -11,14 +11,6 @@ class UserRoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('userrole')->insert([
-            'name' => 'User',
-            'slug' => 'user',
-            'permissions' => "{\"create-data\":true,\"update-data\":true,\"read-data\":true,\"delete-data\":true}",
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-
-        ]);
 
         DB::table('userrole')->insert([
             'name' => 'Administrator',
@@ -29,18 +21,10 @@ class UserRoleSeeder extends Seeder
 
         ]);
 
-        DB::table('userrole')->insert([
-            'name' => 'Guest',
-            'slug' => 'guest',
-            'permissions' => "{\"read-data\":true}",
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-
-        ]);
 
         DB::table('userrole')->insert([
             'name' => 'Admin-Editor',
-            'slug' => 'admineditor',
+            'slug' => 'adminedit',
             'permissions' => "{\"read-content\":true, \"update-content\":true, \"delete-content\":true }",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -48,16 +32,35 @@ class UserRoleSeeder extends Seeder
         ]);
 
         DB::table('userrole')->insert([
-            'name' => 'User-Seller',
-            'slug' => 'userseller',
+            'name' => 'Admin-Market',
+            'slug' => 'adminmarket',
+            'permissions' => "{\"read-content\":true, \"update-content\":true, \"delete-content\":true }",
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+
+        ]);
+
+        DB::table('userrole')->insert([
+            'name' => 'Admin-Feed',
+            'slug' => 'adminfeed',
+            'permissions' => "{\"read-content\":true, \"update-content\":true, \"delete-content\":true }",
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+
+        ]);
+
+
+        DB::table('userrole')->insert([
+            'name' => 'Seller',
+            'slug' => 'seller',
             'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true, \"read-own-content\":true, \"update-own-content\":true, \"delete-own-content\":true}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('userrole')->insert([
-            'name' => 'User-Buyer',
-            'slug' => 'userbuyer',
+            'name' => 'Buyer-Owner',
+            'slug' => 'buyerowner',
             'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true,}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -65,21 +68,14 @@ class UserRoleSeeder extends Seeder
         ]);
 
         DB::table('userrole')->insert([
-            'name' => 'Guest-Seller',
-            'slug' => 'guestseller',
-            'permissions' => "{\"feed\":true, \"msg-admin\":true}",
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-        ]);
-
-        DB::table('userrole')->insert([
-            'name' => 'Guest-Buyer',
-            'slug' => 'guestbuyer',
-            'permissions' => "{\"feed\":true, \"msg-sellers\":true, \"msg-admin\":true, \"create-orders-cc\",true, \"read-own-data\",\"update-own-data\":true}",
+            'name' => 'Buyer',
+            'slug' => 'buyer',
+            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true,}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
 
         ]);
+
 
     }
 }

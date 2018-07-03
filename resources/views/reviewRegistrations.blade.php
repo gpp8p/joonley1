@@ -23,6 +23,16 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
                     $("#regData").show();
+                    if(data['buysell_type']=='B'){
+                        $("#buysell").html('Buyer');
+                    }else{
+                        $("#buysell").html('Seller');
+                    }
+                    if(data['roleselected']==1){
+                        $("#role").html('Owner');
+                    }else{
+                        $("#role").html('Employee');
+                    }
                     $("#fname").html(data['fname']);
                     $("#strname").html(data['strname']);
                     $("#lname").html(data['lname']);
@@ -38,6 +48,7 @@
                     $("#country").html(data['country']);
                     $("#strid").html(data['strid']);
                     $("#strestab").html(data['strestab']);
+                    $("#applicantId").val(data['id']);
                 },
 
                 error: function (data) {
@@ -66,6 +77,21 @@
             <div class="panelRight1">
                 <div id="regData">
                     <table border="0" width="100%">
+                        <tr>
+                            <td width="50%">
+                                <div class="frmlabel">Buyer or Seller:</div>
+                                <div><span id="buysell" class="panelRightData">
+                                    </span>
+                                </div>
+                            </td>
+                            <td width="50%">
+                                <div class="frmlabel">Role:</div>
+                                <div><span class="panelRightData" id="role">
+
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
                         <tr>
                             <td width="50%">
                                 <div class="frmlabel">First Name:</div>
@@ -194,16 +220,18 @@
                         <form method="POST" name="approveReg" action="{{ route('approveReg') }}">
                             {{ csrf_field() }}
                             <input type="submit" class="btn"  value="Approve This Registration As:">
-                            <select id="approveRole">
+                            <select id="approveRole" name="approveRole">
                                 <option value="admin">Administrator</option>
                                 <option value="adminedit">Admin. Editor</option>
                                 <option value="adminmarket">Admin. Marketing</option>
                                 <option value="adminfeed">Admin. Feed</option>
                                 <option value="seller">Seller</option>
+                                <option value="buyerowner">Buyer-Owner</option>
                                 <option value="buyer">Buyer</option>
                             </select>
                             <input type="button" class="btn" value="Cancel" onclick="window.location.href ='{{ route('intro') }}';return false;"/>
-                            <input type="submit" class="btn"  value="Email This Applicant">
+                            <input type="submit" class="btn"  value="Email This Applicant" />
+                            <input type="hidden" id="applicantId" name="applicantId" />
                         </form>
                     </div>
                 </div>

@@ -24,11 +24,11 @@ class Registrations extends Migration
             $table->smallInteger('roleselected');
             $table->string('strwebsite',128);
             $table->string('straddr1',64);
-            $table->string('straddr2', 64);
+            $table->string('straddr2', 64)->nullable();
             $table->string('strcity',64);
             $table->string('strstate',32);
             $table->string('strzip',32);
-            $table->string('strid',32);
+            $table->string('strid',32)->nullable();
             $table->string('strestab',16);
             $table->string('country',64);
             $table->char('reg_status',1);

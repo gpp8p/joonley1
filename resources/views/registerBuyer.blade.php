@@ -64,7 +64,7 @@
                         </div>
                         <div align="left">
                             <label for="comment" class = "frmlabel">Comment:</label>
-                            <textarea class="frminputta" rows="10"  cols="30"></textarea>
+                            <textarea class="frminputta" id="comment" name="comment" rows="10"  cols="30"></textarea>
                         </div>
                     </div>
                 </td>
@@ -76,9 +76,9 @@
                         </div>
                         <div>
                             <label for="roleSelect" class = "frmlabel">Your Role:</label>
-                            <select id="roleSelect" class="selinput">
+                            <select id="roleSelect" name="roleSelect" class="selinput">
                                 <option value="1">Owner</option>
-                                <option value="2">Buyer</option>
+                                <option value="2">Employee</option>
                             </select>
                         </div>
                         <div>

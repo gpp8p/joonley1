@@ -155,8 +155,11 @@
                             <input id="country" type="text" class="frminput" name="country">
                         </div>
                         <div>
-                            <label for="strid" class = "frmlabel">Reseller Id:</label>
-                            <input id="strid" type="text" class="frminput" name="strid">
+                            <label for="roleSelect" class = "frmlabel">Your Role:</label>
+                            <select id="roleSelect" name="roleSelect" class="selinput">
+                                <option value="1">Owner</option>
+                                <option value="2">Employee</option>
+                            </select>
                         </div>
                         <div>
                             <label for="strestab" class = "frmlabel">Established In:</label>

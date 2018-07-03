@@ -38,20 +38,20 @@ class UserTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-        $thisRole = DB::table('roles')->where('slug', 'admin')->first();
+        $thisRole = DB::table('userrole')->where('slug', 'admin')->first();
 
 
         $thisRoleId = $thisRole->id;
 
 
-        $thisRole = DB::table('roles')->where('slug', 'user')->first();
-        $thisUserRole = DB::table('userrole')->where('slug', 'user')->first();
-        $thisRoleId = $thisRole->id;
+//        $thisRole = DB::table('roles')->where('slug', 'user')->first();
+        $thisUserRole = DB::table('userrole')->where('slug', 'seller')->first();
+        $thisRoleId = $thisUserRole;
 
 
         $faker = Faker::create();
 
-        $limit = 33;
+        $limit = 25;
 
         for ($i = 0; $i < $limit; $i++) {
             $lastRcd=DB::table('users')->insertGetId([
@@ -82,6 +82,43 @@ class UserTableSeeder extends Seeder
 
 
         }
+
+        $thisUserRole = DB::table('userrole')->where('slug', 'buyer')->first();
+        $thisRoleId = $thisUserRole;
+
+        $limit = 25;
+
+        for ($i = 0; $i < $limit; $i++) {
+            $lastRcd=DB::table('users')->insertGetId([
+                'name' => $faker->userName,
+                'email' => $faker->unique()->email,
+                'password'      => Hash::make('n1tad0g'),
+                'userrole_id'=>$thisUserRole->id,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            $lastUserDetailsRcd =DB::table('userdetails')->insertGetId([
+                'title' => $faker->title,
+                'admin' => FALSE,
+                'lname' => $faker->lastname,
+                'fname' => $faker->firstNameMale,
+                'addr1' =>$faker->address,
+                'addr2' =>$faker->secondaryAddress,
+                'addr3' =>$faker->secondaryAddress,
+                'city' => $faker->city,
+                'state' => $faker->state,
+                'zip' => $faker->postcode,
+                'country' => $faker->country,
+                'phone' => $faker->phoneNumber,
+                'user_id'=> $lastRcd,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+
+
+        }
+
+
 
     }
 }
