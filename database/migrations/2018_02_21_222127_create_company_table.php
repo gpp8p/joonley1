@@ -22,7 +22,6 @@ class CreateCompanyTable extends Migration
             $table->string ('reseller_id', 64);
             $table->string('addr1',128 );
             $table->string('addr2',128 )->nullable();
-            $table->string('addr3',128 )->nullable();
             $table->string('city',64 );
             $table->string('state',64 );
             $table->string('zip',12 );

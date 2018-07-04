@@ -179,6 +179,16 @@
                                 <option>earlier</option>
                             </select>
                         </div>
+                        <div>
+                            <label for="strtype" class = "frmlabel">Store Type:</label>
+                            <select id="strtype" class="selinput">
+                                <option value ="rshop">Retail Shop - Brick and Mortar</option>
+                                <option value ="online">Online Only</option>
+                                <option value ="catalog">Catalog</option>
+                                <option value ="popup">Pop-Up Retail</option>
+                            </select>
+                        </div>
+
                         <div align="left">
                             <input type="submit" class="btn"  value="Sign Up!">
                             <input type="button" class="btn" value="Cancel" onclick="window.location.href ='{{ route('intro') }}';return false;"/>

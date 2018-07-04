@@ -175,6 +175,14 @@
                                 <option>earlier</option>
                             </select>
                         </div>
+                        <div>
+                            <label for="strtype" class = "frmlabel">Store Type:</label>
+                            <select id="strtype" class="selinput">
+                                <option value ="distrib">Distributer</option>
+                                <option value ="fprod">Factory Producer</option>
+                                <option value ="cprod">Craft Producer</option>
+                            </select>
+                        </div>
                         <div align="left">
                             <input type="submit" class="btn"  value="Submit Application!">
                             <input type="button" class="btn" value="Cancel" onclick="window.location.href ='{{ route('intro') }}';return false;"/>

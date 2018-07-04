@@ -15,13 +15,41 @@ class CompanyTypeTableSeeder extends Seeder
         $faker = Faker::create();
 
         DB::table('companytype')->insert([
-            'name' => 'Retail Shop',
+            'name' => 'Retail Shop - Brick and Mortar',
             'slug' => 'rshop',
+            'description'=> 'A real brick and mortar retail operation.',
+            'role'=> 'buyer',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        DB::table('companytype')->insert([
+            'name' => 'Online Only',
+            'slug' => 'online',
             'description'=> $faker->sentence($nbWords = 15, $variableNbWords = true),
             'role'=> 'buyer',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+
+        DB::table('companytype')->insert([
+            'name' => 'Catalog',
+            'slug' => 'catalog',
+            'description'=> $faker->sentence($nbWords = 15, $variableNbWords = true),
+            'role'=> 'buyer',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+        DB::table('companytype')->insert([
+            'name' => 'Pop-Up Retailer',
+            'slug' => 'popup',
+            'description'=> $faker->sentence($nbWords = 15, $variableNbWords = true),
+            'role'=> 'buyer',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
 
         DB::table('companytype')->insert([
             'name' => 'Distributer',

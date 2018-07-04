@@ -110,6 +110,7 @@ class RegistrationController extends Controller
                 'country' => $input['strcountry'],
                 'strid' => $input['strid'],
                 'strestab' => $input['strestab'],
+                'strtype'=>$input['strtype'],
                 'password' => $input['password'],
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
@@ -164,6 +165,7 @@ class RegistrationController extends Controller
                 'country' => $input['strcountry'],
                 'strid' => $input['strid'],
                 'strestab' => $input['strestab'],
+                'strtype'=>$input['strtype'],
                 'password' => bcrypt($input['password']),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
@@ -209,7 +211,7 @@ class RegistrationController extends Controller
 
 
         $thisUserRole = DB::table('userrole')->where('slug', $inData['approveRole'])->first();
-        $lastRcd =DB::table('users')->insertGetId([
+        $newUserId =DB::table('users')->insertGetId([
             'name'=>    strtolower($thisRegistration->fname.'.'.$thisRegistration->lname),
             'email'=>   'gpp8pvirginia@gmail.com',
             'password'=> Hash::make($thisRegistration->password),
@@ -220,10 +222,55 @@ class RegistrationController extends Controller
         $companyFound = FALSE;
         $thisCompany = DB::table('company')->where('website',$inData['strwebsite'])->first();
         if($thisCompany==null){
-                        
+            $newCompayId = DB::table('company')->insertGetId([
+                'name'=>    $thisRegistration->strname,
+                'website'=> $thisRegistration->strwebsite,
+                'phone'=> $thisRegistration->phone,
+                'addr1' =>$thisRegistration->straddr1,
+                'addr2' =>$thisRegistration->straddr2,
+                'city' =>$thisRegistration->strcity,
+                'state' =>$thisRegistration->strstate,
+                'zip' =>$thisRegistration->strzip,
+                'country' =>$thisRegistration->country,
+                'reseller_id'=>$thisRegistration->strid,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
         }else{
-
+            $companyFound = TRUE;
         }
+        $thisCompanyType = DB::table('companytype')->where('slug',$inData['strtype'])->first();
+        if($thisCompanyType==null){
+            throw new Exception('Store type unknown:'.$inData['strtype']);
+        }else{
+            $newCompayId = DB::table('compcanbe')->insert([
+                'ctype_id'=>$thisCompanyType,
+                'company_id'=>$newCompayId,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+        }
+        if($thisRegistration->buysell_type=='B'){
+            if($thisRegistration->roleselected==1){
+                $companyRoleType = DB::table('companyrole')->where('slug','owner')->first();
+            }else{
+                $companyRoleType = DB::table('companyrole')->where('slug','buyer')->first();
+            }
+        }else{
+            if($thisRegistration->roleselected==1){
+                $companyRoleType = DB::table('companyrole')->where('slug','owner')->first();
+            }else{
+                $companyRoleType = DB::table('companyrole')->where('slug','srep')->first();
+            }
+        }
+        $newUserInCompanyRole = DB::table('userincompany')->insert([
+            'user_id'=>$newUserId,
+            'company_id'=>$newCompayId,
+            'companyrole_id'=>$companyRoleType->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
 
 
 
