@@ -32,6 +32,7 @@ class Registrations extends Migration
             $table->string('strestab',16);
             $table->string('country',64);
             $table->char('reg_status',1);
+            $table->string('strtype',12);
             $table->char('buysell_type',1);
             $table->string('password',64);
             $table->timestamps();

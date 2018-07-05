@@ -49,6 +49,7 @@
                     $("#strid").html(data['strid']);
                     $("#strestab").html(data['strestab']);
                     $("#applicantId").val(data['id']);
+                    $("#storeType").html(data['storeType']);
                 },
 
                 error: function (data) {
@@ -102,6 +103,9 @@
                             <td width="50%">
                                 <div class="frmlabel">Store:</div>
                                 <div><span class="panelRightData" id="strname">
+
+                                    </span><br/>
+                                    <span class="panelRightData" id="storeType">
 
                                     </span>
                                 </div>

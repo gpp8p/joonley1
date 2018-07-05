@@ -190,6 +190,8 @@ class RegistrationController extends Controller
             );
             return response()->json($returnData, 400);
         }else{
+            $companyTypes = DB::table('companytype')->where('slug',$thisRegistration->strtype)->first();
+            $thisRegistration->storeType = $companyTypes->name;
             return response()->json($thisRegistration, 200);
         }
 
@@ -209,46 +211,61 @@ class RegistrationController extends Controller
         $regId = $inData['applicantId'];
         $thisRegistration = DB::table('registrations')->where('id',$regId)->first();
 
-
+        DB::beginTransaction();
         $thisUserRole = DB::table('userrole')->where('slug', $inData['approveRole'])->first();
-        $newUserId =DB::table('users')->insertGetId([
-            'name'=>    strtolower($thisRegistration->fname.'.'.$thisRegistration->lname),
-            'email'=>   'gpp8pvirginia@gmail.com',
-            'password'=> Hash::make($thisRegistration->password),
-            'userrole_id'=>$thisUserRole->id,
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-        ]);
-        $companyFound = FALSE;
-        $thisCompany = DB::table('company')->where('website',$inData['strwebsite'])->first();
-        if($thisCompany==null){
-            $newCompayId = DB::table('company')->insertGetId([
-                'name'=>    $thisRegistration->strname,
-                'website'=> $thisRegistration->strwebsite,
-                'phone'=> $thisRegistration->phone,
-                'addr1' =>$thisRegistration->straddr1,
-                'addr2' =>$thisRegistration->straddr2,
-                'city' =>$thisRegistration->strcity,
-                'state' =>$thisRegistration->strstate,
-                'zip' =>$thisRegistration->strzip,
-                'country' =>$thisRegistration->country,
-                'reseller_id'=>$thisRegistration->strid,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
+        try {
+            $newUserId = DB::table('users')->insertGetId([
+                'name' => strtolower($thisRegistration->fname . '.' . $thisRegistration->lname),
+                'email' => $thisRegistration->email,
+                'password' => Hash::make($thisRegistration->password),
+                'userrole_id' => $thisUserRole->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
             ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return view('error', ["error_message"=>$e->getMessage()]);
+        }
+        $companyFound = FALSE;
+        $thisCompany = DB::table('company')->where('website',$thisRegistration->strwebsite)->first();
+        if($thisCompany==null){
+            try {
+                $newCompayId = DB::table('company')->insertGetId([
+                    'name' => $thisRegistration->strname,
+                    'website' => $thisRegistration->strwebsite,
+                    'phone' => $thisRegistration->phone,
+                    'addr1' => $thisRegistration->straddr1,
+                    'addr2' => $thisRegistration->straddr2,
+                    'city' => $thisRegistration->strcity,
+                    'state' => $thisRegistration->strstate,
+                    'zip' => $thisRegistration->strzip,
+                    'country' => $thisRegistration->country,
+                    'reseller_id' => $thisRegistration->strid,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+            } catch (Exception $e) {
+                DB::rollBack();
+                return view('error', ["error_message"=>$e->getMessage()]);
+            }
         }else{
             $companyFound = TRUE;
         }
-        $thisCompanyType = DB::table('companytype')->where('slug',$inData['strtype'])->first();
+        $thisCompanyType = DB::table('companytype')->where('slug',$thisRegistration->strtype)->first();
         if($thisCompanyType==null){
             throw new Exception('Store type unknown:'.$inData['strtype']);
         }else{
-            $newCompayId = DB::table('compcanbe')->insert([
-                'ctype_id'=>$thisCompanyType,
-                'company_id'=>$newCompayId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
+            try {
+                $newCompayId = DB::table('compcanbe')->insert([
+                    'ctype_id' => $thisCompanyType->id,
+                    'company_id' => $newCompayId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+            } catch (Exception $e) {
+                DB::rollBack();
+                return view('error', ["error_message"=>$e->getMessage()]);
+            }
         }
         if($thisRegistration->buysell_type=='B'){
             if($thisRegistration->roleselected==1){
@@ -263,22 +280,31 @@ class RegistrationController extends Controller
                 $companyRoleType = DB::table('companyrole')->where('slug','srep')->first();
             }
         }
-        $newUserInCompanyRole = DB::table('userincompany')->insert([
-            'user_id'=>$newUserId,
-            'company_id'=>$newCompayId,
-            'companyrole_id'=>$companyRoleType->id,
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-        ]);
+        try {
+            $newUserInCompanyRole = DB::table('userincompany')->insert([
+                'user_id' => $newUserId,
+                'company_id' => $newCompayId,
+                'companyrole_id' => $companyRoleType->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return view('error', ["error_message"=>$e->getMessage()]);
+        }
 
+        try {
+            $affected = DB::update("UPDATE registrations SET reg_status = 'R' WHERE id = ?", [$regId]);
+            if($affected==0){
+                DB::rollBack();
+                return view('error', ["error_message"=>'could not update registration status']);
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return view('error', ["error_message"=>$e->getMessage()]);
+        }
 
-
-
-
-
-
-
-
+        DB::commit();
 
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
         return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
