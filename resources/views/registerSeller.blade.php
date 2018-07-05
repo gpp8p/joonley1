@@ -64,7 +64,7 @@
                         </div>
                         <div align="left">
                             <label for="comment" class = "frmlabel">Comment:</label>
-                            <textarea class="frminputta" rows="10"  cols="30"></textarea>
+                            <textarea class="frminputta" id="comment" name="comment" rows="10"  cols="30"></textarea>
                         </div>
                     </div>
                 </td>
@@ -177,7 +177,7 @@
                         </div>
                         <div>
                             <label for="strtype" class = "frmlabel">Store Type:</label>
-                            <select id="strtype" class="selinput">
+                            <select id="strtype" name="strtype" class="selinput">
                                 <option value ="distrib">Distributer</option>
                                 <option value ="fprod">Factory Producer</option>
                                 <option value ="cprod">Craft Producer</option>

@@ -34,6 +34,14 @@ Route::get('/reviewRegistrations', 'RegistrationController@showRegistrationReque
 Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOneRegistration');
 Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
 
+Route::post('/feed', 'FeedController@show')->name('feed');
+Route::post('/orders', 'OrdersController@show')->name('orders');
+Route::post('/specials', 'SpecialsController@show')->name('specials');
+Route::post('/search', 'SearchController@show')->name('search');
+Route::post('/messages', 'MessageController@show')->name('messages');
+Route::post('/more', 'MoreController@show')->name('more');
+Route::post('/admin', 'AdminController@show')->name('admin');
+
 Route::get('test', function () {
     $thisUser = new \App\User;
     $regularUser = DB::table('users')->where('id', 3)->first()->name;
@@ -41,3 +49,6 @@ Route::get('test', function () {
 
 
 });
+
+
+

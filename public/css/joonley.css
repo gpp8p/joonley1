@@ -26,7 +26,15 @@
     float: right;
     margin-right: 5px;
 }
+.nav_icons {
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size:12px;
+    float: right;
+}
 
+.icon_cell {
+    align-content: center;
+}
 
 .introsection {
     padding-top: 3em;

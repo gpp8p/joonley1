@@ -14,6 +14,12 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
 
+    <script>
+        window.logOut = function(){
+            alert('logout clicked!');
+        });
+    </script>
+
 </head>
 <body class = "bodycss">
 
@@ -22,9 +28,46 @@
     @guest
         <span class="logright"><a class="loglink1" href="{{ route('login') }}">Log In</a></span>
     @else
-            <span class="logright"><a href="{{ route('logout') }}" class="loglink1" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></span>
+        <div class="nav_icons">
+            <table border="0">
+                <tr>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('admin-form').submit();"><i class="fa fa-cogs" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('feed-form').submit();"><i class="fa fa-newspaper fa-1x" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('order-form').submit();"><i class="fa fa-pencil-alt" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('specials-form').submit();"><i class="fa fa-exclamation-circle fa-1x" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('search-form').submit();"><i class="fa fa-search fa-1x" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('messages-form').submit();"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('more-form').submit();"><i class="fa fa-ellipsis-h fa-1x" aria-hidden="true"></i></td>
+                    <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt 1x"></i></td>
+                </tr>
+                <tr>
+                    <td>Admin</td>
+                    <td class="icon_cell">Feed</td>
+                    <td class="icon_cell">Orders</td>
+                    <td>Specials</td>
+                    <td>Search</td>
+                    <td>Message</td>
+                    <td>More</td>
+                    <td>Log Out</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+
+<!--            <span class="logright"><a href="{{ route('logout') }}" class="loglink1" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></span> -->
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="feed-form" action="{{ route('feed') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="order-form" action="{{ route('orders') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="specials-form" action="{{ route('specials') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="search-form" action="{{ route('search') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="messages-form" action="{{ route('messages') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="more-form" action="{{ route('more') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+            <form id="admin-form" action="{{ route('admin') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 
     @endguest
 

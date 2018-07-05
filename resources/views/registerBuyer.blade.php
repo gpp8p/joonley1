@@ -181,7 +181,7 @@
                         </div>
                         <div>
                             <label for="strtype" class = "frmlabel">Store Type:</label>
-                            <select id="strtype" class="selinput">
+                            <select id="strtype" name="strtype" class="selinput">
                                 <option value ="rshop">Retail Shop - Brick and Mortar</option>
                                 <option value ="online">Online Only</option>
                                 <option value ="catalog">Catalog</option>
