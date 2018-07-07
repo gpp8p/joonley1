@@ -123,7 +123,7 @@ class RegistrationController extends Controller
         $thisRegistration = DB::table('registrations')->where('id', $regId)->first();
         $thisRegistrationController = new RegistrationController();
         $thisRegistrationController->doRegistration($thisRegistration, "buyer", $regId);
-        $user =App\User::where('email', $input['email'])->get();
+        $user = User::where('email', $input['email'])->first();
         if($user==null){
             return view('login');
         }
