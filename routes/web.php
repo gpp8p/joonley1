@@ -35,6 +35,7 @@ Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOne
 Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
 
 Route::post('/feed', 'FeedController@show')->name('feed');
+Route::get('/feed', 'FeedController@show')->name('feed');
 Route::post('/orders', 'OrdersController@show')->name('orders');
 Route::post('/specials', 'SpecialsController@show')->name('specials');
 Route::post('/search', 'SearchController@show')->name('search');

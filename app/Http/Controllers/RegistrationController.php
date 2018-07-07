@@ -93,7 +93,7 @@ class RegistrationController extends Controller
         ];
         $input= array_merge($emptyRcd, $buyerRequest->all());
         try {
-            DB::table('registrations')->insert([
+            $regId = DB::table('registrations')->insertGetId([
                 'fname' => $input['fname'],
                 'lname' => $input['lname'],
                 'email' => $input['email'],
@@ -120,7 +120,15 @@ class RegistrationController extends Controller
         } catch (Exception $e) {
             return view('error', ["error_message"=>$e->getMessage()]);
         }
-        return view('regsuccess');
+        $thisRegistration = DB::table('registrations')->where('id', $regId)->first();
+        $thisRegistrationController = new RegistrationController();
+        $thisRegistrationController->doRegistration($thisRegistration, "buyer", $regId);
+        $user =App\User::where('email', $input['email'])->get();
+        if($user==null){
+            return view('login');
+        }
+        Auth::login($user, true);
+        return view('feed');
     }
 
     public function processSellerForm(Request $sellerRequest){
@@ -206,13 +214,20 @@ class RegistrationController extends Controller
         return DB::table('registrations')->where('reg_status','A')->paginate(15);
     }
 
-    public function approveRegistration(Request $regApprovalRequest){
-        $inData =  $regApprovalRequest->all();
+    public function approveRegistration(Request $regApprovalRequest)
+    {
+        $inData = $regApprovalRequest->all();
         $regId = $inData['applicantId'];
-        $thisRegistration = DB::table('registrations')->where('id',$regId)->first();
+        $approveType = $inData['approveRole'];
+        $thisRegistration = DB::table('registrations')->where('id', $regId)->first();
+        doRegistration($thisRegistration, $approveType, $regId);
+        $outstandingRegistrationsList = $this->getOutstandingRegistrations();
+        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+    }
 
+    public function doRegistration($thisRegistration, $approveType, $regId){
         DB::beginTransaction();
-        $thisUserRole = DB::table('userrole')->where('slug', $inData['approveRole'])->first();
+        $thisUserRole = DB::table('userrole')->where('slug', $approveType)->first();
         try {
             $newUserId = DB::table('users')->insertGetId([
                 'name' => strtolower($thisRegistration->fname . '.' . $thisRegistration->lname),
@@ -306,8 +321,6 @@ class RegistrationController extends Controller
 
         DB::commit();
 
-        $outstandingRegistrationsList = $this->getOutstandingRegistrations();
-        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
 
     }
 
