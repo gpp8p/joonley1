@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Exception;
 
 class User extends Authenticatable
@@ -37,14 +38,14 @@ class User extends Authenticatable
      * Checks if User has access to $permissions.
      */
 
-    public function hasAccess(array $permissions) : bool
+    public static function hasAccess(array $permissions) : bool
     {
         $loggedInUser = Auth::user();
-        $loggedInUserName = $loggedInUser>attributesToArray()['name'];
+        $loggedInUserName = $loggedInUser->getAttributes()['email'];
 
 
         try {
-            $access = $this->hasAccessWithUserName($permissions, $loggedInUserName);
+            $access = User::hasAccessWithUserName($permissions, $loggedInUserName);
         } catch (Exception $e) {
             return false;
         }
@@ -52,9 +53,9 @@ class User extends Authenticatable
 
     }
 
-    public function hasAccessWithUserName(array $perms, string $userName) : bool
+    public static function hasAccessWithUserName(array $perms, string $userName) : bool
     {
-        $query = 'select permissions from users, userrole where users.userrole_id = userrole.id and users.name = ? ';
+        $query = 'select permissions from users, userrole where users.userrole_id = userrole.id and users.email = ? ';
         $permission = DB::select($query, [$userName]);
         if(count($permission)!=1){
             throw new Exception('User or role not found');
@@ -68,7 +69,7 @@ class User extends Authenticatable
         {
             foreach ($decodedPermission as $key => $value)
             {
-                if($key==$p && $value ==1){
+                if(strcmp(trim($p, '\''), $key)==0 && $value ==1){
                     return true;
                 }
             }

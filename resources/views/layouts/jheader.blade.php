@@ -31,7 +31,9 @@
         <div class="nav_icons">
             <table border="0">
                 <tr>
+                    @if($adminView)
                     <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('admin-form').submit();"><i class="fa fa-cogs" aria-hidden="true"></i></td>
+                    @endif
                     <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('feed-form').submit();"><i class="fa fa-newspaper fa-1x" aria-hidden="true"></i></td>
                     <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('order-form').submit();"><i class="fa fa-pencil-alt" aria-hidden="true"></i></td>
                     <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('specials-form').submit();"><i class="fa fa-exclamation-circle fa-1x" aria-hidden="true"></i></td>
@@ -41,7 +43,9 @@
                     <td class="icon_cell" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt 1x"></i></td>
                 </tr>
                 <tr>
+                    @if($adminView)
                     <td>Admin</td>
+                    @endif
                     <td class="icon_cell">Feed</td>
                     <td class="icon_cell">Orders</td>
                     <td>Specials</td>

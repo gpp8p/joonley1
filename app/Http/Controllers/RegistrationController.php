@@ -128,7 +128,8 @@ class RegistrationController extends Controller
             return view('login');
         }
         Auth::login($user, true);
-        return view('feed');
+        $adminView=FALSE;
+        return view('feed',['adminView'=>$adminView]);
     }
 
     public function processSellerForm(Request $sellerRequest){

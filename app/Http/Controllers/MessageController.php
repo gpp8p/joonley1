@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class MessageController extends Controller
 {
     public function show(Request $request)
     {
-        return view('messages');
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('messages', ['adminView'=>$adminView]);
     }
 }

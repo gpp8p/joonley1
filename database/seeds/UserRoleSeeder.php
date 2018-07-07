@@ -70,7 +70,7 @@ class UserRoleSeeder extends Seeder
         DB::table('userrole')->insert([
             'name' => 'Buyer-Owner',
             'slug' => 'buyerowner',
-            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true,}",
+            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data\":true}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
 
@@ -79,7 +79,7 @@ class UserRoleSeeder extends Seeder
         DB::table('userrole')->insert([
             'name' => 'Buyer',
             'slug' => 'buyer',
-            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data:true,}",
+            'permissions' => "{\"read-own-data\":true, \"update-own-data\":true, \"delete-own-data\":true}",
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
 
