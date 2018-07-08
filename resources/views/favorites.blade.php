@@ -2,5 +2,6 @@
 
 
 @section('content')
+    <div class="bigTitleCentered">Favorites Page</div>
 
 @endsection

@@ -208,7 +208,8 @@ class RegistrationController extends Controller
 
     public function showRegistrationRequests(){
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
-        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView]);
     }
 
     private function getOutstandingRegistrations(){

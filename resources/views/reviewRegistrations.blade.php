@@ -58,7 +58,7 @@
             });
         }
     </script>
-    <div>
+    <div id="pageContent">
         <div class="split left">
             <table border="0" width="100%">
                 @foreach ($outstandingRegistrations as $thisRegistration)

@@ -36,6 +36,7 @@ Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('
 
 Route::post('/feed', 'FeedController@show')->name('feed');
 Route::get('/feed', 'FeedController@show')->name('feed');
+Route::post('/favorites', 'FavoritesController@show')->name('favorites');
 Route::post('/orders', 'OrdersController@show')->name('orders');
 Route::post('/specials', 'SpecialsController@show')->name('specials');
 Route::post('/search', 'SearchController@show')->name('search');
