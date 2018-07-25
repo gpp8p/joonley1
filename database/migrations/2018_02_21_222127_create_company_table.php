@@ -26,6 +26,7 @@ class CreateCompanyTable extends Migration
             $table->string('state',64 );
             $table->string('zip',12 );
             $table->string('country',64 )->nullable();
+            $table->string('noshow', 128)->nullable();
             $table->unsignedInteger('location_id');
             $table->timestamps();
 

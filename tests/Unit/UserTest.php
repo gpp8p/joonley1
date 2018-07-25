@@ -29,12 +29,12 @@ class UserTest extends TestCase
 
 
         //testing get user profile
-        $allUserInfo = $thisUser->getUserProfile('gpp8p');
+        $allUserInfo = $thisUser->getUserProfile('gpp8pvirginia@gmail.com');
 
         //testing has access
-        $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],'gpp8p');
+        $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],'gpp8pvirginia@gmail.com');
         $this->assertTrue($access);
-        $regularUser = DB::table('users')->where('id', 3)->first()->name;
+        $regularUser = DB::table('users')->where('id', 3)->first()->email;
         $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
         $thisUserRole = DB::table('userrole')->where('slug', 'buyer')->first();
         $this->assertFalse($access);
@@ -52,7 +52,6 @@ class UserTest extends TestCase
             'fname' => $faker->firstNameMale,
             'addr1' =>$faker->address,
             'addr2' =>$faker->secondaryAddress,
-            'addr3' =>$faker->secondaryAddress,
             'city' => $faker->city,
             'state' => $faker->state,
             'zip' => $faker->postcode,
@@ -65,7 +64,7 @@ class UserTest extends TestCase
             echo('##'.$e->getMessage());
             $this->assertFalse(false);
         }
-        $userJustAdded = $thisUser->getUserProfile($thisUserInfo['name']);
+        $userJustAdded = $thisUser->getUserProfile($thisUserInfo['email']);
         $this->assertTrue($userJustAdded->email==$thisUserInfo['email']);
 
         // testing user edit
@@ -73,9 +72,11 @@ class UserTest extends TestCase
             'addr1'=>'editedAddr1',
             'addr2'=>'editedAddr2',
         );
-        $userToEdit = DB::table('users')->where('name', $userJustAdded->name)->first();
+        $userToEdit = DB::table('users')->where('email', $userJustAdded->email)->first();
+        echo('user to edit name:'.$userToEdit->name);
+        echo('user to edit email:'.$userToEdit->email);
         $thisUser->editUserProfile($userToEdit, $thisEditInfo);
-        $userJustEdited = $thisUser->getUserProfile($thisUserInfo['name']);
+        $userJustEdited = $thisUser->getUserProfile($thisUserInfo['email']);
         $this->assertTrue($userJustEdited->addr1=='editedAddr1');
         $this->assertTrue($userJustEdited->addr2=='editedAddr2');
         //testing set user role

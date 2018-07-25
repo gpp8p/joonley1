@@ -94,17 +94,17 @@ class User extends Authenticatable
     }
 
 
-    public function getUserProfile($userName)
+    public function getUserProfile($userEmail)
     {
         $query = 'select users.id as uid,users.name as name,users.email as email,users.password as password, '.
             'users.userrole_id as userrole_id, users.remember_token as users_remember_token, users.created_at as users_created_at, users.updated_at as users_updated_at, '.
             'userdetails.admin,userdetails.title,userdetails.lname,userdetails.fname, '.
-            'userdetails.addr2,userdetails.addr3,userdetails.city,userdetails.addr1, '.
+            'userdetails.addr2,userdetails.city,userdetails.addr1, '.
             'userrole.name as userrole_name, '.
             'userdetails.state,userdetails.zip,userdetails.country,userdetails.phone,userdetails.user_id, userdetails.created_at as userdetails_created_at, userdetails.updated_at as userdetails_updated_at  '.
-            'from users, userdetails, userrole where userdetails.user_id = users.id and users.userrole_id = userrole.id and users.name = ?';
+            'from users, userdetails, userrole where userdetails.user_id = users.id and users.userrole_id = userrole.id and users.email = ?';
 
-        $usersFound = DB::select($query, [$userName]);
+        $usersFound = DB::select($query, [$userEmail]);
 //        $usersFound[0]->name = $userName;
         return $usersFound[0];
     }
@@ -129,7 +129,6 @@ class User extends Authenticatable
                 'fname' => $info['fname'],
                 'addr1' => $info['addr1'],
                 'addr2' => '',
-                'addr3' => '',
                 'city' => $info['city'],
                 'state' => $info['state'],
                 'zip' => $info['zip'],
@@ -160,7 +159,6 @@ class User extends Authenticatable
                 'fname' => $mergedInformation['fname'],
                 'addr1' => $mergedInformation['addr1'],
                 'addr2' => $mergedInformation['addr2'],
-                'addr3' => $mergedInformation['addr3'],
                 'city' => $mergedInformation['city'],
                 'state' => $mergedInformation['state'],
                 'zip' => $mergedInformation['zip'],
@@ -200,7 +198,7 @@ class User extends Authenticatable
         {
             throw new Exception('That user cannot be found');
         }
-        $existingProfile = (array) $this->getUserProfile($user->name);
+        $existingProfile = (array) $this->getUserProfile($user->email);
         $mergedProfileInformation=array_merge($existingProfile, $editInfo);
         if(isset($editInfo['password']))
         {
@@ -224,7 +222,6 @@ class User extends Authenticatable
                 'fname' => $mergedProfileInformation['fname'],
                 'addr1' => $mergedProfileInformation['addr1'],
                 'addr2' => $mergedProfileInformation['addr2'],
-                'addr3' => $mergedProfileInformation['addr3'],
                 'city' => $mergedProfileInformation['city'],
                 'state' => $mergedProfileInformation['state'],
                 'zip' => $mergedProfileInformation['zip'],

@@ -22,11 +22,11 @@ class CompanyTest extends TestCase
         $this->assertTrue(count($companyNameList)==5);
         $thisCompanyType = new \App\CompanyType;
         $companyTypesList = $thisCompanyType->getCompanyTypes();
-        $this->assertTrue(count($companyTypesList)==4);
+        $this->assertTrue(count($companyTypesList)==7);
         $companyTypesList = $thisCompanyType->getCompanySellerTypes();
         $this->assertTrue(count($companyTypesList)==3);
         $companyTypesList = $thisCompanyType->getCompanyBuyerTypes();
-        $this->assertTrue(count($companyTypesList)==1);
+        $this->assertTrue(count($companyTypesList)==4);
         try {
             $thisCompanyId = $thisCompany->getCompanyByName('Rings With Bing');
             $this->assertTrue($thisCompanyId==1);
