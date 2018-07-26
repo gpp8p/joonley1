@@ -55,5 +55,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompHasLinksSeeder::class);
         $this->call(CollectHasLinksSeeder::class);
         $this->call(RegistrationsSeeder::class);
+        $this->call(CombinedFeedSeeder::class);
     }
 }

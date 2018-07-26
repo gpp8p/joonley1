@@ -16,7 +16,7 @@ class CreateCollectionTable extends Migration
         Schema::create('collection', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('slug', 12);
+            $table->string('slug', 12)->nullable()->unique();
             $table->text('description');
             $table->unsignedInteger('type_id');
             $table->string('status',18);

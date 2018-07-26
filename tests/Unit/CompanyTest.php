@@ -19,7 +19,7 @@ class CompanyTest extends TestCase
         $this->assertTrue(true);
         $thisCompany = new \App\Company;
         $companyNameList = $thisCompany->names();
-        $this->assertTrue(count($companyNameList)==5);
+        $this->assertTrue(count($companyNameList)>0);
         $thisCompanyType = new \App\CompanyType;
         $companyTypesList = $thisCompanyType->getCompanyTypes();
         $this->assertTrue(count($companyTypesList)==7);

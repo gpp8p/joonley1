@@ -14,7 +14,9 @@ class CompanyTableSeeder extends Seeder
     {
         $faker = Faker::create();
         $thisCompany = DB::table('locations')->where('name', 'Virginia')->first();
-        DB::table('company')->insert([
+        $loc1 = DB::table('locations')->where('name', 'Planet Mars')->first();
+        $loc2 = DB::table('locations')->where('name', 'Quebec, Canada')->first();
+        $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Rings With Bing',
             'website'=> 'www.rings.com',
             'icon'=>'12345678.jpg',
@@ -30,8 +32,21 @@ class CompanyTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$thisCompany->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc1->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         $thisCompany = DB::table('locations')->where('name', 'New York')->first();
-        DB::table('company')->insert([
+        $newCompanyId=DB::table('company')->insertGetId([
             'name'=>    'Shop till you drop',
             'website'=> 'www.shopanddrop.com',
             'icon'=>'2476831.jpg',
@@ -47,8 +62,20 @@ class CompanyTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$thisCompany->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc2->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $thisCompany = DB::table('locations')->where('name', 'Hong Kong')->first();
-        DB::table('company')->insert([
+        $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Trinkets Unlimited',
             'website'=> 'www.trinkets.com',
             'icon'=>'987654321.jpg',
@@ -64,8 +91,20 @@ class CompanyTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$thisCompany->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc1->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
 
-        DB::table('company')->insert([
+        $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Junk From China',
             'website'=> 'www.chinajunk.com',
             'icon'=>'6666543.jpg',
@@ -81,8 +120,21 @@ class CompanyTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc2->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc1->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         $thisCompany = DB::table('locations')->where('name', 'New York')->first();
-        DB::table('company')->insert([
+        $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Accessories Today',
             'website'=> 'www.accessories.com',
             'icon'=>'23465432.jpg',
@@ -98,5 +150,18 @@ class CompanyTableSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$thisCompany->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$loc1->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
     }
 }
