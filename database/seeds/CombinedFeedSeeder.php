@@ -13,13 +13,14 @@ class CombinedFeedSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        $type = DB::table('companytype')->where('slug', 'rshop')->first();
+        $retailShopType = DB::table('companytype')->where('slug', 'rshop')->first();
 //buyers
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-        'name' => 'Small Accessory Shops',
+        $thisNewLocationGroupId = DB::table('locations')->insertGetId([
+        'name' => 'East Coast',
         'created_at'=>\Carbon\Carbon::now(),
         'updated_at'=>\Carbon\Carbon::now(),
         ]);
+        $eastCoast = $thisNewLocationGroupId;
 
         $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Trink-Shop',
@@ -33,19 +34,19 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -64,19 +65,19 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -95,27 +96,27 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
 
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-            'name' => 'Dress Shops',
+        $thisNewLocationGroupId = DB::table('locations')->insertGetId([
+            'name' => 'Virginia',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
@@ -132,19 +133,26 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$eastCoast,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -162,26 +170,33 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$eastCoast,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
 
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-            'name' => 'Leather Shops',
+        $thisNewLocationGroupId = DB::table('locations')->insertGetId([
+            'name' => 'DC Shops',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
@@ -198,19 +213,25 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$eastCoast,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -229,33 +250,34 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        DB::table('companyloc')->insert([
+            'location_id'=>$eastCoast,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$retailShopType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 // sellers
         $containedAs = DB::table('containedas')->where('slug', 'issale')->first();
-        $type = DB::table('companytype')->where('slug', 'cprod')->first();
+        $craftProducerType = DB::table('companytype')->where('slug', 'cprod')->first();
         $collectionType = DB::table('collectiontype')->where('slug', 'rcatalog')->first();
 
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-            'name' => 'Small Accessory Producers',
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now(),
-        ]);
         $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'The Trinket Factory',
             'website'=> 'www.trinkfactory.com',
@@ -268,19 +290,19 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$eastCoast,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$eastCoast,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -343,19 +365,19 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$eastCoast,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$eastCoast,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -406,6 +428,11 @@ class CombinedFeedSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $thisNewLocationGroupId = DB::table('locations')->insertGetId([
+            'name' => 'West Coast',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
 
         $productType = DB::table('nested_category')->where('name', 'Rings')->first();
         $newCompanyId = DB::table('company')->insertGetId([
@@ -420,19 +447,19 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -486,11 +513,6 @@ class CombinedFeedSeeder extends Seeder
 
 
 
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-            'name' => 'Dress Producers',
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now(),
-        ]);
         $productType = DB::table('nested_category')->where('name', 'Blouses')->first();
 
         $newCompanyId = DB::table('company')->insertGetId([
@@ -505,18 +527,18 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -579,18 +601,18 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -651,18 +673,18 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -715,11 +737,6 @@ class CombinedFeedSeeder extends Seeder
 
         $productType = DB::table('nested_category')->where('name', 'Leather Purses')->first();
 
-        $thisNewGropupId = DB::table('locations')->insertGetId([
-            'name' => 'Leather Producers',
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now(),
-        ]);
         $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Leather Lather',
             'website'=> 'www.leatherlather.com',
@@ -732,18 +749,18 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
@@ -807,18 +824,18 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('companyloc')->insert([
-            'location_id'=>$thisNewGropupId,
+            'location_id'=>$thisNewLocationGroupId,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
         DB::table('compcanbe')->insert([
-            'ctype_id'=>$type->id,
+            'ctype_id'=>$craftProducerType->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
