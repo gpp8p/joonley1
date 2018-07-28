@@ -1,0 +1,85 @@
+all retail shops:
+
+select company.name, company.id from company, companytype, compcanbe where
+company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.slug= 'rshop';
+
+all craft producers:
+
+select company.name, company.id from company, companytype, compcanbe where
+company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.slug= 'cprod';
+
+west coast craft producers:
+
+select company.name, company.id from company, companytype, compcanbe, companyloc, locations  where
+company.id = companyloc.company_id
+and companyloc.location_id = locations.id
+and locations.name = 'West Coast'
+and company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.slug= 'cprod';
+
+east coast producers:
+
+select company.name, company.id from company, companytype, compcanbe, companyloc, locations  where
+company.id = companyloc.company_id
+and companyloc.location_id = locations.id
+and locations.name = 'East Coast'
+and company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.slug= 'cprod';
+
+east coast buyers:
+
+select company.name, company.id from company, companytype, compcanbe, companyloc, locations  where
+company.id = companyloc.company_id
+and companyloc.location_id = locations.id
+and locations.name = 'East Coast'
+and company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.role= 'buyer';
+
+virginia buyers:
+select company.name, company.id from company, companytype, compcanbe, companyloc, locations  where
+company.id = companyloc.company_id
+and companyloc.location_id = locations.id
+and locations.name = 'Virginia'
+and company.id = compcanbe.company_id
+and compcanbe.ctype_id = companytype.id
+and companytype.role= 'buyer';
+
+all product names:
+
+ select name from product;
+
+all product names that are for sale and their collections:
+
+select product.name, collection.name from product, collection, collectionhas, containedas
+where product.id = collectionhas.product_id
+and collectionhas.collection_id = collection.id
+and collectionhas.containedas_id = containedas.id
+and containedas.slug='issale'
+
+all company names and product names that are for sale and their collections:
+
+select product.name, collection.name, company.name from product, collection, collectionhas, containedas, company, hascollection
+where product.id = collectionhas.product_id
+and collectionhas.collection_id = collection.id
+and collectionhas.containedas_id = containedas.id
+and containedas.slug='issale'
+and hascollection.collection_id = collection.id
+and hascollection.company_id = company.id
+
+select product.name, collection.name, company.name from product, collection, collectionhas, containedas, company, hascollection, nested_categories
+where product.id = collectionhas.product_id
+and collectionhas.collection_id = collection.id
+and collectionhas.containedas_id = containedas.id
+and containedas.slug='issale'
+and hascollection.collection_id = collection.id
+and hascollection.company_id = company.id
+
+
+

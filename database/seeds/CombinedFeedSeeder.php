@@ -315,6 +315,12 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $productType = DB::table('nested_category')->where('name', 'Chains')->first();
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Gold Chain',
@@ -388,6 +394,12 @@ class CombinedFeedSeeder extends Seeder
             'description'=>'Collection of bracelets from the Bracelet Factory',
             'status'=>'open',
             'type_id'=>$collectionType->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -473,7 +485,12 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Gold Ring',
             'type_id'=>$productType->id,
@@ -552,6 +569,12 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Large Blouse',
             'type_id'=>$productType->id,
@@ -622,6 +645,12 @@ class CombinedFeedSeeder extends Seeder
             'description'=>'Collection of tropical dresses from Tropical Dresses',
             'status'=>'open',
             'type_id'=>$collectionType->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -697,7 +726,12 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Work Blouses',
             'type_id'=>$productType->id,
@@ -773,7 +807,12 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Large Lather',
             'type_id'=>$productType->id,
@@ -845,6 +884,12 @@ class CombinedFeedSeeder extends Seeder
             'description'=>'Collection of leather from Much More Leather',
             'status'=>'open',
             'type_id'=>$collectionType->id,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+        $thisCompanyHasCollection = DB::table('hascollection')->insertGetId([
+            'company_id'=>$newCompanyId,
+            'collection_id'=>$thisCollection,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
