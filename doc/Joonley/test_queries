@@ -73,13 +73,101 @@ and containedas.slug='issale'
 and hascollection.collection_id = collection.id
 and hascollection.company_id = company.id
 
-select product.name, collection.name, company.name from product, collection, collectionhas, containedas, company, hascollection, nested_categories
+
+
+selecting product names and company names for products that lie in a specified category:
+
+select product.name, collection.name, company.name, product.type_id from product, collection, collectionhas, containedas, company, hascollection, nested_category
 where product.id = collectionhas.product_id
+and product.name in (
+
+select product.name from product, nested_category
+where product.type_id=nested_category.id
+and nested_category.lft between (
+select nested_category.lft from nested_category where
+nested_category.name = 'Bracelets'
+)
+and
+(
+select nested_category.rgt from nested_category where
+nested_category.name = 'Bracelets'
+)
+
+
+
+)
+and product.type_id > nested_category.lft
+and product.type_id < nested_category.rgt
+and nested_category.name = 'Bracelets'
 and collectionhas.collection_id = collection.id
 and collectionhas.containedas_id = containedas.id
 and containedas.slug='issale'
 and hascollection.collection_id = collection.id
 and hascollection.company_id = company.id
+
+
+
+select nested_category.name from nested_category, product where
+product.type_id = nested_category.id
+and product.id = 9
+
+
+select nested_category.lft from nested_category where
+nested_category.name =
+(select nested_category.name from nested_category, product where
+ product.type_id = nested_category.id
+ and product.id = 10
+)
+
+select product.name from product, nested_category
+where product.type_id=nested_category.id
+and nested_category.lft>(
+select nested_category.lft from nested_category where
+nested_category.name =
+(select nested_category.name from nested_category, product where
+ product.type_id = nested_category.id
+ and product.id = 10
+)
+)
+
+
+A 'between' query
+
+select product.name from product, nested_category
+where product.type_id=nested_category.id
+and nested_category.lft between (
+select nested_category.lft from nested_category where
+nested_category.name =
+(select nested_category.name from nested_category, product where
+ product.type_id = nested_category.id
+ and product.id = 10
+)
+)
+and
+(
+select nested_category.rgt from nested_category where
+nested_category.name =
+(select nested_category.name from nested_category, product where
+ product.type_id = nested_category.id
+ and product.id = 10
+)
+)
+
+
+Products in a specified product category:
+
+select product.name from product, nested_category
+where product.type_id=nested_category.id
+and nested_category.lft between (
+select nested_category.lft from nested_category where
+nested_category.name = 'Bracelets'
+)
+and
+(
+select nested_category.rgt from nested_category where
+nested_category.name = 'Bracelets'
+)
+
 
 
 

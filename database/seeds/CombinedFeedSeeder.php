@@ -421,9 +421,9 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
-
+        $productType = DB::table('nested_category')->where('name', 'Silver Bracelets')->first();
         $thisProduct = DB::table('product')->insertGetId([
-            'name'=>'Large Bracelet',
+            'name'=>'Large Silver Bracelet',
             'type_id'=>$productType->id,
             'price_q1'=>10.95,
             'price_q10'=>9.50,
