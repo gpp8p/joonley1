@@ -168,6 +168,20 @@ select nested_category.rgt from nested_category where
 nested_category.name = 'Bracelets'
 )
 
+all products from a specified location:
+select product.id, product.name as product_name, product.description as 'product_description', company.name as 'company_name', collection.name as 'collection_name', medialink.url as 'product_image'  from company, locations, companyloc, collection, hascollection, product, collectionhas, medialink, producthaslinks
+where company.id = companyloc.company_id
+and companyloc.location_id = locations.id
+and locations.name='East Coast'
+and company.id = hascollection.company_id
+and collection.id = hascollection.collection_id
+and collectionhas.collection_id = collection.id
+and collectionhas.product_id = product.id
+and (medialink.pertainsto='product' or medialink.pertainsto='*')
+and producthaslinks.product_id = product.id
+and producthaslinks.medialink_id = medialink.id
 
+
+note: there must be a  producthaslinks record for each product - any way to get around this ?
 
 

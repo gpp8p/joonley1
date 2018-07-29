@@ -14,6 +14,7 @@ class CombinedFeedSeeder extends Seeder
     {
         $faker = Faker::create();
         $retailShopType = DB::table('companytype')->where('slug', 'rshop')->first();
+        $medialinkReference = DB::table('medialink')->where('url','http://nomedia/nomedia.jpg')->first()->id;
 //buyers
         $thisNewLocationGroupId = DB::table('locations')->insertGetId([
         'name' => 'East Coast',
@@ -332,6 +333,14 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -350,6 +359,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -414,6 +430,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -432,6 +455,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -501,6 +531,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -519,6 +556,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -585,6 +629,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -603,6 +654,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -664,6 +722,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -682,6 +747,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -742,6 +814,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -760,6 +839,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -823,6 +909,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -841,6 +934,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -903,6 +1003,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
@@ -921,6 +1028,13 @@ class CombinedFeedSeeder extends Seeder
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        DB::table('producthaslinks')->insert([
+            'product_id'=>$thisProduct,
+            'medialink_id'=>$medialinkReference,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
         DB::table('collectionhas')->insert([
             'product_id'=>$thisProduct,
             'collection_id'=>$thisCollection,
