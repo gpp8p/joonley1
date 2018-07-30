@@ -12,6 +12,8 @@ class Product extends Model
 
     public function getAllSellableProductsByCategory($category)
     {
+
+/*
         $categoryId = DB::table('nested_category')->where('name',$category)->first()->id;
         $query = 'select distinct product.name as product, product.description as description, medialink.url as media_url, mediatype.name as media_type, '.
                 'company.name as company , collection.name as collection, locations.name as location '.
@@ -29,8 +31,29 @@ class Product extends Model
                 'and locations.id = company.location_id '.
                 'and producthaslinks.product_id = product.id '.
                 'and producthaslinks.medialink_id = medialink.id ';
+*/
 
-        $productsFound = DB::select($query, [$categoryId]);
+        $query = "select product.name as product, product.description as description, medialink.url as media_url, mediatype.name as media_type, collection.name as collection, company.name as company from product, nested_category, medialink, mediatype, producthaslinks, collection, collectionhas, containedas,  company, hascollection ".
+            "where product.type_id=nested_category.id ".
+            "and producthaslinks.product_id = product.id ".
+            "and medialink_id = medialink.id ".
+            "and collectionhas.product_id = product.id ".
+            "and collectionhas.collection_id = collection.id ".
+            "and collectionhas.containedas_id = containedas.id ".
+            "and containedas.slug=\'issale\' ".
+            "and hascollection.collection_id = collection.id ".
+            "and hascollection.company_id = company.id ".
+            "and mediatype.id = medialink.mediatype_id ".
+            "and nested_category.lft between ( ".
+            "select nested_category.lft from nested_category where ".
+            "nested_category.name = ? )".
+            "and ".
+            "(select nested_category.rgt from nested_category where ".
+            "nested_category.name = ? )";
+
+
+
+        $productsFound = DB::select($query, [$category, $category]);
         return $productsFound;
     }
 
