@@ -27,22 +27,35 @@ class Company extends Model
             $this->getCompanyByName($companyName);
             throw new Exception($companyName.' already exists');
         } catch (Exception $e) {
-            $newCompanyId = DB::table('company')->insertGetId([
-                'name'=>  $companyName,
-                'website'=> $companyWeb,
-                'icon'=>$icon,
-                'phone'=> $companyPhone,
-                'location_id'=>$companyLocationId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
+            DB::beginTransaction();
+            try {
+                $newCompanyId = DB::table('company')->insertGetId([
+                    'name' => $companyName,
+                    'website' => $companyWeb,
+                    'icon' => $icon,
+                    'phone' => $companyPhone,
+//                'location_id'=>$companyLocationId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
 
-            DB::table('compcanbe')->insert([
-                'ctype_id'=>$companyTypeId,
-                'company_id'=>$newCompanyId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
+                DB::table('compcanbe')->insert([
+                    'ctype_id' => $companyTypeId,
+                    'company_id' => $newCompanyId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                DB::table('companyloc')->insert([
+                    'location_id' => $companyLocationId,
+                    'company_id' => $newCompanyId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new Exception("Error updating database:".$e->getMessage());
+            }
         }
         return $newCompanyId;
     }
@@ -71,7 +84,7 @@ class Company extends Model
         }
     }
 
-    public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocationId, $companyTypeIds)
+    public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)
     {
         try {
             $thisCompany = DB::table('company')->where('id', '=', $companyId)->get();
@@ -93,16 +106,18 @@ class Company extends Model
         }else{
             $newCompanyPhone = $thisCompany[0]->phone;
         }
+/*
         if($thisCompany[0]->location_id != $companyLocationId){
             $newCompanyLocationId = $companyLocationId;
         }else{
             $newCompanyLocationId = $thisCompany[0]->location_id;
         }
+*/
         DB::table('company')->where('id', $companyId)->update([
             'name'=>    $newCompanyName,
             'website'=> $newCompanyWeb,
             'phone'=> $newCompanyPhone,
-            'location_id'=>$newCompanyLocationId,
+//            'location_id'=>$newCompanyLocationId,
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
@@ -134,6 +149,37 @@ class Company extends Model
                 DB::table('compcanbe')->where([
                     ['ctype_id', '=', $et],
                     ['company_id', '=', $companyId],
+                ])->delete();
+            }
+        }
+
+        $locationsQuery = "select location_id from companyloc where company_id = ?";
+        $locs = DB::select($locationsQuery, [$companyId]);
+        $existingLocations = array();
+        foreach($locs as $l)
+        {
+            $thisLocId = $l->location_id;
+            $existingLocations[] = $thisLocId;
+        }
+        foreach($companyLocations as $cloc)
+        {
+            if(!in_array($cloc, $existingLocations))
+            {
+                DB::table('companyloc')->insert([
+                   'location_id'=>$cloc,
+                   'company_id'=>$companyId,
+                    'created_at'=>\Carbon\Carbon::now(),
+                    'updated_at'=>\Carbon\Carbon::now()
+                ]);
+            }
+        }
+        foreach($existingLocations as $eloc)
+        {
+            if(!in_array($eloc, $companyLocations))
+            {
+                DB::table('companyloc')->where([
+                    ['location_id', '=', $eloc],
+                    ['company_id', '=', $companyId]
                 ])->delete();
             }
         }
