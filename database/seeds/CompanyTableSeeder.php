@@ -28,16 +28,18 @@ class CompanyTableSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisCompany->id,
+//            'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+
         DB::table('companyloc')->insert([
             'location_id'=>$thisCompany->id,
             'company_id'=>$newCompanyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+
         DB::table('companyloc')->insert([
             'location_id'=>$loc1->id,
             'company_id'=>$newCompanyId,
@@ -58,7 +60,7 @@ class CompanyTableSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisCompany->id,
+//            'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -79,7 +81,7 @@ class CompanyTableSeeder extends Seeder
             'name'=>    'Trinkets Unlimited',
             'website'=> 'www.trinkets.com',
             'icon'=>'987654321.jpg',
-            'location_id'=>$thisCompany->id,
+//            'location_id'=>$thisCompany->id,
             'phone'=> $faker->phoneNumber,
             'addr1' =>$faker->address,
             'addr2' =>$faker->secondaryAddress,
@@ -116,7 +118,7 @@ class CompanyTableSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisCompany->id,
+//            'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -146,7 +148,7 @@ class CompanyTableSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisCompany->id,
+//            'location_id'=>$thisCompany->id,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

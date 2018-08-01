@@ -21,7 +21,7 @@ class Company extends Model
         return $companyNames;
     }
 
-    public function addNewCompany($companyName, $companyWeb, $companyPhone, $companyLocationId, $companyTypeId,$icon)
+    public function addNewCompany($companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeId,$icon)
     {
         try {
             $this->getCompanyByName($companyName);
@@ -34,7 +34,7 @@ class Company extends Model
                     'website' => $companyWeb,
                     'icon' => $icon,
                     'phone' => $companyPhone,
-//                'location_id'=>$companyLocationId,
+//                'location_id'=>$companyLocations,
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
                 ]);
@@ -45,12 +45,15 @@ class Company extends Model
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
                 ]);
-                DB::table('companyloc')->insert([
-                    'location_id' => $companyLocationId,
-                    'company_id' => $newCompanyId,
-                    'created_at' => \Carbon\Carbon::now(),
-                    'updated_at' => \Carbon\Carbon::now()
-                ]);
+                foreach($companyLocations as $thisLoc)
+                {
+                    DB::table('companyloc')->insert([
+                        'location_id' => $thisLoc,
+                        'company_id' => $newCompanyId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                }
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();

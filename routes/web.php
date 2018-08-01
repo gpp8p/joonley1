@@ -44,10 +44,9 @@ Route::post('/messages', 'MessageController@show')->name('messages');
 Route::post('/more', 'MoreController@show')->name('more');
 Route::post('/admin', 'AdminController@show')->name('admin');
 
-Route::get('test', function () {
-    $thisUser = new \App\User;
-    $regularUser = DB::table('users')->where('id', 3)->first()->name;
-    $access = $thisUser->hasAccessWithUserName(['admin-dashboard'],$regularUser);
+Route::get('/test', function () {
+    $thisLocation = new \App\Locations;
+    $thisProduct = $thisLocation->getProductsByLocation("Virginia");
 
 
 });

@@ -39,7 +39,7 @@ class CompanyTest extends TestCase
             $this->assertTrue(true);
         }
         try {
-            $newCompanyId = $thisCompany->addNewCompany('New Company Name3', 'newweb.com', '999-999-9999', 2, 1, '98989898.jpg');
+            $newCompanyId = $thisCompany->addNewCompany('New Company Name3', 'newweb.com', '999-999-9999', [2], 1, '98989898.jpg');
         } catch (Exception $e) {
             echo($e->getMessage());
             $this->assertTrue(false);
@@ -69,7 +69,7 @@ class CompanyTest extends TestCase
         }
 
         try {
-            $thisCompany->editCompany($thisCompanyId, 'Cheap Trinkets Unlimited', 'www.ultracheaptrinkets.com', '451) 307-2650 x71724', 9, [1, 3]);
+            $thisCompany->editCompany($thisCompanyId, 'Cheap Trinkets Unlimited', 'www.ultracheaptrinkets.com', '451) 307-2650 x71724', [9], [1, 3]);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }
@@ -80,7 +80,7 @@ class CompanyTest extends TestCase
             $this->assertTrue(false);
         }
         try {
-            $thisCompany->editCompany($thisCompanyId, 'Trinkets Unlimited', 'www.ultracheaptrinkets.com', '451) 307-2650 x71724', 9, [1, 3]);
+            $thisCompany->editCompany($thisCompanyId, 'Trinkets Unlimited', 'www.ultracheaptrinkets.com', '451) 307-2650 x71724', [9], [1, 3]);
         } catch (Exception $e) {
             $this->assertTrue(false);
         }

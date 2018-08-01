@@ -35,7 +35,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -66,7 +66,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -97,7 +97,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -134,7 +134,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -171,7 +171,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -214,7 +214,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -251,7 +251,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -291,7 +291,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$eastCoast,
+//            'location_id'=>$eastCoast,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -387,7 +387,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$eastCoast,
+//            'location_id'=>$eastCoast,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -489,7 +489,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -588,7 +588,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -682,7 +682,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -774,7 +774,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -869,7 +869,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -963,7 +963,7 @@ class CombinedFeedSeeder extends Seeder
             'zip' => $faker->postcode,
             'country' => $faker->country,
             'reseller_id'=>'1234567890',
-            'location_id'=>$thisNewLocationGroupId,
+//            'location_id'=>$thisNewLocationGroupId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

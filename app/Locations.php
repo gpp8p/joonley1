@@ -20,7 +20,7 @@ class Locations extends Model
 
     }
 
-    public function getProductsByLocation($locationId)
+    public function getProductsByLocation($locationName)
     {
 /*
         $query = 'select product.id, product.name, product.description, medialink.url from product, medialink, collectionhas, collection, hascollection, company, locations, producthaslinks '.
@@ -30,13 +30,13 @@ class Locations extends Model
             'and hascollection.company_id = company.id '.
             'and company.location_id = locations.id '.
             'and locations.id=? '.
-            'and medialink.pertainsto=\'product\' '.
+            'and medialink.pertainsto='product' '.
             'and producthaslinks.product_id = product.id '.
             'and producthaslinks.medialink_id = medialink.id';
 */
 
-        $query = "select product.id, product.name as product_name, product.description as \'product_description\', ".
-            "company.name as \'company_name\', collection.name as \'collection_name\', medialink.url as \'product_image\' ".
+        $query = "select product.id, product.name as product_name, product.description as 'product_description', ".
+            "company.name as 'company_name', collection.name as 'collection_name', medialink.url as 'product_image' ".
             "from company, locations, companyloc, collection, hascollection, product, collectionhas, medialink, producthaslinks ".
             "where company.id = companyloc.company_id ".
             "and companyloc.location_id = locations.id ".
@@ -45,11 +45,11 @@ class Locations extends Model
             "and collection.id = hascollection.collection_id ".
             "and collectionhas.collection_id = collection.id ".
             "and collectionhas.product_id = product.id ".
-            "and (medialink.pertainsto=\'product\' or medialink.pertainsto=\'*\') ".
+            "and (medialink.pertainsto='product' or medialink.pertainsto='*') ".
             "and producthaslinks.product_id = product.id ".
             "and producthaslinks.medialink_id = medialink.id ";
 
-        $products = DB::select($query, [$locationId]);
+        $products = DB::select($query, [$locationName]);
         return $products;
     }
 

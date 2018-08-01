@@ -20,12 +20,12 @@ class Product extends Model
                 'from product, medialink, mediatype, collectionhas, containedas, collection, '.
                 'collectiontype, hascollection, company, locations, producthaslinks '.
                 'where product.type_id = ? '.
-                'and medialink.pertainsto = \'product\' '.
+                'and medialink.pertainsto = 'product' '.
                 'and medialink.mediatype_id = mediatype.id '.
                 'and collectionhas.product_id = product.id '.
                 'and collectionhas.collection_id = collection.id '.
                 'and collectionhas.containedas_id = containedas.id '.
-                'and containedas.slug=\'issale\' '.
+                'and containedas.slug='issale' '.
                 'and hascollection.collection_id = collection.id '.
                 'and hascollection.company_id = company.id '.
                 'and locations.id = company.location_id '.
@@ -40,7 +40,7 @@ class Product extends Model
             "and collectionhas.product_id = product.id ".
             "and collectionhas.collection_id = collection.id ".
             "and collectionhas.containedas_id = containedas.id ".
-            "and containedas.slug=\'issale\' ".
+            "and containedas.slug='issale' ".
             "and hascollection.collection_id = collection.id ".
             "and hascollection.company_id = company.id ".
             "and mediatype.id = medialink.mediatype_id ".

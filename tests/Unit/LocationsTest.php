@@ -19,8 +19,8 @@ class LocationsTest extends TestCase
         $thisLocation = new \App\Locations;
         $thisLocationList = $thisLocation->getLocations();
         $this->assertTrue($thisLocationList[0][0]=="Arizona");
-        $thisProductList = $thisLocation->getProductsByLocation(2);
-        $this->assertTrue($thisProductList[0]->name == "Gold pinky ring");
+        $thisProductList = $thisLocation->getProductsByLocation("Virginia");
+        $this->assertTrue($thisProductList[0]->product_name == "Gold pinky ring");
         try {
             $thisLocationId = $thisLocation->getLocationId('Virginia');
             $this->assertTrue($thisLocationId==2);
