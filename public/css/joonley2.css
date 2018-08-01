@@ -6,30 +6,38 @@ body {
     flex-direction: column;
 }
 .header {
-    background-color: yellow;
+    background-color: white;
 }
 .content {
-    background: lightblue;
+    display: flex;
+    flex-direction: row;
     flex-grow: 1;
 }
 .line2px {
     border-bottom: 2px solid black;
 }
-
+.topalign{
+    vertical-align: top;
+}
 .menutable {
-    flex-grow: 1;
+    width:15%;
+    background-color: #07eefa;
+}
+.contentarea {
+    width:85%;
+    background-color: white;
+}
+.menuitem1 {
     width:100%;
-    height:100%;
+    background-color: #07eefa;
+    color:white;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 18px;
+    margin:2px;
 }
 
-.menu1 {
-    background: #c2096a;
-    flex-grow: 1;
-    width: 20%;
+.menuitem1:hover {
+    color: #10b82b;
 }
-.content1 {
-    background: #0cc287;
-    flex-grow: 1;
-    width: 80%;
 
-}
+

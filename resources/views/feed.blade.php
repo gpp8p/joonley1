@@ -1,4 +1,4 @@
-@extends('layouts.jheader3')
+@extends('layouts.jheader')
 
 
 @section('content')
@@ -60,12 +60,12 @@
         </div>
         <div class="line2px"></div>
         <div class="content">
-            <table class="menutable" border="0">
-                <tr>
-                    <td width="20%" class="menu1">menu</td>
-                    <td width="80%" class="content1">content</td>
-                </tr>
-            </table>
+            <div class="menutable">
+                <div class="menuitem1">First</div>
+                <div class="menuitem1">Second</div>
+                <div class="menuitem1">Third</div>
+            </div>
+            <div class="contentarea">content</div>
         </div>
 
     </body>

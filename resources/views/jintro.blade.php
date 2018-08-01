@@ -3,6 +3,9 @@
 @section('title', 'Welcome to Joonley!')
 
 @section('content')
+<div class="logdiv alignright">
+    <a class="loglink1" href="{{ route('login') }}">Log In</a>
+</div>
 <div class="introsection">
         <div class = "introTitle2">
             Dear Wholesale,

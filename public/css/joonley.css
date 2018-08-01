@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .bodycss {
     background-color: #ffffff;
 }
@@ -31,6 +37,10 @@
 .alignright {
     float: right;
 }
+.logdiv {
+    width:100%;
+    margin-left: 95%;
+}
 
 .aligncenter {
     width:100%;
@@ -53,7 +63,6 @@
 }
 
 .introsection {
-    padding-top: 3em;
     padding-bottom: 15em;
 }
 .introTitle {
@@ -124,6 +133,9 @@
 .loglink1 {
     text-decoration: none;
     color:blue;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
 }
 .loglink1:hover {
     color:red;
@@ -366,4 +378,48 @@
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    margin-left: inherit;
+    background-color: white;
+}
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.line2px {
+    border-bottom: 2px solid black;
+}
+.topalign{
+    vertical-align: top;
+}
+.menutable {
+    width:15%;
+    background-color:lightgray;
+}
+.contentarea {
+    width:85%;
+    background-color: white;
+}
+.menuitem1 {
+    width:100%;
+    background-color: lightgrey;
+    color:black;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    font-size: 18px;
+    margin:2px;
+}
+
+.menuitem1:hover {
+    color: #ff0913;
+}
+
 
