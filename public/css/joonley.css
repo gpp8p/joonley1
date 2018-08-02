@@ -418,6 +418,10 @@ body {
     margin:2px;
 }
 
+.lmarg15{
+    margin-left: 15%;
+}
+
 .menuitem1:hover {
     color: #ff0913;
 }

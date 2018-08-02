@@ -209,7 +209,7 @@ class RegistrationController extends Controller
     public function showRegistrationRequests(){
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView]);
+        return view('reviewRegistrations2',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView]);
     }
 
     private function getOutstandingRegistrations(){
@@ -224,7 +224,7 @@ class RegistrationController extends Controller
         $thisRegistration = DB::table('registrations')->where('id', $regId)->first();
         doRegistration($thisRegistration, $approveType, $regId);
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
-        return view('reviewRegistrations',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+        return view('reviewRegistrations2',['outstandingRegistrations'=>$outstandingRegistrationsList]);
     }
 
     public function doRegistration($thisRegistration, $approveType, $regId){

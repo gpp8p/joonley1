@@ -61,7 +61,7 @@
     <div class="content">
         <div class="menutable">
             <div class="menuitem1">Users</div>
-            <div class="menuitem1">Review Registrations</div>
+            <div class="menuitem1"><a href="{{ route('reviewRegistrations') }}">Review Registrations</a></div>
             <div class="menuitem1">Rdecent Activity</div>
         </div>
         <div class="contentarea">content</div>
