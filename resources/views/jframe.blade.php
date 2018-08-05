@@ -14,7 +14,7 @@
         <div class="bar"></div>
         <div id="sidebar" class="sidebar">
             @switch($sidebar)
-                @case('admin)
+                @case('admin')
                     @include('adminSidebar')
                 @break
             @endswitch
@@ -26,5 +26,17 @@
                 @break
             @endswitch
         </div>
-        <div class="box footer">Footer</div>
+        <div class="footer">
+            <div class="menuFiller"></div>
+            <div class="menuSpacer">
+                <div></div>
+                <div class="socialFooter">
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-facebook-square"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div></div>
+            </div>
+        </div>
 @endsection

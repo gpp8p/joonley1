@@ -56,7 +56,7 @@ body {
 
 .menuicons{
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 35% 65%;
     font-size: 75%;
 }
 
@@ -108,7 +108,24 @@ body {
 
 .header,
 .footer {
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.menuFiller {
+    background-color: #07eefa;
+}
+.menuSpacer {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
     background-color: #ffffff;
+}
+.socialFooter{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
+    font-size: 250%;
+    color: blue;
+
 }
 /* line item - one row */
 .wrap2 {
@@ -137,6 +154,15 @@ body {
 }
 
 /* registrations list styling */
+.registrations{
+    display: grid;
+    grid-template-rows:90% 10%;
+}
+.regtable{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 125%;
+}
 .regrow {
     display: grid;
     grid-template-columns: 50% 25% 25%;
@@ -146,6 +172,10 @@ body {
     font-family: 'Fira Sans Condensed', sans-serif;
     color:blue;
     font-size:100%;
+}
+.registrationPager {
+    display:grid;
+    grid-template-columns:70% 30%
 }
 
 
