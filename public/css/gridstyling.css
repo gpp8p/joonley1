@@ -136,5 +136,17 @@ body {
 
 }
 
+/* registrations list styling */
+.regrow {
+    display: grid;
+    grid-template-columns: 50% 25% 25%;
+}
+
+.regcol {
+    font-family: 'Fira Sans Condensed', sans-serif;
+    color:blue;
+    font-size:100%;
+}
+
 
 

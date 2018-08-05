@@ -209,7 +209,7 @@ class RegistrationController extends Controller
     public function showRegistrationRequests(){
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('reviewRegistrations2',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView]);
+        return view('jframe',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'viewRegistrations']);
     }
 
     private function getOutstandingRegistrations(){

@@ -10,6 +10,6 @@ class AdminController extends Controller
     public function show(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('admin', ['adminView'=>$adminView]);
+        return view('jframe', ['adminView'=>$adminView, 'sidebar'=>'admin', 'contentWindow'=>'viewUsers']);
     }
 }
