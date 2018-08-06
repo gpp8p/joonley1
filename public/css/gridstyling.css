@@ -162,17 +162,28 @@ body {
     margin-left: 10px;
     margin-right: 10px;
     font-size: 125%;
+    display:grid;
+    grid-template-rows: repeat(auto-fill, minmax(30px,1fr));
+}
+.regheader {
+    color: #484848;
+    background-color: white;
+    display:grid;
+    grid-template-columns: 50% 25% 25%;
 }
 .regrow {
     display: grid;
     grid-template-columns: 50% 25% 25%;
+    color:blue;
 }
-
+.regrow:hover{
+    color:red;
+}
 .regcol {
     font-family: 'Fira Sans Condensed', sans-serif;
-    color:blue;
     font-size:100%;
 }
+
 .registrationPager {
     display:grid;
     grid-template-columns:70% 30%
