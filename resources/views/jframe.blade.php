@@ -24,6 +24,9 @@
                 @case('viewRegistrations')
                     @include('regwindow')
                 @break
+                @case('viewThisRegistration')
+                    @include('regdata')
+                @break
             @endswitch
         </div>
         <div class="footer">

@@ -188,6 +188,11 @@ class RegistrationController extends Controller
 
     }
 
+    public function showThisRequest(Request $registrationRequest){
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('jframe', ['adminView'=>$adminView, 'sidebar'=>'admin', 'contentWindow'=>'viewThisRegistration']);
+    }
+
     public function getOneRegistration(Request $regIdRequest){
         $inData =  $regIdRequest->all();
         $regId = $inData['regId'];
