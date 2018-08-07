@@ -4,7 +4,7 @@
     }
     .myForm {
         display: grid;
-        flex:1;
+
         width: 100%;
         grid-template-areas:
                 "storeinfo typeinfo"
@@ -15,7 +15,7 @@
         grid-template-columns: 50% 50%;
         grid-gap: .8em .5em;
         background: #eee;
-        padding: 1.2em;
+        padding: 2.5em;
     }
     #typeinfo{
         grid-area: typeinfo;

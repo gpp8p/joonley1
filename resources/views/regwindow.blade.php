@@ -5,6 +5,7 @@
         display: grid;
         grid-template-rows:90% 10%;
         height: calc(80vh - 30px);
+        background-color: #eeeeee;
     }
     .regtable{
         margin-left: 10px;
@@ -12,10 +13,11 @@
         font-size: 125%;
         display:grid;
         grid-template-rows: repeat(auto-fill, minmax(30px,1fr));
+        background-color: #eeeeee;
     }
     .regheader {
         color: #484848;
-        background-color: white;
+        background-color: #eeeeee;
         display:grid;
         grid-template-columns: 50% 25% 25%;
     }
