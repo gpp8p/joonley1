@@ -32,14 +32,15 @@ body {
 }
 
 .sidebarItem {
-    color:white;
+    color:black;
     font-family: 'Fira Sans Condensed', sans-serif;
     font-size: 125%;
     margin-left: 10px;
+    text-decoration: none;
 }
 
 .sidebarItem:hover {
-    color:red;
+    color: #fffb13;
 }
 
 .content {

@@ -17,6 +17,29 @@
                 @case('admin')
                     @include('adminSidebar')
                 @break
+                @case('feed')
+                    @include('feedSidebar')
+                @break
+                @case('orders')
+                    @include('ordersSidebar')
+                @break
+                @case('specials')
+                    @include('specialsSidebar')
+                @break
+                @case('favorites')
+                    @include('favoritesSidebar')
+                @break
+                @case('search')
+                @include('searchSidebar')
+                @break
+                @case('messages')
+                    @include('messagesSidebar')
+                @break
+                @case('more')
+                @include('moreSidebar')
+                @break
+
+
             @endswitch
         </div>
         <div class="box content">
@@ -27,6 +50,28 @@
                 @case('viewThisRegistration')
                     @include('regdata')
                 @break
+                @case('feedContent')
+                    @include('feedContent')
+                @break
+                @case('ordersContent')
+                    @include('ordersContent')
+                @break
+                @case('specialsContent')
+                    @include('specialsContent')
+                @break
+                @case('favoritesContent')
+                    @include('favoritesContent')
+                @break
+                @case('searchContent')
+                    @include('searchContent')
+                @break
+                @case('messagesContent')
+                    @include('messagesContent')
+                @break
+                @case('moreContent')
+                    @include('moreContent')
+                @break
+
             @endswitch
         </div>
         <div class="footer">

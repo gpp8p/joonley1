@@ -10,6 +10,6 @@ class MessageController extends Controller
     public function show(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('messages', ['adminView'=>$adminView]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'messages', 'contentWindow'=>'messagesContent']);
     }
 }

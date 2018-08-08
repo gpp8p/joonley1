@@ -10,6 +10,6 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('search',['adminView'=>$adminView]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'search', 'contentWindow'=>'searchContent']);
     }
 }

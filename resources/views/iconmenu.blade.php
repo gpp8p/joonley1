@@ -1,6 +1,6 @@
 <div class="iconmenu">
     @if($adminView)
-        <div class="oneicon" onclick="event.preventDefault(); document.getElementById('feed-form').submit();">
+        <div class="oneicon" onclick="event.preventDefault(); document.getElementById('admin-form').submit();">
             <i class="fa fa-cogs" aria-hidden="true"></i>
             <div>Admin</div>
         </div>
@@ -38,3 +38,14 @@
         <div>Logout</div>
     </div>
 </div>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="feed-form" action="{{ route('feed') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="order-form" action="{{ route('orders') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="specials-form" action="{{ route('specials') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="favorites-form" action="{{ route('favorites') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="search-form" action="{{ route('search') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="messages-form" action="{{ route('messages') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="more-form" action="{{ route('more') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="admin-form" action="{{ route('admin') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+

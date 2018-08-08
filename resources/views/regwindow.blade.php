@@ -41,7 +41,7 @@
 </style>
 <script language='javascript' type='text/javascript'>
     var getOneRegistrationRequest = function(clickedElement){
-        window.location.replace('{{route('showRegistration')}}');
+        window.location.replace('{{route('showRegistration')}}?regId='+clickedElement.id);
     }
 </script>
 <div class="registrations">

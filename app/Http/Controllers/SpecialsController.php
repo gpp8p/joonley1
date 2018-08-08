@@ -10,6 +10,6 @@ class SpecialsController extends Controller
     public function show(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('specials', ['adminView'=>$adminView]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'specials', 'contentWindow'=>'specialsContent']);
     }
 }

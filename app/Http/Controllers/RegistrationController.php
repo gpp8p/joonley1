@@ -190,7 +190,23 @@ class RegistrationController extends Controller
 
     public function showThisRequest(Request $registrationRequest){
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe', ['adminView'=>$adminView, 'sidebar'=>'admin', 'contentWindow'=>'viewThisRegistration']);
+        $inData =  $registrationRequest->all();
+        $regId = $inData['regId'];
+        $thisRegistration = DB::table('registrations')->where('id',$regId)->first();
+        if($thisRegistration==null){
+            return view('error', ["error_message"=>'Unable to find a registration with that id']);
+        }else{
+            $companyTypes = DB::table('companytype')->where('slug',$thisRegistration->strtype)->first();
+            if($thisRegistration->buysell_type == 'S'){
+                $thisRegistration->buysell = 'Seller';
+            }else{
+                $thisRegistration->buysell = 'Buyer';
+            }
+            $thisRegistration->storeType = $companyTypes->name;
+            return view('jframe', ['adminView'=>$adminView, 'sidebar'=>'admin', 'contentWindow'=>'viewThisRegistration', 'thisRegistration'=>$thisRegistration]);
+        }
+
+
     }
 
     public function getOneRegistration(Request $regIdRequest){
@@ -227,9 +243,10 @@ class RegistrationController extends Controller
         $regId = $inData['applicantId'];
         $approveType = $inData['approveRole'];
         $thisRegistration = DB::table('registrations')->where('id', $regId)->first();
-        doRegistration($thisRegistration, $approveType, $regId);
+        $this->doRegistration($thisRegistration, $approveType, $regId);
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $outstandingRegistrationsList = $this->getOutstandingRegistrations();
-        return view('reviewRegistrations2',['outstandingRegistrations'=>$outstandingRegistrationsList]);
+        return view('jframe',['outstandingRegistrations'=>$outstandingRegistrationsList, 'adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'viewRegistrations']);
     }
 
     public function doRegistration($thisRegistration, $approveType, $regId){

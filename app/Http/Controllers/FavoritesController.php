@@ -11,6 +11,6 @@ class FavoritesController extends Controller
     public function show(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return View::make('favorites', ['adminView'=>$adminView]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'favorites', 'contentWindow'=>'favoritesContent']);
     }
 }
