@@ -38,12 +38,19 @@ Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('
 Route::post('/feed', 'FeedController@show')->name('feed');
 Route::get('/feed', 'FeedController@show')->name('feed');
 Route::post('/favorites', 'FavoritesController@show')->name('favorites');
+Route::get('/favorites', 'FavoritesController@show')->name('favorites');
 Route::post('/orders', 'OrdersController@show')->name('orders');
+Route::get('/orders', 'OrdersController@show')->name('orders');
 Route::post('/specials', 'SpecialsController@show')->name('specials');
+Route::get('/specials', 'SpecialsController@show')->name('specials');
 Route::post('/search', 'SearchController@show')->name('search');
+Route::get('/search', 'SearchController@show')->name('search');
 Route::post('/messages', 'MessageController@show')->name('messages');
+Route::get('/messages', 'MessageController@show')->name('messages');
 Route::post('/more', 'MoreController@show')->name('more');
+Route::get('/more', 'MoreController@show')->name('more');
 Route::post('/admin', 'AdminController@show')->name('admin');
+Route::get('/admin', 'AdminController@show')->name('admin');
 
 Route::get('/test', function () {
     $thisLocation = new \App\Locations;
