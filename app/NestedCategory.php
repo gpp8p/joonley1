@@ -18,7 +18,7 @@ public function findChildNodes($parentNodeName)
         throw new Exception('Parent:'.$parentNodeName.' not found');
     }
     $query = <<<ENDQUERY
-SELECT node.name, (COUNT(parent.name) - (sub_tree.depth + 1)) AS depth
+SELECT node.name,  (COUNT(parent.name) - (sub_tree.depth + 1)) AS depth, node.id as id
 FROM nested_category AS node,
         nested_category AS parent,
         nested_category AS sub_parent,
@@ -46,7 +46,7 @@ ENDQUERY;
     {
         if($thisCategoryFound->depth>0)
         {
-            $returnValues[] = $thisCategoryFound->name;
+            $returnValues[] = [$thisCategoryFound->name, $thisCategoryFound->id];
         }
     }
     return $returnValues;

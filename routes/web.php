@@ -53,10 +53,9 @@ Route::post('/admin', 'AdminController@show')->name('admin');
 Route::get('/admin', 'AdminController@show')->name('admin');
 
 Route::get('/test', function () {
-    $thisLocation = new \App\Locations;
-    $thisProduct = $thisLocation->getProductsByLocation("Virginia");
-
-
+    $thisNestedCategory = new \App\NestedCategory();
+    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
+    return "<h2>Done!</h2>";
 });
 
 

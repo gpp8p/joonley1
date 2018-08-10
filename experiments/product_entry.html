@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>New Product</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
 </head>
 <body>
 <style>
@@ -62,34 +63,132 @@
         display: inline-block;
         align-self: flex-end;
     }
+    .expanding_div{
+        display:flex;
+        grid-template-columns: repeat(auto-fill, minmax(15%,1fr));
+
+    }
+    .ediv{
+        background-color: #ff110a;
+        margin-right: 1%;
+        padding-top: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 15px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+        color:white;
+        height: 35%;
+    }
+    .esdiv{
+        display:grid;
+        grid-template-rows: repeat(auto-fill, minmax(30px,0.5fr));
+    }
 
 </style>
+<script language='javascript' type='text/javascript'>
+    $( document ).ready(function() {
+        $('#disappearing_div').hide();
+        $('#showData').on('click',function(){
+            $('#disappearing_div').show();
+        });
+        $('#expanddv').on('click',function(){
+            var selectdiv="<div class='esdiv' id='seldiv'><select onchange='addBox(this);' id='nxt_selector'><option value='One'>One</option><option value='Two'>Two</option><option value='Three'>Three</option><option value='Four'>Four</option><option value='Five'>Five</option></select></div>"
+            $('#seldiv').remove();
+            $('#expanding_container').append("<div class='ediv'>another one</div>");
+            $('#expanding_container').append(selectdiv);
+
+        });
+    });
+    function addBox(elem){
+        var selectdiv="<div class='esdiv' id='seldiv'><select onchange='addBox(this);' id='nxt_selector'><option value='One'>One</option><option value='Two'>Two</option><option value='Three'>Three</option><option value='Four'>Four</option><option value='Five'>Five</option></select></div>"
+        var new_box = "<div class='ediv'>"+elem.value+"</div>";
+        $('#seldiv').remove();
+        $('#expanding_container').append(new_box);
+        $('#expanding_container').append(selectdiv);
+    }
+</script>
+
 <div class="product_entry">
     <div class="product_form">
         <div class="title_row">
             <div class="explained_label">
                 <div class="lab">
-                    Here is a title
+                    Information on your product.
                 </div>
                 <div class="explaination">
-                    Here is some text explaining the title.  It can go on for quite a ways.
+                    We need some details about your product to help us market it.
                 </div>
             </div>
         </div>
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">
-                    A labeled Explaination
+                    The product name:
                 </div>
                 <div class="explaination">
-                    This is a labeled explaination.  A lot of smaller print under some bigger print.
+                    What do you call your product ?  Think of something that's easy to remember that contains key words that will help people find it.
                 </div>
             </div>
             <div class="input_field">
-                <input type="text" class="wide_input_field" size="50"/>
+                <input type="text" name="product_name" id="product_name" class="wide_input_field" size="50"/>
             </div>
-
         </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    The product name:
+                </div>
+                <div class="explaination">
+                    What do you call your product ?  Think of something that's easy to remember that contains key words that will help people find it.
+                </div>
+            </div>
+            <div class="expanding_div" id="expanding_container">
+
+            </div>
+        </div>
+        <div id="disappearing_div">
+            <div class="content_row">
+                <div class="explained_label">
+                    <div class="lab">
+                        Attribute #1 :
+                    </div>
+                    <div class="explaination">
+
+                    </div>
+                </div>
+                <div class="input_field">
+                    <input type="text" name="product_name" id="atrib1" class="wide_input_field" size="50"/>
+                </div>
+            </div>
+            <div class="content_row">
+                <div class="explained_label">
+                    <div class="lab">
+                        Attribute #2 :
+                    </div>
+                    <div class="explaination">
+
+                    </div>
+                </div>
+                <div class="input_field">
+                    <input type="text" name="product_name" id="atrib1" class="wide_input_field" size="50"/>
+                </div>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Another item:
+                </div>
+                <div class="explaination">
+                    Make the hidden stuff appear
+                </div>
+            </div>
+            <div class="input_field">
+                <button id="showData">Show HiddenContent</button><button id="expanddv">Add a div</button>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>
