@@ -50,6 +50,7 @@
         font-size: 15px;
         font-family: 'Fira Sans Condensed', sans-serif;
         font-weight: normal;
+        margin-right: 5px;
     }
     .input_field{
         display: flex;
@@ -63,6 +64,30 @@
         display: inline-block;
         align-self: flex-end;
     }
+    .accross3{
+        display:grid;
+        grid-template-columns: 30% 30% 30%;
+    }
+
+    .wideselects {
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 20px;
+        height: 55%;
+        margin-top: 35px;
+        margin-right: 3px;
+        -webkit-appearance: none;
+        appearance: none;
+        border: 1px solid #999999;
+        line-height: 1;
+        outline: 0;
+        color: #484848;
+        border-color: #999999;
+
+        border-radius: 3px;
+
+        background-color: white;
+    }
+
     .expanding_div{
         display:flex;
         grid-template-columns: repeat(auto-fill, minmax(15%,1fr));
@@ -134,6 +159,41 @@
                 <input type="text" name="product_name" id="product_name" class="wide_input_field" size="50"/>
             </div>
         </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Product Source:
+                </div>
+                <div class="explaination">
+                    Provide us some information about what your product is how and when it came to be produced.
+                </div>
+            </div>
+            <div class="accross3">
+                 <select class="wideselects" id="product_src">
+                     <option value="null">Who Produced It?</option>
+                     <option value="local">Made by Me</option>
+                     <option value="external">Somebody Else</option>
+                </select>
+                <select class="wideselects" id="product_what">
+                    <option value="n">What is It?</option>
+                    <option value="P">A Product</option>
+                    <option value="T">Supply or Tool</option>
+                </select>
+                <select class="wideselects" id="product_when">
+                    <option value="n">When Made?</option>
+                    <option value="notyet">Not prodeuced Yet</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="old">Before That</option>
+                </select>
+            </div>
+        </div>
+
+
+
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">
