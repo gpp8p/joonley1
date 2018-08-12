@@ -59,11 +59,28 @@
         justify-content: flex-start;
         align-content: flex-start;
     }
+
+    .small_input{
+        font-size: 15px;
+    }
+    .ta_field {
+        display: grid;
+        grid-template-rows: 100%;
+        width: 90%;
+    }
     .wide_input_field{
         font-size: 25px;
         display: inline-block;
         align-self: flex-end;
     }
+    .accross2{
+        display:grid;
+        grid-template-columns: 15% 15%;
+        margin-top: 15px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 12px;
+    }
+
     .accross3{
         display:grid;
         grid-template-columns: 30% 30% 30%;
@@ -178,6 +195,7 @@
                     <option value="n">What is It?</option>
                     <option value="P">A Product</option>
                     <option value="T">Supply or Tool</option>
+                    <option value="D">Digital Content</option>
                 </select>
                 <select class="wideselects" id="product_when">
                     <option value="n">When Made?</option>
@@ -197,59 +215,76 @@
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">
-                    The product name:
+                    The product type:
                 </div>
                 <div class="explaination">
-                    What do you call your product ?  Think of something that's easy to remember that contains key words that will help people find it.
+                    What product ctaegory does your product fall under ?  Use the select pulldowns to refine the category.
                 </div>
             </div>
             <div class="expanding_div" id="expanding_container">
 
             </div>
         </div>
-        <div id="disappearing_div">
-            <div class="content_row">
-                <div class="explained_label">
-                    <div class="lab">
-                        Attribute #1 :
-                    </div>
-                    <div class="explaination">
 
-                    </div>
+        <div id="disappearing_div">
+        </div>
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Description:
                 </div>
-                <div class="input_field">
-                    <input type="text" name="product_name" id="atrib1" class="wide_input_field" size="50"/>
+                <div class="explaination">
+                    Please describe your product here at length.  Tell us why you think this product is exactly what Joonley stores will want to sell.
                 </div>
             </div>
-            <div class="content_row">
-                <div class="explained_label">
-                    <div class="lab">
-                        Attribute #2 :
-                    </div>
-                    <div class="explaination">
-
-                    </div>
+            <div class="ta_field">
+                <textarea columns="60" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Price:
                 </div>
-                <div class="input_field">
-                    <input type="text" name="product_name" id="atrib1" class="wide_input_field" size="50"/>
+                <div class="explaination">
+                    Please provide the suggested price - both q1 and q10:
+                </div>
+            </div>
+            <div class="accross2">
+                <div>
+                    <span><input class="small_input" type="text" name="q1_price" id="q1_price" class="wide_input_field" size="10" placeholder="Q1 price"/></span>
+                </div>
+                <div>
+                    <span><input class="small_input" type="text" name="q10_price" id="q10_price" class="wide_input_field" size="10"placeholder="Q10 price"/></span>
                 </div>
             </div>
         </div>
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">
-                    Another item:
+                    Weight:
                 </div>
                 <div class="explaination">
-                    Make the hidden stuff appear
+                    What will your product weight when shipped:
                 </div>
             </div>
-            <div class="input_field">
-                <button id="showData">Show HiddenContent</button><button id="expanddv">Add a div</button>
+            <div class="accross2">
+                <div>
+                    <span><input class="small_input" type="text" name="weight_lbs" id="weight_lbs" class="wide_input_field" size="6" placeholder="Lbs."/></span>
+
+                </div>
+                <div>
+                    <span><input class="small_input" type="text" name="weight_oz" id="weight_oz" class="wide_input_field" size="6" placeholder="Oz."/></span>
+
+                </div>
             </div>
         </div>
 
+
     </div>
 </div>
+
+
 </body>
 </html>
