@@ -5,7 +5,7 @@
     .cntrBig{
         display: grid;
         grid-template-rows:100%;
-        height: 100%;
+        height: calc(80vh - 30px);
         background-color: #eeeeee;
         font-size: 250%;
         color:black;
@@ -16,5 +16,5 @@
 
 </style>
 
-<div class="cntrBig">Feed Page</div>
+<div class="cntrBig">Products Page</div>
 

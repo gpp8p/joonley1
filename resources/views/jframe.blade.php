@@ -30,13 +30,16 @@
                     @include('favoritesSidebar')
                 @break
                 @case('search')
-                @include('searchSidebar')
+                    @include('searchSidebar')
                 @break
                 @case('messages')
                     @include('messagesSidebar')
                 @break
                 @case('more')
-                @include('moreSidebar')
+                    @include('moreSidebar')
+                @break
+                @case('products')
+                    @include('productsSidebar')
                 @break
 
 
@@ -71,16 +74,15 @@
                 @case('moreContent')
                     @include('moreContent')
                 @break
+                @case('productsContent')
+                    @include('productsContent')
+                @break
+                @case('newProductsContent')
+                    @include('productEntry')
+                @break
+
 
             @endswitch
         </div>
-        <div class="footer">
-            <div class="menuFiller"></div>
-            <div class="menuSpacer">
-                <div></div>
-                <div class="socialFooter">
-                </div>
-                <div></div>
-            </div>
-        </div>
+
 @endsection

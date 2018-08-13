@@ -13,6 +13,10 @@
         <i class="fas fa-dollar-sign" aria-hidden="true"></i>
         <div>Orders</div>
     </div>
+    <div class="oneicon" onclick="event.preventDefault(); document.getElementById('products-form').submit();">
+        <i class="fa fa-product-hunt" aria-hidden="true"></i>
+        <div>Products</div>
+    </div>
     <div class="oneicon" onclick="event.preventDefault(); document.getElementById('specials-form').submit();">
         <i class="fa fa-exclamation-circle fa-1x" aria-hidden="true"></i>
         <div>Specials</div>
@@ -42,6 +46,7 @@
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 <form id="feed-form" action="{{ route('feed') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 <form id="order-form" action="{{ route('orders') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
+<form id="products-form" action="{{ route('products') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 <form id="specials-form" action="{{ route('specials') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 <form id="favorites-form" action="{{ route('favorites') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>
 <form id="search-form" action="{{ route('search') }}" method="POST" style="display: none;">{{ csrf_field() }}</form>

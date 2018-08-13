@@ -51,6 +51,10 @@ Route::post('/more', 'MoreController@show')->name('more');
 Route::get('/more', 'MoreController@show')->name('more');
 Route::post('/admin', 'AdminController@show')->name('admin');
 Route::get('/admin', 'AdminController@show')->name('admin');
+Route::post('/products', 'ProductController@show')->name('products');
+Route::get('/products', 'ProductController@show')->name('products');
+Route::get('/newProduct', 'ProductController@newProduct')->name('newProduct');
+
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();
