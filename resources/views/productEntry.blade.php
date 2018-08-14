@@ -72,7 +72,7 @@
 
     }
     .ediv{
-        background-color: #ff110a;
+        background-color: #07eefa;
         margin-right: 1%;
         padding-top: 5px;
         padding-right: 5px;
@@ -80,9 +80,23 @@
         font-size: 15px;
         font-family: 'Fira Sans Condensed', sans-serif;
         font-weight: normal;
-        color:white;
-        height: 35%;
+        color:#000000;
+        height: 45%;
     }
+    .backdiv{
+        background-color: #faa66e;
+        border-radius:9px 0px 0px 9px;
+        margin-right: 1%;
+        padding-top: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+        font-size: 15px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+        color:#000000;
+        height: 45%;
+    }
+
     .esdiv{
         display:grid;
         grid-template-rows: repeat(auto-fill, minmax(30px,0.5fr));
@@ -91,23 +105,90 @@
 </style>
 
 <script language='javascript' type='text/javascript'>
-    function getOneRegistrationRequest(clickedElement){
+
+    var lastAddedCat = "";
+    $( document ).ready(function() {
+        getNextCats('Select Product Category')
+    });
+
+    function getNextCats(parentCatName){
+        var childNodes = [];
+        childNodes.push(['select category',0]);
         $.ajax({
             /* the route pointing to the post function */
             url: '/getCats',
             type: 'GET',
             /* send the csrf-token and the input to the controller */
-            data: {parentCategoryName:encodeURIComponent(sParameter.trim(clickedElement.id))},
+            data: {parentCategoryName:parentCatName},
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-
+                for(i=0;i<data.length;i++){
+                    childNodes.push(data[i]);
+                }
+                if(data.length>0){
+                    var selHtml = createNextSelect(childNodes);
+                    $('#seldiv').remove();
+                    $('#expanding_container').append(selHtml);
+                    $('#expanding_container').append(selectdiv);
+                }else{
+                    $('#seldiv').remove();
+                    $('#expanding_container').append(createBackButton ());
+                }
             },
 
             error: function (data) {
                 alert('error');
             }
         });
+    }
+
+    function createNextSelect(optNames){
+        var thisDivHtml = "<div class='esdiv' id='seldiv'><select onchange='addCat(this);' id='nxt_selector'>";
+        for(i=0;i<optNames.length;i++){
+            var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
+            thisDivHtml = thisDivHtml+newOpt;
+        }
+        $("#backButton").remove();
+        thisDivHtml = thisDivHtml+"</select></div>"+createBackButton();
+        return thisDivHtml;
+
+    }
+
+    function createBackButton (){
+        var backButton = "<div class='backdiv' id = 'backButton' onclick='removeCat(lastAddedCat);'>Go Back</div>";
+        return backButton;
+    }
+
+    function  addCat(elem){
+        $("#backButton").remove();
+        var selectedOptionName = elem.selectedOptions[0].innerText;
+        lastAddedCat = elem.value;
+        var new_box = "<div class='ediv' id='cat"+elem.value+"'>"+selectedOptionName+"</div>";
+        $('#expanding_container').append(new_box);
+        getNextCats(selectedOptionName);
+    }
+
+    function removeCat(){
+        $('#seldiv').remove();
+        $("#backButton").remove();
+        var childern = document.getElementById('expanding_container').children;
+        var numCats = childern.length;
+        $("#cat"+lastAddedCat).remove();
+        var childern = document.getElementById('expanding_container').children;
+        if(numCats==1){
+            clength = childern.length;
+            var lastNode = childern[clength-1];
+            var lastNodeId = lastNode.id;
+            $("#"+lastNodeId).remove();
+            getNextCats('Select Product Category')
+        }else{
+            clength = childern.length;
+            var lastNode = childern[clength-1];
+            var lastNodeName = lastNode.innerText;
+            getNextCats(lastNodeName);
+        }
+
     }
 
 </script>
