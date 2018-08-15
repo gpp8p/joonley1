@@ -108,6 +108,7 @@
 
     var lastAddedCat = "";
     $( document ).ready(function() {
+        $("#disappearing_div").hide();
         getNextCats('Select Product Category')
     });
 
@@ -133,6 +134,7 @@
                     $('#expanding_container').append(selectdiv);
                 }else{
                     $('#seldiv').remove();
+                    showDefaultOptions(lastAddedCat);
                     $('#expanding_container').append(createBackButton ());
                 }
             },
@@ -141,6 +143,28 @@
                 alert('error');
             }
         });
+    }
+
+    function showDefaultOptions(catId){
+        $.ajax({
+            /* the route pointing to the post function */
+            url: '/getOptions',
+            type: 'GET',
+            /* send the csrf-token and the input to the controller */
+            data: {categoryId:catId},
+            dataType: 'json',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function (data) {
+                for(i=0;i<data.length;i++){
+                    thisOption = data[i];
+                }
+            },
+
+            error: function (data) {
+                alert('error');
+            }
+        });
+
     }
 
     function createNextSelect(optNames){

@@ -56,6 +56,7 @@ Route::get('/products', 'ProductController@show')->name('products');
 Route::get('/newProduct', 'ProductController@newProduct')->name('newProduct');
 
 Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
+Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
 
 
 Route::get('/test', function () {
