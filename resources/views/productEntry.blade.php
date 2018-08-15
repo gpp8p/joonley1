@@ -155,9 +155,25 @@
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
+                var allOptionsDiv = "<div class='allOptions'>";
                 for(i=0;i<data.length;i++){
-                    thisOption = data[i];
+                    var optionHeader = data[i][0];
+                    var thisOptionHeaderDiv = "<div class='optionHeader'>"+optionHeader+"</div>";
+                    var optionItems = data[i][1];
+                    var itemsDiv = "<div class='itemsDiv'>";
+                    for(d=0;d<optionItems.length;d++){
+                        var thisItemValue = optionItems[d][0];
+                        var thisItemId = optionItems[d][1];
+                        var thisItemCheckbox = "<div class='optionCheckBoxDiv'>"
+                        thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
+                        thisItemCheckbox = thisItemCheckbox + "<label for='option"+thisItemId+"'>"+thisItemValue+"</label>";
+                        thisItemCheckbox = thisItemCheckbox + "</div>";
+                        itemsDiv = itemsDiv+thisItemCheckbox;
+                    }
+                    itemsDiv = itemsDiv+"</div>";
+                    allOptionsDiv = allOptionsDiv+thisOptionHeaderDiv+itemsDiv;
                 }
+                allOptionsDiv = allOptionsDiv+"</div>";
             },
 
             error: function (data) {

@@ -12,6 +12,15 @@ class OptionsController extends Controller
         $categoryId = $inData['categoryId'];
         $thisOptions = new Options();
         $categoryOptions = $thisOptions->getDefaultOptionsForProducttype($categoryId);
-        return json_encode($categoryOptions);
+        $optionKeys = array_keys($categoryOptions);
+        $returnArray=[];
+        for($a=0;$a<sizeof($optionKeys);$a++){
+            $thisOptionKey = $optionKeys[$a];
+            $optionsForThisKey = $categoryOptions[$thisOptionKey];
+            $optionArrayElement = [$thisOptionKey,$optionsForThisKey];
+            array_push($returnArray,$optionArrayElement);
+        }
+
+        return json_encode($returnArray);
     }
 }
