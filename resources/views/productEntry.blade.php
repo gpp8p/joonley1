@@ -50,7 +50,7 @@
 
     .wideselects {
         font-family: 'Fira Sans Condensed', sans-serif;
-        font-size: 20px;
+        font-size: 15px;
         height: 55%;
         margin-top: 35px;
         margin-right: 3px;
@@ -102,13 +102,29 @@
         grid-template-rows: repeat(auto-fill, minmax(30px,0.5fr));
     }
 
+    .allOptions{
+        font-family: 'Fira Sans Condensed', sans-serif;
+        padding:20px;
+        margin-left: 10px;
+    }
+    .optionHeader{
+        font-size: 15px;
+    }
+    .optionCheckBoxDiv[type="checkbox"]{
+        font-size:12px;
+    }
+    .optionLabel {
+        font-size:12px;
+        margin-left: 3px;
+    }
+
 </style>
 
 <script language='javascript' type='text/javascript'>
 
     var lastAddedCat = "";
     $( document ).ready(function() {
-        $("#disappearing_div").hide();
+        $("#options_div").hide();
         getNextCats('Select Product Category')
     });
 
@@ -166,7 +182,7 @@
                         var thisItemId = optionItems[d][1];
                         var thisItemCheckbox = "<div class='optionCheckBoxDiv'>"
                         thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
-                        thisItemCheckbox = thisItemCheckbox + "<label for='option"+thisItemId+"'>"+thisItemValue+"</label>";
+                        thisItemCheckbox = thisItemCheckbox + "<label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label>";
                         thisItemCheckbox = thisItemCheckbox + "</div>";
                         itemsDiv = itemsDiv+thisItemCheckbox;
                     }
@@ -174,6 +190,8 @@
                     allOptionsDiv = allOptionsDiv+thisOptionHeaderDiv+itemsDiv;
                 }
                 allOptionsDiv = allOptionsDiv+"</div>";
+                $("#disappearing_div").html(allOptionsDiv);
+                $("#options_div").show();
             },
 
             error: function (data) {
@@ -210,18 +228,23 @@
     }
 
     function removeCat(){
+        $("#options_div").hide();
         $('#seldiv').remove();
         $("#backButton").remove();
         var childern = document.getElementById('expanding_container').children;
         var numCats = childern.length;
         $("#cat"+lastAddedCat).remove();
         var childern = document.getElementById('expanding_container').children;
-        if(numCats==1){
+        if(numCats<2){
             clength = childern.length;
-            var lastNode = childern[clength-1];
-            var lastNodeId = lastNode.id;
-            $("#"+lastNodeId).remove();
-            getNextCats('Select Product Category')
+            if (clength == 0) {
+                getNextCats('Select Product Category')
+            }else{
+                var lastNode = childern[clength-1];
+                var lastNodeId = lastNode.id;
+                $("#"+lastNodeId).remove();
+                getNextCats('Select Product Category')
+            }
         }else{
             clength = childern.length;
             var lastNode = childern[clength-1];
@@ -303,8 +326,20 @@
 
         </div>
     </div>
-    <div id="disappearing_div">
+    <div class="content_row" id="options_div">
+        <div class="explained_label">
+            <div class="lab">
+                Possible product options:
+            </div>
+            <div class="explaination">
+                Please check the options that will apply apply for your product.
+            </div>
+        </div>
+        <div class="expanding_div" id="disappearing_div">
+
+        </div>
     </div>
+
     <div class="content_row">
         <div class="explained_label">
             <div class="lab">
