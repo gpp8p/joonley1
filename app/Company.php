@@ -21,6 +21,7 @@ class Company extends Model
         return $companyNames;
     }
 
+
     public function addNewCompany($companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeId,$icon)
     {
         try {

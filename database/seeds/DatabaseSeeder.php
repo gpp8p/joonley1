@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocationsSeeder::class);
         $this->call(CompanyTableSeeder::class);
         $this->call(CompanyCanBeSeeder::class);
-        $this->call(CompanyUserInCompanySeeder::class);
         $this->call(CollectionTypeSeeder::class);
         $this->call(CollectionSeeder::class);
         $this->call(CompanyHasCollectionSeeder::class);
@@ -56,5 +55,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CollectHasLinksSeeder::class);
         $this->call(RegistrationsSeeder::class);
         $this->call(CombinedFeedSeeder::class);
+        $this->call(CompanyUserInCompanySeeder::class);
     }
 }

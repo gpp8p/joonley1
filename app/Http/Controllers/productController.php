@@ -16,6 +16,8 @@ class productController extends Controller
     public function newProduct(Request $request)
     {
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent']);
+        $currentUser = new User;
+        $thisUsersCollections = $currentUser->getCollectionsForLoggedInUser();
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections]);
     }
 }

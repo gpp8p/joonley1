@@ -41,6 +41,14 @@
         font-size: 12px;
     }
 
+    .accross1 {
+        display:grid;
+        grid-template-columns: 50%;
+        margin-top: 15px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 15px;
+    }
+
 
     .ta_field {
         display: grid;
@@ -389,6 +397,23 @@
                 <span><input class="small_input" type="text" name="weight_oz" id="weight_oz" class="wide_input_field" size="6" placeholder="Oz."/></span>
 
             </div>
+        </div>
+    </div>
+    <div class="content_row">
+        <div class="explained_label">
+            <div class="lab">
+                Catalog:
+            </div>
+            <div class="explaination">
+                Please select which of your company's existing catalogs you wish to include this product.
+            </div>
+        </div>
+        <div class="across1">
+            <select class="wideselects" id="product_catalog">
+                @foreach ($thisUsersCollections as $collection)
+                    <option id="{{$collection->id}}">{{$collection->name}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 </div>

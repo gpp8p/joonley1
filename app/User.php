@@ -286,6 +286,21 @@ class User extends Authenticatable
         }
     }
 
+    public function getCollectionsForLoggedInUser(){
+        $loggedInUser = Auth::user();
+        $loggedInUserId = $loggedInUser->getAttributes()['id'];
+        $query = "select collection.id, collection.name from collection, hascollection, company, userincompany, users ".
+            "where collection.id = hascollection.collection_id ".
+            "and hascollection.company_id = company.id ".
+            "and userincompany.company_id = company.id ".
+            "and userincompany.user_id = users.id ".
+            "and users.id = ? ";
+        $collectionsFound = DB::select($query, [$loggedInUserId]);
+        return $collectionsFound;
+
+
+    }
+
 
 
 }
