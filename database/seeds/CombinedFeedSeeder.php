@@ -338,8 +338,21 @@ class CombinedFeedSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
+        $termReference = DB::table('terms')->where('specification', 'buyer pays for shipping')->first();
+        DB::table('defaultterms')->insert([
+            'terms_id'=>$termReference->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
 
-
+        $termReference = DB::table('terms')->where('specification', 'Net 30-day')->first();
+        DB::table('defaultterms')->insert([
+            'terms_id'=>$termReference->id,
+            'company_id'=>$newCompanyId,
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
         $productType = DB::table('nested_category')->where('name', 'Chains')->first();
         $thisProduct = DB::table('product')->insertGetId([
             'name'=>'Gold Chain',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Terms;
 
 class productController extends Controller
 {
@@ -18,6 +19,12 @@ class productController extends Controller
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $currentUser = new User;
         $thisUsersCollections = $currentUser->getCollectionsForLoggedInUser();
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections]);
+        $thisTerms = new Terms();
+        $thisUserCompanies = $currentUser->getCompaniesForLoggedInUser();
+        $thisCompanyTerms = [];
+        foreach($thisUserCompanies as $company){
+           array_push($thisCompanyTerms,$thisTerms->getTermsForCompany($company->comp_id));
+        }
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms]);
     }
 }

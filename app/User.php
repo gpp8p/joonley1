@@ -253,6 +253,11 @@ class User extends Authenticatable
 
     }
 
+    public function getCompaniesForLoggedInUser(){
+        $loggedInUser = Auth::user();
+        return $loggedInUser->getUserCompanies($loggedInUser);
+    }
+
     public function setUserRole($newUserRole, $userToChange)
     {
         try {

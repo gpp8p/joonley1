@@ -125,6 +125,14 @@
         font-size:12px;
         margin-left: 3px;
     }
+    .termCheckBoxDiv{
+        margin-top: 20px;
+    }
+    .termDiv {
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size:12px;
+        margin-left: 3px;
+    }
 
 </style>
 
@@ -414,6 +422,26 @@
                     <option id="{{$collection->id}}">{{$collection->name}}</option>
                 @endforeach
             </select>
+        </div>
+    </div>
+    <div class="content_row">
+        <div class="explained_label">
+            <div class="lab">
+                Available Terms:
+            </div>
+            <div class="explaination">
+                Please select which of your company's terms you wish to include this product.
+            </div>
+        </div>
+        <div class="termCheckBoxDiv">
+            @foreach($thisCompanyTerms as $companyTerms)
+                @foreach($companyTerms as $thisTerm)
+                    <div class="termDiv">
+                        <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}"/>
+                        <label class="optionLabel" for="term{{$thisTerm->id}}">{{$thisTerm->specification}}</label>
+                    </div>
+                @endforeach
+            @endforeach
         </div>
     </div>
 </div>
