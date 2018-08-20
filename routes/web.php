@@ -58,6 +58,14 @@ Route::get('/newProduct', 'ProductController@newProduct')->name('newProduct');
 Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
 Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
 
+//Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
+//Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
+
+Route::post('/images-save', 'UploadImagesController@store');
+Route::post('/images-delete', 'UploadImagesController@destroy');
+Route::get('/images-show', 'UploadImagesController@index');
+
+
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();

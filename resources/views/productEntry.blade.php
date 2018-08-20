@@ -135,6 +135,9 @@
     }
 
 </style>
+<link rel="stylesheet" href="{{ url('/css/bootstrap.min.css') }}">
+<script src="{{ url('/js/dropzone.js') }}"></script>
+<script src="{{ url('/js/dropzone-config.js') }}"></script>
 
 <script language='javascript' type='text/javascript'>
 
@@ -442,6 +445,35 @@
                     </div>
                 @endforeach
             @endforeach
+        </div>
+    </div>
+    <div class="content_row">
+        <div class="explained_label">
+            <div class="lab">
+                Product Photo's:
+            </div>
+            <div class="explaination">
+                Please drag and drop photo's of your product here.  Make sure to include photo's that have good lighting and highlight your product from several angles.
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="col-sm-10 offset-sm-1">
+                <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
+                <form method="post" action="{{ url('/images-save') }}"
+                      enctype="multipart/form-data" class="dropzone" id="my-dropzone">
+                    {{ csrf_field() }}
+                    <div class="dz-message">
+                        <div class="col-xs-8">
+                            <div class="message">
+                                <p>Drop files here or Click to Upload</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fallback">
+                        <input type="file" name="file" multiple>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
