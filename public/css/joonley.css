@@ -95,6 +95,10 @@
     width: 50%;
 }
 
+.fontOnly {
+    font-family: 'Fira Sans Condensed', sans-serif;
+}
+
 .bigTitleCentered {
     align-content: center;
     padding-top: 1em;
@@ -183,6 +187,10 @@
     background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
     background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
     text-decoration: none;
+}
+
+.subCntr {
+    margin-left: 50%;
 }
 
 .pwentry {

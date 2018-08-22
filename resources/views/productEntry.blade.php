@@ -133,17 +133,21 @@
         font-size:12px;
         margin-left: 3px;
     }
+    .errorItem{
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size:12px;
+        margin-left: 8px;
+        color:red;
+    }
 
 </style>
-<link rel="stylesheet" href="{{ url('/css/bootstrap.min.css') }}">
-<script src="{{ url('/js/dropzone.js') }}"></script>
-<script src="{{ url('/js/dropzone-config.js') }}"></script>
 
 <script language='javascript' type='text/javascript'>
 
     var lastAddedCat = "";
     $( document ).ready(function() {
         $("#options_div").hide();
+        $("#errorDiv").hide();
         getNextCats('Select Product Category')
     });
 
@@ -221,7 +225,7 @@
     }
 
     function createNextSelect(optNames){
-        var thisDivHtml = "<div class='esdiv' id='seldiv'><select onchange='addCat(this);' id='nxt_selector'>";
+        var thisDivHtml = "<div class='esdiv' id='seldiv'><select id ='categorySelect' onchange='addCat(this);' id='nxt_selector'>";
         for(i=0;i<optNames.length;i++){
             var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
             thisDivHtml = thisDivHtml+newOpt;
@@ -273,207 +277,257 @@
 
     }
 
+    function submitNewProductForm(){
+        var errorsHaveBeenDetected = 0;
+        if($("#product_name").val()==""){
+            $("#errorList").append("<li>You must enter a product name</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#product_src").val()=='n'){
+            $("#errorList").append("<li>You must select a value detailing who produced your product</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#product_what").val()=='n'){
+            $("#errorList").append("<li>You must select a value detailing what your product is</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#product_when").val()=='n'){
+            $("#errorList").append("<li>You must select a value detailing when your product was made</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#categorySelect").val()=='0'){
+            $("#errorList").append("<li>You must select a category for your product</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#product_description").val()==""){
+            $("#errorList").append("<li>You must enter a product description</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#q1_price").val()==""){
+            $("#errorList").append("<li>You must enter a quantity one price</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#q10_price").val()==""){
+            $("#errorList").append("<li>You must enter a quantity ten price</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#weight_lbs").val()==""){
+            $("#errorList").append("<li>You must enter a weight (lbs)</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#weight_oz").val()==""){
+            $("#errorList").append("<li>You must enter a weight (ounces)</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if($("#product_catalog").val()==0){
+            $("#errorList").append("<li>You must select a catalog</li>");
+            errorsHaveBeenDetected = 1;
+        }
+        if(errorsHaveBeenDetected>0){
+            $("#errorDiv").show();
+        }else{
+            $("#newProductForm").submit();
+        }
+
+    }
+
 </script>
+<form id="newProductForm" method="post" action="{{ url('/newProductSubmit') }}">
+    {{ csrf_field() }}
 
-<div class="product_form">
-    <div class="title_row">
-        <div class="explained_label">
-            <div class="lab">
-                Information on your product.
-            </div>
-            <div class="explaination">
-                We need some details about your product to help us market it.
-            </div>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                The product name:
-            </div>
-            <div class="explaination">
-                What do you call your product ?  Think of something that's easy to remember that contains key words that will help people find it.
-            </div>
-        </div>
-        <div class="input_field">
-            <input type="text" name="product_name" id="product_name" class="wide_input_field" size="50"/>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Product Source:
-            </div>
-            <div class="explaination">
-                Provide us some information about what your product is how and when it came to be produced.
-            </div>
-        </div>
-        <div class="accross3">
-            <select class="wideselects" id="product_src">
-                <option value="null">Who Produced It?</option>
-                <option value="local">Made by Me</option>
-                <option value="external">Somebody Else</option>
-            </select>
-            <select class="wideselects" id="product_what">
-                <option value="n">What is It?</option>
-                <option value="P">A Product</option>
-                <option value="T">Supply or Tool</option>
-                <option value="D">Digital Content</option>
-            </select>
-            <select class="wideselects" id="product_when">
-                <option value="n">When Made?</option>
-                <option value="notyet">Not prodeuced Yet</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-                <option value="2015">2015</option>
-                <option value="2014">2014</option>
-                <option value="old">Before That</option>
-            </select>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                The product type:
-            </div>
-            <div class="explaination">
-                What product ctaegory does your product fall under ?  Use the select pulldowns to refine the category.
-            </div>
-        </div>
-        <div class="expanding_div" id="expanding_container">
 
-        </div>
-    </div>
-    <div class="content_row" id="options_div">
-        <div class="explained_label">
-            <div class="lab">
-                Possible product options:
-            </div>
-            <div class="explaination">
-                Please check the options that will apply apply for your product.
-            </div>
-        </div>
-        <div class="expanding_div" id="disappearing_div">
 
+    <div class="product_form">
+        <div class="title_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Information on your product.
+                </div>
+                <div class="explaination">
+                    We need some details about your product to help us market it.
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Description:
+        <div class="content_row" id="errorDiv">
+            <div class="explained_label">
+                <div class="lab">
+                    Entry errors:
+                </div>
+                <div class="explaination">
+                    You must correct all the errors before submitting the form
+                </div>
             </div>
-            <div class="explaination">
-                Please describe your product here at length.  Tell us why you think this product is exactly what Joonley stores will want to sell.
-            </div>
-        </div>
-        <div class="ta_field">
-            <textarea columns="60" rows="10"></textarea>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Price:
-            </div>
-            <div class="explaination">
-                Please provide the suggested price - both q1 and q10:
+            <div class="input_field">
+                <ul id="errorList" class="errorItem">
+                </ul>
             </div>
         </div>
-        <div class="accross2">
-            <div>
-                <span><input class="small_input" type="text" name="q1_price" id="q1_price" class="wide_input_field" size="10" placeholder="Q1 price"/></span>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    The product name:
+                </div>
+                <div class="explaination">
+                    What do you call your product ?  Think of something that's easy to remember that contains key words that will help people find it.
+                </div>
             </div>
-            <div>
-                <span><input class="small_input" type="text" name="q10_price" id="q10_price" class="wide_input_field" size="10"placeholder="Q10 price"/></span>
-            </div>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Weight:
-            </div>
-            <div class="explaination">
-                What will your product weight when shipped:
+            <div class="input_field">
+                <input type="text" name="product_name" id="product_name" class="wide_input_field" size="50"/>
             </div>
         </div>
-        <div class="accross2">
-            <div>
-                <span><input class="small_input" type="text" name="weight_lbs" id="weight_lbs" class="wide_input_field" size="6" placeholder="Lbs."/></span>
-
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Product Source:
+                </div>
+                <div class="explaination">
+                    Provide us some information about what your product is how and when it came to be produced.
+                </div>
             </div>
-            <div>
-                <span><input class="small_input" type="text" name="weight_oz" id="weight_oz" class="wide_input_field" size="6" placeholder="Oz."/></span>
+            <div class="accross3">
+                <select class="wideselects" id="product_src">
+                    <option value="n">Who Produced It?</option>
+                    <option value="local">Made by Me</option>
+                    <option value="external">Somebody Else</option>
+                </select>
+                <select class="wideselects" id="product_what">
+                    <option value="n">What is It?</option>
+                    <option value="P">A Product</option>
+                    <option value="T">Supply or Tool</option>
+                    <option value="D">Digital Content</option>
+                </select>
+                <select class="wideselects" id="product_when">
+                    <option value="n">When Made?</option>
+                    <option value="notyet">Not prodeuced Yet</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="old">Before That</option>
+                </select>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    The product type:
+                </div>
+                <div class="explaination">
+                    What product ctaegory does your product fall under ?  Use the select pulldowns to refine the category.
+                </div>
+            </div>
+            <div class="expanding_div" id="expanding_container">
 
             </div>
         </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Catalog:
+        <div class="content_row" id="options_div">
+            <div class="explained_label">
+                <div class="lab">
+                    Possible product options:
+                </div>
+                <div class="explaination">
+                    Please check the options that will apply apply for your product.
+                </div>
             </div>
-            <div class="explaination">
-                Please select which of your company's existing catalogs you wish to include this product.
-            </div>
-        </div>
-        <div class="across1">
-            <select class="wideselects" id="product_catalog">
-                @foreach ($thisUsersCollections as $collection)
-                    <option id="{{$collection->id}}">{{$collection->name}}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Available Terms:
-            </div>
-            <div class="explaination">
-                Please select which of your company's terms you wish to include this product.
+            <div class="expanding_div" id="disappearing_div">
+
             </div>
         </div>
-        <div class="termCheckBoxDiv">
-            @foreach($thisCompanyTerms as $companyTerms)
-                @foreach($companyTerms as $thisTerm)
-                    <div class="termDiv">
-                        <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}"/>
-                        <label class="optionLabel" for="term{{$thisTerm->id}}">{{$thisTerm->specification}}</label>
-                    </div>
-                @endforeach
-            @endforeach
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Product Photo's:
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Description:
+                </div>
+                <div class="explaination">
+                    Please describe your product here at length.  Tell us why you think this product is exactly what Joonley stores will want to sell.
+                </div>
             </div>
-            <div class="explaination">
-                Please drag and drop photo's of your product here.  Make sure to include photo's that have good lighting and highlight your product from several angles.
+            <div class="ta_field">
+                <textarea id="product_description" columns="60" rows="10"></textarea>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="col-sm-10 offset-sm-1">
-                <h2 class="page-heading">Upload your Images <span id="counter"></span></h2>
-                <form method="post" action="{{ url('/images-save') }}"
-                      enctype="multipart/form-data" class="dropzone" id="my-dropzone">
-                    {{ csrf_field() }}
-                    <div class="dz-message">
-                        <div class="col-xs-8">
-                            <div class="message">
-                                <p>Drop files here or Click to Upload</p>
-                            </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Price:
+                </div>
+                <div class="explaination">
+                    Please provide the suggested price - both q1 and q10:
+                </div>
+            </div>
+            <div class="accross2">
+                <div>
+                    <span><input class="small_input" type="text" name="q1_price" id="q1_price" class="wide_input_field" size="10" placeholder="Q1 price"/></span>
+                </div>
+                <div>
+                    <span><input class="small_input" type="text" name="q10_price" id="q10_price" class="wide_input_field" size="10"placeholder="Q10 price"/></span>
+                </div>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Weight:
+                </div>
+                <div class="explaination">
+                    What will your product weight when shipped:
+                </div>
+            </div>
+            <div class="accross2">
+                <div>
+                    <span><input class="small_input" type="text" name="weight_lbs" id="weight_lbs" class="wide_input_field" size="6" placeholder="Lbs."/></span>
+
+                </div>
+                <div>
+                    <span><input class="small_input" type="text" name="weight_oz" id="weight_oz" class="wide_input_field" size="6" placeholder="Oz."/></span>
+
+                </div>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Catalog:
+                </div>
+                <div class="explaination">
+                    Please select which of your company's existing catalogs you wish to include this product.
+                </div>
+            </div>
+            <div class="across1">
+                <select class="wideselects" id="product_catalog">
+                    <option value="0">Select Catalog</option>
+                    @foreach ($thisUsersCollections as $collection)
+                        <option value="{{$collection->id}}">{{$collection->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Available Terms:
+                </div>
+                <div class="explaination">
+                    Please select which of your company's terms you wish to include this product.
+                </div>
+            </div>
+            <div class="termCheckBoxDiv">
+                @foreach($thisCompanyTerms as $companyTerms)
+                    @foreach($companyTerms as $thisTerm)
+                        <div class="termDiv">
+                            <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}"/>
+                            <label class="optionLabel" for="term{{$thisTerm->id}}">{{$thisTerm->specification}}</label>
                         </div>
-                    </div>
-                    <div class="fallback">
-                        <input type="file" name="file" multiple>
-                    </div>
-                </form>
+                    @endforeach
+                @endforeach
             </div>
         </div>
     </div>
-</div>
+    <div class="subCntr">
+        <button type="button" onclick="submitNewProductForm();return false;" class="btn" value="Next">Next->></button>
+    </div>
+
+</form>

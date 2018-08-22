@@ -8,6 +8,11 @@ use App\Options;
 class OptionsController extends Controller
 {
     public function getOptionsForCategory(Request $request){
+        $returnArray = $this->catOptions($request);
+        return json_encode($returnArray);
+    }
+
+    public function catOptions(Request $request){
         $inData =  $request->all();
         $categoryId = $inData['categoryId'];
         $thisOptions = new Options();
@@ -20,7 +25,6 @@ class OptionsController extends Controller
             $optionArrayElement = [$thisOptionKey,$optionsForThisKey];
             array_push($returnArray,$optionArrayElement);
         }
-
-        return json_encode($returnArray);
+        return $returnArray;
     }
 }

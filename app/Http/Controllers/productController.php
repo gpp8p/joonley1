@@ -27,4 +27,8 @@ class productController extends Controller
         }
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms]);
     }
+
+    public function processNewProductInitial(Request $request){
+        $inData =  $request->all();
+    }
 }

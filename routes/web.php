@@ -64,7 +64,9 @@ Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getO
 Route::post('/images-save', 'UploadImagesController@store');
 Route::post('/images-delete', 'UploadImagesController@destroy');
 Route::get('/images-show', 'UploadImagesController@index');
+Route::get('/uploadImages', 'UploadImagesController@create');
 
+Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
 
 
 Route::get('/test', function () {
