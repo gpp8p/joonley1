@@ -61,12 +61,13 @@ Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getO
 //Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
 //Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
 
-Route::post('/images-save', 'UploadImagesController@store');
-Route::post('/images-delete', 'UploadImagesController@destroy');
-Route::get('/images-show', 'UploadImagesController@index');
-Route::get('/uploadImages', 'UploadImagesController@create');
+Route::post('/images-save', 'UploadImagesController@store')->name('images-save');
+Route::post('/images-delete', 'UploadImagesController@destroy')->name('images-delete');
+Route::get('/images-show', 'UploadImagesController@index')->name('images-show');
+Route::get('/uploadImages', 'UploadImagesController@create')->name('uploadImages');
 
 Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
+Route::post('/productSummary', 'ProductController@showProductSummary')->name('productSummary');
 
 
 Route::get('/test', function () {

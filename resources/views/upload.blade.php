@@ -30,6 +30,11 @@
                     <input type="file" name="file" multiple>
                 </div>
             </form>
+            <form method="post" action="{{ url('/productSummary') }}" id="productSummaryForm">
+                {{ csrf_field() }}
+                <input type="hidden" name='productData' id='productData' value="{{$productData}}"/>
+                <button type="submit">Next ->></button>
+            </form>
         </div>
     </div>
 
