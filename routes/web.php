@@ -67,7 +67,7 @@ Route::get('/images-show', 'UploadImagesController@index')->name('images-show');
 Route::get('/uploadImages', 'UploadImagesController@create')->name('uploadImages');
 
 Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
-Route::post('/productSummary', 'ProductController@showProductSummary')->name('productSummary');
+Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
 
 
 Route::get('/test', function () {

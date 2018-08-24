@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Upload;
 use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UploadImagesController extends Controller
 {
@@ -54,6 +56,7 @@ class UploadImagesController extends Controller
         if (!is_dir($this->photos_path)) {
             mkdir($this->photos_path, 0777);
         }
+        $thisUser = Auth::user();
 
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
@@ -73,6 +76,7 @@ class UploadImagesController extends Controller
             $upload->filename = $save_name;
             $upload->resized_name = $resize_name;
             $upload->original_name = basename($photo->getClientOriginalName());
+            $upload->user_id = $thisUser->id;
             $upload->save();
         }
         return Response::json([

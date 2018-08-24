@@ -30,10 +30,10 @@
                     <input type="file" name="file" multiple>
                 </div>
             </form>
-            <form method="post" action="{{ url('/productSummary') }}" id="productSummaryForm">
+            <form method="post" action="{{ url('/newProductCreate') }}" id="productSummaryForm">
                 {{ csrf_field() }}
                 <input type="hidden" name='productData' id='productData' value="{{$productData}}"/>
-                <button type="submit">Next ->></button>
+                <button type="submit" style="margin-left: 35%;" class="btn">Save Information and Photos for: {{$product_name}}</button>
             </form>
         </div>
     </div>

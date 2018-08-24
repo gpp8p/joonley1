@@ -18,6 +18,7 @@ class CreateUploadsTable extends Migration
             $table->text('filename');
             $table->text('resized_name');
             $table->text('original_name');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

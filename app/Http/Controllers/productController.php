@@ -39,10 +39,10 @@ class productController extends Controller
             array_push($returnArray,$dataElement);
         }
         $encodedData = json_encode($returnArray);
-        return view('upload',['productData'=>$encodedData]);
+        return view('upload',['productData'=>$encodedData, 'product_name'=>$inData['product_name']]);
     }
 
-    public function showProductSummary(Request $request){
+    public function newProductCreate(Request $request){
         $inData =  $request->all();
         $decodedData = json_decode($inData['productData']);
         $decodedValues = array();
@@ -51,6 +51,21 @@ class productController extends Controller
             $value=$decodedData[$i][1];
             $decodedValues[$key] = $value;
         }
-        $thisProductName = $decodedData[1][1];
+        $newProductId = DB::table('product')->insertgetId([
+            'name'=>$decodedValues['product_name'],
+            'type_id'=>$decodedValues['lastAddedCat'],
+            'price_q1'=>$decodedValues['q1_price'],
+            'price_q10'=>$decodedValues['q10_price'],
+            'ship_weight'=>$decodedValues['weight_lbs'],
+            'ship_weight_oz'=>$decodedValues['weight_oz'],
+            'whenmade'=>$decodedValues['product_when'],
+            'whomade'=>$decodedValues['product_src'],
+            'prodis'=>$decodedValues['product_when'],
+            'description'=>$decodedValues['product_description'],
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
+        ]);
+
+
     }
 }

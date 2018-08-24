@@ -24,6 +24,7 @@ class CreateProductTable extends Migration
             $table->decimal('price_q1', 8, 2);
             $table->decimal('price_q10', 8, 2);
             $table->unsignedInteger('ship_weight');
+            $table->unsignedInteger('ship_weight_oz');
             $table->timestamps();
 
         });
