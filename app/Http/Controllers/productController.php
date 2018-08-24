@@ -45,6 +45,12 @@ class productController extends Controller
     public function showProductSummary(Request $request){
         $inData =  $request->all();
         $decodedData = json_decode($inData['productData']);
+        $decodedValues = array();
+        for($i=0;$i<sizeof($decodedData);$i++){
+            $key=$decodedData[$i][0];
+            $value=$decodedData[$i][1];
+            $decodedValues[$key] = $value;
+        }
         $thisProductName = $decodedData[1][1];
     }
 }

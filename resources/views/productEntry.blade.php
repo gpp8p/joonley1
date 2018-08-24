@@ -326,6 +326,7 @@
         if(errorsHaveBeenDetected>0){
             $("#errorDiv").show();
         }else{
+            $("#lastAddedCat").val(lastAddedCat);
             $("#newProductForm").submit();
         }
 
@@ -386,18 +387,18 @@
                 </div>
             </div>
             <div class="accross3">
-                <select class="wideselects" id="product_src">
+                <select class="wideselects" name="product_src" id="product_src">
                     <option value="n">Who Produced It?</option>
                     <option value="local">Made by Me</option>
                     <option value="external">Somebody Else</option>
                 </select>
-                <select class="wideselects" id="product_what">
+                <select class="wideselects" name="product_what" id="product_what">
                     <option value="n">What is It?</option>
                     <option value="P">A Product</option>
                     <option value="T">Supply or Tool</option>
                     <option value="D">Digital Content</option>
                 </select>
-                <select class="wideselects" id="product_when">
+                <select class="wideselects" name="product_when" id="product_when">
                     <option value="n">When Made?</option>
                     <option value="notyet">Not prodeuced Yet</option>
                     <option value="2018">2018</option>
@@ -446,7 +447,7 @@
                 </div>
             </div>
             <div class="ta_field">
-                <textarea id="product_description" columns="60" rows="10"></textarea>
+                <textarea name="product_description" id="product_description" columns="60" rows="10"></textarea>
             </div>
         </div>
         <div class="content_row">
@@ -497,7 +498,7 @@
                 </div>
             </div>
             <div class="across1">
-                <select class="wideselects" id="product_catalog">
+                <select class="wideselects" name="product_catalog" id="product_catalog">
                     <option value="0">Select Catalog</option>
                     @foreach ($thisUsersCollections as $collection)
                         <option value="{{$collection->id}}">{{$collection->name}}</option>
@@ -529,5 +530,6 @@
     <div class="subCntr">
         <button type="button" onclick="submitNewProductForm();return false;" class="btn" value="Next">Next->></button>
     </div>
+    <input type="hidden" id="lastAddedCat" name="lastAddedCat"/>
 
 </form>
