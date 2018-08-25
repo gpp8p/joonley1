@@ -44,6 +44,15 @@ class MediaTypeSeeder extends Seeder
         ]);
 
         DB::table('mediatype')->insert([
+            'name' => 'Thumbnail',
+            'slug' => 'thumb',
+            'description'=> 'image thumbnail',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+
+
+        DB::table('mediatype')->insert([
             'name' => 'No Media',
             'slug' => 'nomedia',
             'description'=> 'for situations where there is no media',

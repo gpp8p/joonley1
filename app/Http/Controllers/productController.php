@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Terms;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class productController extends Controller
@@ -44,6 +46,9 @@ class productController extends Controller
     }
 
     public function newProductCreate(Request $request){
+        $urlPrefix = 'http://localhost/joonley1/storage/app/public/';
+        $thumbNailType = DB::table('mediatype')->where('slug', 'thumb')->first();
+        $imageType = DB::table('mediatype')->where('slug', 'image')->first();
         $inData =  $request->all();
         $decodedData = json_decode($inData['productData']);
         $decodedValues = array();
@@ -69,15 +74,37 @@ class productController extends Controller
         ]);
         $uploadedFiles = DB::table('uploads')->where('user_id', $thisUser->id)->get();
         foreach ($uploadedFiles as $thisUploadedFile){
-            
+            $uploadedThumbnailName = $thisUploadedFile->resized_name;
+            $uploadedFileName = $thisUploadedFile->filename;
+            $newProductThumbnailLinkId =DB::table('medialink')->insertgetId([
+                'mediatype_id'=>$thumbNailType->id,
+                'pertainsto'=>'product',
+                'url'=>$urlPrefix.$thisUser->id.'/'.$uploadedThumbnailName,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            DB::table('producthaslinks')->insert([
+                'product_id'=>$newProductId,
+                'medialink_id'=>$newProductThumbnailLinkId,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            Storage::move('public/'.$thisUser->id.'/tmp/'.$uploadedThumbnailName, 'public/'.$thisUser->id.'/'.$uploadedThumbnailName);
+            $newProductFileLinkId = DB::table('medialink')->insertgetId([
+                'mediatype_id'=>$imageType->id,
+                'pertainsto'=>'product',
+                'url'=>$urlPrefix.$thisUser->id.'/'.$uploadedFileName,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            DB::table('producthaslinks')->insert([
+                'product_id'=>$newProductId,
+                'medialink_id'=>$newProductFileLinkId,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+            Storage::move('public/'.$thisUser->id.'/tmp/'.$uploadedFileName, 'public/'.$thisUser->id.'/'.$uploadedFileName);
         }
-
-
-
-
-
-
-
-
+        DB::table('uploads')->where('user_id', $thisUser->id)->delete();
     }
 }

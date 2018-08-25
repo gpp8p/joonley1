@@ -18,7 +18,7 @@ class CreateMediaLinkTable extends Migration
 //            $table->unsignedInteger('reference_id');
             $table->string('pertainsto',12);
             $table->unsignedInteger('mediatype_id');
-            $table->string('url',64);
+            $table->string('url',128);
             $table->timestamps();
 
 
