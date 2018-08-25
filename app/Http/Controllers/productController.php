@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Terms;
+use Illuminate\Support\Facades\Storage;
 
 class productController extends Controller
 {
@@ -51,6 +52,7 @@ class productController extends Controller
             $value=$decodedData[$i][1];
             $decodedValues[$key] = $value;
         }
+        $thisUser = Auth::user();
         $newProductId = DB::table('product')->insertgetId([
             'name'=>$decodedValues['product_name'],
             'type_id'=>$decodedValues['lastAddedCat'],
@@ -65,6 +67,16 @@ class productController extends Controller
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+        $uploadedFiles = DB::table('uploads')->where('user_id', $thisUser->id)->get();
+        foreach ($uploadedFiles as $thisUploadedFile){
+            
+        }
+
+
+
+
+
+
 
 
     }

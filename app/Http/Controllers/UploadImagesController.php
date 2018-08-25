@@ -15,7 +15,9 @@ class UploadImagesController extends Controller
 
     public function __construct()
     {
-        $this->photos_path = public_path('/images');
+//        $this->photos_path = public_path('/images');
+        $thisUser = Auth::user();
+        $this->photos_path = storage_path('app/public/');
     }
 
     /**
@@ -52,11 +54,13 @@ class UploadImagesController extends Controller
         if (!is_array($photos)) {
             $photos = [$photos];
         }
+        $thisUser = Auth::user();
+        $this->photos_path = $this->photos_path.'/'.$thisUser->id.'/tmp';
 
         if (!is_dir($this->photos_path)) {
             mkdir($this->photos_path, 0777);
         }
-        $thisUser = Auth::user();
+
 
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
@@ -91,6 +95,10 @@ class UploadImagesController extends Controller
      */
     public function destroy(Request $request)
     {
+        $thisUser = Auth::user();
+        $this->photos_path = $this->photos_path.'/'.$thisUser->id.'/tmp';
+
+
         $filename = $request->id;
         $uploaded_image = Upload::where('original_name', basename($filename))->first();
 
