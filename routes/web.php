@@ -69,6 +69,8 @@ Route::get('/uploadImages', 'UploadImagesController@create')->name('uploadImages
 Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
 Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
 
+Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
+
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();

@@ -57,54 +57,110 @@ class productController extends Controller
             $value=$decodedData[$i][1];
             $decodedValues[$key] = $value;
         }
-        $thisUser = Auth::user();
-        $newProductId = DB::table('product')->insertgetId([
-            'name'=>$decodedValues['product_name'],
-            'type_id'=>$decodedValues['lastAddedCat'],
-            'price_q1'=>$decodedValues['q1_price'],
-            'price_q10'=>$decodedValues['q10_price'],
-            'ship_weight'=>$decodedValues['weight_lbs'],
-            'ship_weight_oz'=>$decodedValues['weight_oz'],
-            'whenmade'=>$decodedValues['product_when'],
-            'whomade'=>$decodedValues['product_src'],
-            'prodis'=>$decodedValues['product_when'],
-            'description'=>$decodedValues['product_description'],
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
-        ]);
-        $uploadedFiles = DB::table('uploads')->where('user_id', $thisUser->id)->get();
-        foreach ($uploadedFiles as $thisUploadedFile){
-            $uploadedThumbnailName = $thisUploadedFile->resized_name;
-            $uploadedFileName = $thisUploadedFile->filename;
-            $newProductThumbnailLinkId =DB::table('medialink')->insertgetId([
-                'mediatype_id'=>$thumbNailType->id,
-                'pertainsto'=>'product',
-                'url'=>$urlPrefix.$thisUser->id.'/'.$uploadedThumbnailName,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
+        DB::beginTransaction();
+        try {
+            $thisUser = Auth::user();
+            $newProductId = DB::table('product')->insertgetId([
+                'name' => $decodedValues['product_name'],
+                'type_id' => $decodedValues['lastAddedCat'],
+                'price_q1' => $decodedValues['q1_price'],
+                'price_q10' => $decodedValues['q10_price'],
+                'ship_weight' => $decodedValues['weight_lbs'],
+                'ship_weight_oz' => $decodedValues['weight_oz'],
+                'whenmade' => $decodedValues['product_when'],
+                'whomade' => $decodedValues['product_src'],
+                'prodis' => $decodedValues['product_when'],
+                'description' => $decodedValues['product_description'],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
             ]);
-            DB::table('producthaslinks')->insert([
-                'product_id'=>$newProductId,
-                'medialink_id'=>$newProductThumbnailLinkId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
+            $uploadedFiles = DB::table('uploads')->where('user_id', $thisUser->id)->get();
+            foreach ($uploadedFiles as $thisUploadedFile) {
+                $uploadedThumbnailName = $thisUploadedFile->resized_name;
+                $uploadedFileName = $thisUploadedFile->filename;
+                $newProductThumbnailLinkId = DB::table('medialink')->insertgetId([
+                    'mediatype_id' => $thumbNailType->id,
+                    'pertainsto' => 'product',
+                    'url' => $urlPrefix . $thisUser->id . '/' . $uploadedThumbnailName,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                DB::table('producthaslinks')->insert([
+                    'product_id' => $newProductId,
+                    'medialink_id' => $newProductThumbnailLinkId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                Storage::move('public/' . $thisUser->id . '/tmp/' . $uploadedThumbnailName, 'public/' . $thisUser->id . '/' . $uploadedThumbnailName);
+                $newProductFileLinkId = DB::table('medialink')->insertgetId([
+                    'mediatype_id' => $imageType->id,
+                    'pertainsto' => 'product',
+                    'url' => $urlPrefix . $thisUser->id . '/' . $uploadedFileName,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                DB::table('producthaslinks')->insert([
+                    'product_id' => $newProductId,
+                    'medialink_id' => $newProductFileLinkId,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
+                Storage::move('public/' . $thisUser->id . '/tmp/' . $uploadedFileName, 'public/' . $thisUser->id . '/' . $uploadedFileName);
+            }
+            DB::table('uploads')->where('user_id', $thisUser->id)->delete();
+            $productStatus = DB::table('containedas')->where('slug', $decodedValues['prodStatus'])->first();
+            DB::table('collectionhas')->insert([
+                'product_id' => $newProductId,
+                'collection_id' => $decodedValues['product_catalog'],
+                'containedas_id' => $productStatus->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
             ]);
-            Storage::move('public/'.$thisUser->id.'/tmp/'.$uploadedThumbnailName, 'public/'.$thisUser->id.'/'.$uploadedThumbnailName);
-            $newProductFileLinkId = DB::table('medialink')->insertgetId([
-                'mediatype_id'=>$imageType->id,
-                'pertainsto'=>'product',
-                'url'=>$urlPrefix.$thisUser->id.'/'.$uploadedFileName,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
-            DB::table('producthaslinks')->insert([
-                'product_id'=>$newProductId,
-                'medialink_id'=>$newProductFileLinkId,
-                'created_at'=>\Carbon\Carbon::now(),
-                'updated_at'=>\Carbon\Carbon::now()
-            ]);
-            Storage::move('public/'.$thisUser->id.'/tmp/'.$uploadedFileName, 'public/'.$thisUser->id.'/'.$uploadedFileName);
+            for ($i = 0; $i < sizeof($decodedData); $i++) {
+                $key = $decodedData[$i][0];
+                if (strpos($key, 'option')) {
+                    $optionId = substr($key, 6);
+                    DB::table('hasoptions')->insert([
+                        'product_id' => $newProductId,
+                        'options_id' => $optionId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                }
+                if (strpos($key, 'term')) {
+                    $termId = substr($key, 4);
+                    DB::table('hasterms')->insert([
+                        'product_id' => $newProductId,
+                        'terms_id' => $termId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+
+                }
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            $adminView =User::hasAccess(['\'admin-dashboard\'']);
+            return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productError', 'errorMessage'=>$e->getMessage()]);
         }
-        DB::table('uploads')->where('user_id', $thisUser->id)->delete();
+        DB::commit();
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        $currentUser = new User;
+        $thisUsersCollections = $currentUser->getCollectionsForLoggedInUser();
+        $thisTerms = new Terms();
+        $thisUserCompanies = $currentUser->getCompaniesForLoggedInUser();
+        $thisCompanyTerms = [];
+        foreach($thisUserCompanies as $company){
+            array_push($thisCompanyTerms,$thisTerms->getTermsForCompany($company->comp_id));
+        }
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms]);
+    }
+
+    public function getProductsForLoggedInUser(){
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        $thisUser = Auth::user();
+        $thisProduct = new \App\Product;
+        $productsFound = $thisProduct->getAllMyProducts($thisUser->id);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
 }

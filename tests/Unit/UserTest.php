@@ -119,7 +119,7 @@ class UserTest extends TestCase
         $this->assertTrue($deletedUserCount==1);
         $testUser = DB::table('users')->where('name','gpp8p')->first();
         $userCompanies = $thisUser->getUserCompanies($testUser);
-        $this->assertTrue($userCompanies[0]->comp_name == "Rings With Bing");
+        $this->assertTrue($userCompanies[0]->comp_name == "The Trinket Factory");
 
 
 

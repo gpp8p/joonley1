@@ -18,6 +18,10 @@
         display: grid;
         grid-template-rows: repeat(auto-fill, minmax(30px,0.5fr));
     }
+    .radioDiv {
+        font-size: 15px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+    }
     .lab{
         font-size: 15px;
         font-family: 'Fira Sans Condensed', sans-serif;
@@ -497,13 +501,20 @@
                     Please select which of your company's existing catalogs you wish to include this product.
                 </div>
             </div>
-            <div class="across1">
-                <select class="wideselects" name="product_catalog" id="product_catalog">
-                    <option value="0">Select Catalog</option>
-                    @foreach ($thisUsersCollections as $collection)
-                        <option value="{{$collection->id}}">{{$collection->name}}</option>
-                    @endforeach
-                </select>
+            <div class="across2">
+                <span>
+                    <select class="wideselects" name="product_catalog" id="product_catalog">
+                        <option value="0">Select Catalog</option>
+                        @foreach ($thisUsersCollections as $collection)
+                            <option value="{{$collection->id}}">{{$collection->name}}</option>
+                        @endforeach
+                    </select>
+                    <span class="radioDiv">
+                        <input type="radio" name="prodStatus" value="issale" checked>For Sale
+                        <input type="radio" name="prodStatus" value="bosale">Back Ordered
+                        <input type="radio" name="prodStatus" value="prevnoord">Preview
+                    </span>
+                </span>
             </div>
         </div>
         <div class="content_row">

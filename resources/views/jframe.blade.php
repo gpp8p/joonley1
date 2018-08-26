@@ -80,6 +80,9 @@
                 @case('newProductsContent')
                     @include('productEntry')
                 @break
+                @case('productsForUser')
+                    @include('showProductsForUser')
+                @break
 
 
             @endswitch

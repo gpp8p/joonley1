@@ -72,6 +72,14 @@ class ProductTest extends TestCase
         $this->assertFalse(DB::table('collectionhas')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasoptions')->where('product_id',$newProductId)->exists());
         $this->assertFalse(DB::table('hasterms')->where('product_id',$newProductId)->exists());
+        $thisUserId = 1;
+        try {
+            $allMyProducts = $thisProduct->getAllMyProducts($thisUserId);
+        } catch (Exception $e) {
+            $this->assertTrue(false);
+        }
+//        echo('result---'.$allMyProducts[0]->name);
+        $this->assertTrue($allMyProducts[0]->product_name=='Gold Chain');
 
     }
 }
