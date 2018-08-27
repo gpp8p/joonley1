@@ -234,7 +234,7 @@ class Product extends Model
                 array_push($imageUrls, $thisProductFound->url);
                 $productId = $thisProductFound->product_id;
                 $productName = $thisProductFound->product_name;
-                $productCategory = $thisProductFound>category_name;
+                $productCategory = $thisProductFound->category_name;
                 $productQ1 = $thisProductFound->price_q1;
                 $productQ10 = $thisProductFound->price_q10;
                 $productCreatedAt = $thisProductFound->created_at;
@@ -246,7 +246,7 @@ class Product extends Model
                 array_push($imageUrls, $thisProductFound->url);
                 $productId = $thisProductFound->product_id;
                 $productName = $thisProductFound->product_name;
-                $productCategory = $thisProductFound>category_name;
+                $productCategory = $thisProductFound->category_name;
                 $productQ1 = $thisProductFound->price_q1;
                 $productQ10 = $thisProductFound->price_q10;
                 $productCreatedAt = $thisProductFound->created_at;

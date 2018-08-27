@@ -160,7 +160,7 @@ class productController extends Controller
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $thisUser = Auth::user();
         $thisProduct = new \App\Product;
-        $productsFound = $thisProduct->getAllMyProducts($thisUser->id);
+        $productsFound = $thisProduct->getAllMyProductsWithPictures($thisUser->id);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
 }
