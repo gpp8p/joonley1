@@ -209,6 +209,61 @@ class Product extends Model
 
     }
 
+    public function getOneProduct($productId){
+        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, ".
+            "medialink.url, product.price_q1, product.price_q10, product.created_at, product.ship_weight, product.ship_weight_oz, product.whenmade, ".
+            "product.whomade, product.prodis, collection.name as collection_name from product, collection, collectionhas, producthaslinks, medialink, mediatype, nested_category ".
+            "where product.id = ? ".
+            "and collectionhas.product_id = product.id ".
+            "and collectionhas.collection_id = collection.id ".
+            "and producthaslinks.product_id = product.id ".
+            "and producthaslinks.medialink_id = medialink.id ".
+            "and nested_category.id = product.type_id ".
+            "and medialink.mediatype_id = mediatype.id ".
+            "and (mediatype.slug='thumb' or mediatype.slug='nomedia') ";
+
+        $thisProductFound = DB::select($query, [$productId]);
+        $productId = $thisProductFound[0]->product_id;
+        $productName = $thisProductFound[0]->product_name;
+        $productCategory = $thisProductFound[0]->category_name;
+        $productQ1 = $thisProductFound[0]->price_q1;
+        $productQ10 = $thisProductFound[0]->price_q10;
+        $productCreatedAt = $thisProductFound[0]->created_at;
+        $productShipWeight = $thisProductFound[0]->ship_weight;
+        $productShipWeightOz = $thisProductFound[0]->ship_weight_oz;
+        $productWhenMade = $thisProductFound[0]->whenmade;
+        $productWhoMade = $thisProductFound[0]->whomade;
+        if($thisProductFound[0]->prodis =='D'){
+            $productIs = 'Digital Content';
+        }elseif ($thisProductFound[0]->prodis =='T'){
+            $productIs = 'Tool';
+        }else{
+            $productIs = 'Product';
+        }
+        $productCollection = $thisProductFound[0]->collection_name;
+        $imageUrls = array();
+        foreach($thisProductFound as $prod){
+            array_push($imageUrls, $prod->url);
+        }
+        $result = array('product_id'=>$productId,
+            'product_name'=>$productName,
+            'category_name'=>$productCategory,
+            'price_q1'=>$productQ1,
+            'price_q10'=>$productQ10,
+            'created_at'=>$productCreatedAt,
+            'ship_weight'=>$productShipWeight,
+            'ship_weight_oz'=>$productShipWeightOz,
+            'whenmade'=>$productWhenMade,
+            'whomade'=>$productWhoMade,
+            'prodis'=>$productIs,
+            'images'=>$imageUrls,
+            );
+
+        return $result;
+
+
+    }
+
     public function getAllMyProductsWithPictures($thisUserId){
         $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name,  medialink.url, product.price_q1, product.price_q10, product.created_at ".
             "from product, collectionhas, collection, hascollection, company, userincompany, users, producthaslinks, medialink, mediatype, nested_category ".

@@ -163,4 +163,12 @@ class productController extends Controller
         $productsFound = $thisProduct->getAllMyProductsWithPictures($thisUser->id);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
+
+    public function showOneProduct(Request $request){
+        $productId = $request->id;
+        $thisProduct = new Product();
+        $thisProductInfo = $thisProduct->getOneProduct($productId);
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'oneProduct', 'thisProductInfo'=>$thisProductInfo]);
+    }
 }

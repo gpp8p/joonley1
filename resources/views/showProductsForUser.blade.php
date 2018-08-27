@@ -39,7 +39,7 @@ hr {
     border-top: 1px dashed #8c8b8b;
 }
 .btnsize {
-    height:25%;
+    height:30px;
 }
 
 .imageRow{
@@ -74,13 +74,18 @@ hr {
                                     <img src="{{$thisProductImage}}" />
                                 </div>
                             @endforeach
+                            <form method="get" action="{{url('/showOneProduct')}}?id={{$thisProduct['product_id']}}">
+                                <button class="btn btnsize">More</button>
+                            </form>
                         @else
                             @for($i=0;$i<4;$i++)
                                 <div class="productImage">
                                     <img src="{{$thisProduct['product_images'][$i]}}" />
                                 </div>
                             @endfor
-                            <button class="btn btnsize">More ->></button>
+                                <form method="get" action="{{url('/showOneProduct')}}?id={{$thisProduct['product_id']}}">
+                                    <button class="btn btnsize">More->></button>
+                                </form>
                         @endif
                     </div>
                 </div>
