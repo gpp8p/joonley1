@@ -83,6 +83,9 @@
                 @case('productsForUser')
                     @include('showProductsForUser')
                 @break
+                @case('oneProduct')
+                    @include('oneProduct')
+                @break
 
 
             @endswitch

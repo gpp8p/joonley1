@@ -74,8 +74,10 @@ hr {
                                     <img src="{{$thisProductImage}}" />
                                 </div>
                             @endforeach
-                            <form method="get" action="{{url('/showOneProduct')}}?id={{$thisProduct['product_id']}}">
+                            <form method="POST" action="{{url('/showOneProduct')}}">
+                                {{ csrf_field() }}
                                 <button class="btn btnsize">More</button>
+                                <input type="hidden" value="{{$thisProduct['product_id']}}" name="product_id"/>
                             </form>
                         @else
                             @for($i=0;$i<4;$i++)
@@ -83,8 +85,10 @@ hr {
                                     <img src="{{$thisProduct['product_images'][$i]}}" />
                                 </div>
                             @endfor
-                                <form method="get" action="{{url('/showOneProduct')}}?id={{$thisProduct['product_id']}}">
+                                <form method="POST" action="{{url('/showOneProduct')}}">
+                                    {{ csrf_field() }}
                                     <button class="btn btnsize">More->></button>
+                                    <input type="hidden" value="{{$thisProduct['product_id']}}" name="product_id"/>
                                 </form>
                         @endif
                     </div>

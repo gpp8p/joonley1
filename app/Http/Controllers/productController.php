@@ -165,10 +165,11 @@ class productController extends Controller
     }
 
     public function showOneProduct(Request $request){
-        $productId = $request->id;
-        $thisProduct = new Product();
+        $requestData = $request->all();
+        $productId = $requestData['product_id'];
+        $thisProduct = new \App\Product;
         $thisProductInfo = $thisProduct->getOneProduct($productId);
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'oneProduct', 'thisProductInfo'=>$thisProductInfo]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'oneProduct', 'thisProduct'=>$thisProductInfo]);
     }
 }

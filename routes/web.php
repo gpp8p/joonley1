@@ -70,7 +70,7 @@ Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->
 Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
 
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
-Route::get('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
+Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();
