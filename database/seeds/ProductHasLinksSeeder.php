@@ -12,7 +12,7 @@ class ProductHasLinksSeeder extends Seeder
     public function run()
     {
         $productReference = DB::table('product')->where('name', 'Gold pinky ring')->first();
-        $medialinkReference = DB::table('medialink')->where('url','http://mymedia.com/ring5')->first();
+        $medialinkReference = DB::table('medialink')->where('url','http://localhost/joonley1/storage/app/public/no_images.jpg')->first();
         DB::table('producthaslinks')->insert([
             'product_id'=>$productReference->id,
             'medialink_id'=>$medialinkReference->id,
@@ -21,7 +21,7 @@ class ProductHasLinksSeeder extends Seeder
         ]);
 
         $productReference = DB::table('product')->where('name', 'Zirconium ring')->first();
-        $medialinkReference = DB::table('medialink')->where('url','http://mymedia.com/ring6')->first();
+        $medialinkReference = DB::table('medialink')->where('url','http://localhost/joonley1/storage/app/public/no_images.jpg')->first();
         DB::table('producthaslinks')->insert([
             'product_id'=>$productReference->id,
             'medialink_id'=>$medialinkReference->id,

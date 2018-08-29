@@ -16,7 +16,8 @@ class MediaLinkSeeder extends Seeder
         DB::table('medialink')->insert([
             'mediatype_id'=>$type->id,
             'pertainsto'=>'product',
-            'url'=>'http://mymedia.com/ring5',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -27,7 +28,8 @@ class MediaLinkSeeder extends Seeder
 
             'mediatype_id'=>$type->id,
             'pertainsto'=>'product',
-            'url'=>'http://mymedia.com/ring6',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -37,8 +39,8 @@ class MediaLinkSeeder extends Seeder
         DB::table('medialink')->insert([
 
             'mediatype_id'=>$type->id,
-            'pertainsto'=>'product',
-            'url'=>'http://mymedia.com/ring6',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -49,7 +51,8 @@ class MediaLinkSeeder extends Seeder
 
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
-            'url'=>'http://fashion.com/fcollect1',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -60,7 +63,8 @@ class MediaLinkSeeder extends Seeder
 
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
-            'url'=>'http://fashion.com/compicon.jpg',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -71,7 +75,8 @@ class MediaLinkSeeder extends Seeder
 
             'mediatype_id'=>$type->id,
             'pertainsto'=>'collection',
-            'url'=>'http://fashion.com/compicon2.jpg',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -81,7 +86,8 @@ class MediaLinkSeeder extends Seeder
 
             'mediatype_id'=>$type->id,
             'pertainsto'=>'*',
-            'url'=>'http://nomedia/nomedia.jpg',
+            'url'=>'http://localhost/joonley1/storage/app/public/no_images.jpg',
+            'url_thumb'=>' http://localhost/joonley1/storage/app/public/no_images.jpg',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

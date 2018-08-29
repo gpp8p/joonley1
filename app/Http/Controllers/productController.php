@@ -78,6 +78,7 @@ class productController extends Controller
             foreach ($uploadedFiles as $thisUploadedFile) {
                 $uploadedThumbnailName = $thisUploadedFile->resized_name;
                 $uploadedFileName = $thisUploadedFile->filename;
+/*
                 $newProductThumbnailLinkId = DB::table('medialink')->insertgetId([
                     'mediatype_id' => $thumbNailType->id,
                     'pertainsto' => 'product',
@@ -90,12 +91,14 @@ class productController extends Controller
                     'medialink_id' => $newProductThumbnailLinkId,
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
-                ]);
+                ]);]
+*/
                 Storage::move('public/' . $thisUser->id . '/tmp/' . $uploadedThumbnailName, 'public/' . $thisUser->id . '/' . $uploadedThumbnailName);
                 $newProductFileLinkId = DB::table('medialink')->insertgetId([
                     'mediatype_id' => $imageType->id,
                     'pertainsto' => 'product',
                     'url' => $urlPrefix . $thisUser->id . '/' . $uploadedFileName,
+                    'url_thumb'=>$urlPrefix . $thisUser->id . '/' . $uploadedThumbnailName,
                     'created_at' => \Carbon\Carbon::now(),
                     'updated_at' => \Carbon\Carbon::now()
                 ]);

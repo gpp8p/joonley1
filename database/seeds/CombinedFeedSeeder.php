@@ -14,7 +14,7 @@ class CombinedFeedSeeder extends Seeder
     {
         $faker = Faker::create();
         $retailShopType = DB::table('companytype')->where('slug', 'rshop')->first();
-        $medialinkReference = DB::table('medialink')->where('url','http://nomedia/nomedia.jpg')->first()->id;
+        $medialinkReference = DB::table('medialink')->where('url','http://localhost/joonley1/storage/app/public/no_images.jpg')->first()->id;
 //buyers
         $thisNewLocationGroupId = DB::table('locations')->insertGetId([
         'name' => 'East Coast',

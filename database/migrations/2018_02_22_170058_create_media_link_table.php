@@ -19,6 +19,7 @@ class CreateMediaLinkTable extends Migration
             $table->string('pertainsto',12);
             $table->unsignedInteger('mediatype_id');
             $table->string('url',128);
+            $table->string('url_thumb', 128)->nullable();
             $table->timestamps();
 
 

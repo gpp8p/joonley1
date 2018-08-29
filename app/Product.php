@@ -211,7 +211,7 @@ class Product extends Model
 
     public function getOneProduct($productId){
         $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, ".
-            "medialink.url, product.price_q1, product.price_q10, product.created_at, product.ship_weight, product.ship_weight_oz, product.whenmade, ".
+            "medialink.url, medialink.url_thumb, medialink.id as medialink_id,product.price_q1, product.price_q10, product.created_at, product.ship_weight, product.ship_weight_oz, product.whenmade, ".
             "product.whomade, product.prodis, collection.name as collection_name from product, collection, collectionhas, producthaslinks, medialink, mediatype, nested_category ".
             "where product.id = ? ".
             "and collectionhas.product_id = product.id ".
@@ -220,7 +220,7 @@ class Product extends Model
             "and producthaslinks.medialink_id = medialink.id ".
             "and nested_category.id = product.type_id ".
             "and medialink.mediatype_id = mediatype.id ".
-            "and (mediatype.slug='thumb' or mediatype.slug='nomedia') ";
+            "and (mediatype.slug='image' or mediatype.slug='nomedia') ";
 
         $thisProductFound = DB::select($query, [$productId]);
         $productId = $thisProductFound[0]->product_id;
@@ -242,8 +242,12 @@ class Product extends Model
         }
         $productCollection = $thisProductFound[0]->collection_name;
         $imageUrls = array();
+        $imageUrlsBig = array();
+        $imageIds = array();
         foreach($thisProductFound as $prod){
-            array_push($imageUrls, $prod->url);
+            array_push($imageUrls, $prod->url_thumb);
+            array_push($imageUrlsBig, $prod->url);
+            array_push($imageIds, $prod->medialink_id);
         }
         $result = array('product_id'=>$productId,
             'product_name'=>$productName,
@@ -256,7 +260,9 @@ class Product extends Model
             'whenmade'=>$productWhenMade,
             'whomade'=>$productWhoMade,
             'prodis'=>$productIs,
-            'images'=>$imageUrls,
+            'product_images'=>$imageUrls,
+            'product_bigimages'=>$imageUrlsBig,
+            'product_imageids'=>$imageIds,
             );
 
         return $result;
@@ -265,7 +271,7 @@ class Product extends Model
     }
 
     public function getAllMyProductsWithPictures($thisUserId){
-        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name,  medialink.url, product.price_q1, product.price_q10, product.created_at ".
+        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name,  medialink.url, medialink.url_thumb, medialink.id as medialink_id, product.price_q1, product.price_q10, product.created_at ".
             "from product, collectionhas, collection, hascollection, company, userincompany, users, producthaslinks, medialink, mediatype, nested_category ".
             "where collectionhas.product_id = product.id ".
             "and collectionhas.collection_id = collection.id ".
@@ -277,16 +283,18 @@ class Product extends Model
             "and producthaslinks.medialink_id = medialink.id ".
             "and nested_category.id = product.type_id ".
             "and medialink.mediatype_id = mediatype.id ".
-            "and (mediatype.slug='thumb' or mediatype.slug='nomedia')";
+            "and (mediatype.slug='image' or mediatype.slug='nomedia')";
 
         $productsFound = DB::select($query, [$thisUserId]);
         $currentProductId = $productsFound[0]->product_id;
         $imageUrls=array();
+        $imageIds = array();
         $results = array();
         $numberOfRecords = sizeof($productsFound);
         foreach($productsFound as $thisProductFound){
             if($thisProductFound->product_id==$currentProductId){
-                array_push($imageUrls, $thisProductFound->url);
+                array_push($imageUrls, $thisProductFound->url_thumb);
+                array_push($imageIds, $thisProductFound->medialink_id);
                 $productId = $thisProductFound->product_id;
                 $productName = $thisProductFound->product_name;
                 $productCategory = $thisProductFound->category_name;
@@ -298,7 +306,8 @@ class Product extends Model
                 array_push($results, $thisResultRow);
                 $imageUrls = array();
                 $currentProductId = $thisProductFound->product_id;
-                array_push($imageUrls, $thisProductFound->url);
+                array_push($imageUrls, $thisProductFound->url_thumb);
+                array_push($imageIds, $thisProductFound->medialink_id);
                 $productId = $thisProductFound->product_id;
                 $productName = $thisProductFound->product_name;
                 $productCategory = $thisProductFound->category_name;
@@ -307,7 +316,7 @@ class Product extends Model
                 $productCreatedAt = $thisProductFound->created_at;
             }
         }
-        $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls];
+        $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls, 'image_ids'=>$imageIds];
         array_push($results, $thisResultRow);
         return $results;
 
