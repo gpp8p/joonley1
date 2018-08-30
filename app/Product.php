@@ -210,7 +210,7 @@ class Product extends Model
     }
 
     public function getOneProduct($productId){
-        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, ".
+        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, product.description as product_description, ".
             "medialink.url, medialink.url_thumb, medialink.id as medialink_id,product.price_q1, product.price_q10, product.created_at, product.ship_weight, product.ship_weight_oz, product.whenmade, ".
             "product.whomade, product.prodis, collection.name as collection_name from product, collection, collectionhas, producthaslinks, medialink, mediatype, nested_category ".
             "where product.id = ? ".
@@ -225,6 +225,7 @@ class Product extends Model
         $thisProductFound = DB::select($query, [$productId]);
         $productId = $thisProductFound[0]->product_id;
         $productName = $thisProductFound[0]->product_name;
+        $productDescription = $thisProductFound[0]->product_description;
         $productCategory = $thisProductFound[0]->category_name;
         $productQ1 = $thisProductFound[0]->price_q1;
         $productQ10 = $thisProductFound[0]->price_q10;
@@ -251,6 +252,7 @@ class Product extends Model
         }
         $result = array('product_id'=>$productId,
             'product_name'=>$productName,
+            'product_description'=>$productDescription,
             'category_name'=>$productCategory,
             'price_q1'=>$productQ1,
             'price_q10'=>$productQ10,
