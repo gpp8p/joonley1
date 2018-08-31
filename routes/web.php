@@ -72,6 +72,8 @@ Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('ne
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
 
+Route::post('/addToFeed', 'FeedController@addToFeed')->name('addToFeed');
+
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();
     $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");

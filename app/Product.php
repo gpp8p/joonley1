@@ -212,7 +212,7 @@ class Product extends Model
     public function getOneProduct($productId){
         $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, product.description as product_description, ".
             "medialink.url, medialink.url_thumb, medialink.id as medialink_id,product.price_q1, product.price_q10, product.created_at, product.ship_weight, product.ship_weight_oz, product.whenmade, ".
-            "product.whomade, product.prodis, collection.name as collection_name from product, collection, collectionhas, producthaslinks, medialink, mediatype, nested_category ".
+            "product.whomade, product.prodis, collection.name as collection_name, collection.id as collection_id from product, collection, collectionhas, producthaslinks, medialink, mediatype, nested_category ".
             "where product.id = ? ".
             "and collectionhas.product_id = product.id ".
             "and collectionhas.collection_id = collection.id ".
@@ -242,6 +242,7 @@ class Product extends Model
             $productIs = 'Product';
         }
         $productCollection = $thisProductFound[0]->collection_name;
+        $productCollectionId = $thisProductFound[0]->collection_id;
         $imageUrls = array();
         $imageUrlsBig = array();
         $imageIds = array();
@@ -265,6 +266,8 @@ class Product extends Model
             'product_images'=>$imageUrls,
             'product_bigimages'=>$imageUrlsBig,
             'product_imageids'=>$imageIds,
+            'product_collection_name'=>$productCollection,
+            'product_collection_id'=>$productCollectionId,
             );
 
         return $result;

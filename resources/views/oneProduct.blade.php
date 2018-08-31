@@ -61,6 +61,7 @@
         <div class="productItem"><span class="plabel">Product Name:  </span>{{$thisProduct['product_name']}}</div>
         <div class="productItem"><span class="plabel">Product Description:  </span>{{$thisProduct['product_description']}}</div>
         <div class="productItem"><span class="plabel">Category:  </span>{{$thisProduct['category_name']}}</div>
+        <div class="productItem"><span class="plabel">Catalog:  </span>{{$thisProduct['product_collection_name']}}</div>
         <div class="productItem"><span class="plabel">Price (q1):  </span>{{$thisProduct['price_q1']}}</div>
         <div class="productItem"><span class="plabel">Price (q10):  </span>{{$thisProduct['price_q10']}}</div>
         <div class="productItem"><span class="plabel">When Added:  </span>{{$thisProduct['created_at']}}</div>
@@ -74,6 +75,7 @@
         $j=0;
     @endphp
 <form method="POST" action="{{ url('/addToFeed') }}">
+    {{ csrf_field() }}
     @while($i<count($thisProduct['product_images']))
         <div class="imageRow">
             @while($j<5 && $i<count($thisProduct['product_images']))
@@ -98,11 +100,14 @@
             @endwhile
             @php
                 $j=0;
-            @endphp
+            @endphp`
 
         </div>
     @endwhile
     <button class="btn"/>Select This Product for Feed</button>
+    <input type="hidden" name="product_id" value="{{$thisProduct['product_id']}}"/>
+    <input type="hidden" name="collection_id" value="{{$thisProduct['product_collection_id']}}"/>
+
 </form>
 
 
