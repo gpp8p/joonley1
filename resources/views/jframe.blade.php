@@ -86,6 +86,9 @@
                 @case('oneProduct')
                     @include('oneProduct')
                 @break
+                @case('feedPreview')
+                    @include('feedPreview')
+                @break
 
 
             @endswitch

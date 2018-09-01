@@ -73,6 +73,7 @@ Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->nam
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
 
 Route::post('/addToFeed', 'FeedController@addToFeed')->name('addToFeed');
+Route::post('/feedPreview', 'FeedController@showFeedPreview')->name('feedPreview');
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();

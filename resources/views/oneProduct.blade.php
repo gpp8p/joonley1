@@ -74,7 +74,7 @@
         $i = 0;
         $j=0;
     @endphp
-<form method="POST" action="{{ url('/addToFeed') }}">
+<form method="POST" action="{{ url('/feedPreview') }}">
     {{ csrf_field() }}
     @while($i<count($thisProduct['product_images']))
         <div class="imageRow">
