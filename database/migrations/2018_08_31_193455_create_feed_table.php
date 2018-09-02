@@ -19,6 +19,8 @@ class CreateFeedTable extends Migration
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('collection_id');
             $table->unsignedInteger('company_id');
+            $table->text('description');
+            $table->string('name');
             $table->timestamps();
         });
     }

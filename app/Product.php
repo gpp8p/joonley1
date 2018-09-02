@@ -275,6 +275,47 @@ class Product extends Model
 
     }
 
+    public function getAllProductsWithPictures(){
+        $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, product.price_q1, product.price_q10, product.created_at, medialink.url as url_thumb, medialink.id as medialink_id, product.created_at from product, nested_category, producthaslinks, medialink ".
+            "where nested_category.id = product.type_id ".
+            "and producthaslinks.product_id = product.id ".
+            "and producthaslinks.medialink_id = medialink.id";
+        $productsFound = DB::select($query);
+        $currentProductId = $productsFound[0]->product_id;
+        $imageUrls=array();
+        $imageIds = array();
+        $results = array();
+        $numberOfRecords = sizeof($productsFound);
+        foreach($productsFound as $thisProductFound){
+            if($thisProductFound->product_id==$currentProductId){
+                array_push($imageUrls, $thisProductFound->url_thumb);
+                array_push($imageIds, $thisProductFound->medialink_id);
+                $productId = $thisProductFound->product_id;
+                $productName = $thisProductFound->product_name;
+                $productCategory = $thisProductFound->category_name;
+                $productQ1 = $thisProductFound->price_q1;
+                $productQ10 = $thisProductFound->price_q10;
+                $productCreatedAt = $thisProductFound->created_at;
+            }else{
+                $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls];
+                array_push($results, $thisResultRow);
+                $imageUrls = array();
+                $currentProductId = $thisProductFound->product_id;
+                array_push($imageUrls, $thisProductFound->url_thumb);
+                array_push($imageIds, $thisProductFound->medialink_id);
+                $productId = $thisProductFound->product_id;
+                $productName = $thisProductFound->product_name;
+                $productCategory = $thisProductFound->category_name;
+                $productQ1 = $thisProductFound->price_q1;
+                $productQ10 = $thisProductFound->price_q10;
+                $productCreatedAt = $thisProductFound->created_at;
+            }
+        }
+        $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls, 'image_ids'=>$imageIds];
+        array_push($results, $thisResultRow);
+        return $results;
+    }
+
     public function getAllMyProductsWithPictures($thisUserId){
         $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name,  medialink.url, medialink.url_thumb, medialink.id as medialink_id, product.price_q1, product.price_q10, product.created_at ".
             "from product, collectionhas, collection, hascollection, company, userincompany, users, producthaslinks, medialink, mediatype, nested_category ".

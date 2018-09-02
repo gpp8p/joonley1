@@ -27,30 +27,33 @@ class FeedController extends Controller
         $companyId = DB::table('hascollection')->where('collection_id', $collectionId)->first()->id;
         $mediaLinkId = substr($requestData['feedSelect'],4);
         $imageUrl = DB::table('medialink')->where('id', $mediaLinkId)->first()->url_thumb;
-        $viewData = array('product_id'=>$productId, 'product_description'=>$thisProductDescription, 'product_name'=>$thisProductName, 'collection_id'=>$collectionId, 'image_url'=>$imageUrl);
+        $viewData = array('product_id'=>$productId, 'product_description'=>$thisProductDescription, 'product_name'=>$thisProductName, 'collection_id'=>$collectionId, 'company_id'=>$companyId, 'image_url'=>$imageUrl);
 
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'feedPreview', 'viewData'=>$viewData]);
-
-
     }
+
 
     public function addToFeed(Request $request){
         $requestData = $request->all();
         $productId = $requestData['product_id'];
         $collectionId = $requestData['collection_id'];
         $companyId = DB::table('hascollection')->where('collection_id', $collectionId)->first()->id;
-        $mediaLinkId = substr($requestData['feedSelect'],4);
-        $imageUrl = DB::table('medialink')->where('id', $mediaLinkId)->first()->url_thumb;
+        $imageUrl = $requestData['image_url'];
+        $productDescription = trim($requestData['feed_blurb']);
+        $productName = $requestData['product_name'];
 
         DB::table('feed')->insert([
             'image_url'=>$imageUrl,
+            'name'=>$productName,
+            'description'=>$productDescription,
             'product_id'=>$productId,
             'collection_id'=>$collectionId,
             'company_id'=>$companyId,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
+
 
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent']);

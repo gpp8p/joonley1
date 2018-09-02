@@ -130,9 +130,22 @@
 
 <script language='javascript' type='text/javascript'>
 
+    $( document ).ready(function() {
+        $('#previewAdd').on('click',function(){
+            $('#previewForm').attr('action', "/addToFeed").submit();
+        });
+        $('#previewBack').on('click',function(){
+            $('#previewForm').attr('action', "/previewBack").submit();
+        });
+        $('#previewCancel').on('click',function(){
+            $('#previewForm').attr('action', "/cancelFeedAdd").submit();
+        });
+    });
+
 
 </script>
-<form method="POST" class="fillFrame">
+<form method="POST" class="fillFrame" id="previewForm">
+    {{ csrf_field() }}
     <div class="fillFrame">
         <div class="viewRow">
             <div>
@@ -147,8 +160,8 @@
                         <img src="{{$viewData['image_url']}}"
                     </div>
                     <div class="pdescription">
-                    <textarea cols="32" rows="8">
-                        {{ $viewData['product_description'] }}
+                    <textarea cols="32" rows="8" name="feed_blurb">
+{{ trim($viewData['product_description']) }}
                     </textarea>
                     </div>
                     <div class="ifooter">
@@ -162,10 +175,16 @@
         </div>
     </div>
     <div class="formButtons">
-        <span class="bitem"><a href="#" class="but1">Back</a></span>
-        <span class="bitem"><a href="#" class="but1">Add to Feed</a></span>
-        <span class="bitem"><a href="#" class="but1">Cancel</a></span>
+        <span class="bitem"><a href="#" id="previewBack" class="but1">Back</a></span>
+        <span class="bitem"><a href="#" id="previewAdd" class="but1">Add to Feed</a></span>
+        <span class="bitem"><a href="#" id="previewCancel" class="but1">Cancel</a></span>
     </div>
+    <input type="hidden" name="product_id" value="{{$viewData['product_id']}}"/>
+    <input type="hidden" name="product_name" value="{{$viewData['product_name']}}"/>
+    <input type="hidden" name="collection_id" value="{{$viewData['collection_id']}}"/>
+    <input type="hidden" name="image_url" value="{{$viewData['image_url']}}"/>
+    <input type="hidden" name="company_id" value="{{$viewData['company_id']}}"/>
+    <input type="hidden" name="product_name" value="{{$viewData['product_name']}}"/>
 </form>
 
 

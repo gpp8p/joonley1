@@ -74,6 +74,8 @@ Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOn
 
 Route::post('/addToFeed', 'FeedController@addToFeed')->name('addToFeed');
 Route::post('/feedPreview', 'FeedController@showFeedPreview')->name('feedPreview');
+Route::post('/previewBack', 'ProductController@showOneProduct')->name('previewBack');
+Route::post('/cancelFeedAdd', 'ProductController@getProductsForLoggedInUser')->name('previewCancel');
 
 Route::get('/test', function () {
     $thisNestedCategory = new \App\NestedCategory();
