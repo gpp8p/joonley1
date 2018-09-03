@@ -54,7 +54,7 @@
                     @include('regdata')
                 @break
                 @case('feedContent')
-                    @include('feedContent')
+                    @include('feed')
                 @break
                 @case('ordersContent')
                     @include('ordersContent')
