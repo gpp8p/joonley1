@@ -1,3 +1,4 @@
+<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 <style>
 .fillFrame{
     background-color: #eeeeee;
@@ -48,6 +49,11 @@ hr {
 
     grid-template-columns: repeat(3, 1fr 1fr);
 }
+.productPager {
+    display:grid;
+    grid-template-columns:70% 30%
+}
+
 
 </style>
 
@@ -99,4 +105,12 @@ hr {
             </div>
 
     @endforeach
+
+
+            <div class="productPager">
+                <div></div>
+                <div>
+                    {{$thisUsersProducts->links()}}
+                </div>
+            </div>
 </div>

@@ -8,6 +8,8 @@ use App\Terms;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 
 class productController extends Controller
 {
@@ -159,15 +161,16 @@ class productController extends Controller
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms]);
     }
 
-    public function getProductsForLoggedInUser(){
+    public function getProductsForLoggedInUser(Request $request){
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $thisUser = Auth::user();
         $thisProduct = new \App\Product;
         $productsFound = $thisProduct->getAllMyProductsWithPictures($thisUser->id);
+        $productsFound = $this->arrayPaginator($productsFound, $request);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
 
-    public function getAllProducts(){
+    public function getAllProducts(Request $request){
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $thisUser = Auth::user();
         $thisProduct = new \App\Product;
@@ -184,4 +187,15 @@ class productController extends Controller
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'oneProduct', 'thisProduct'=>$thisProductInfo]);
     }
+
+    public function arrayPaginator($array, $request)
+    {
+        $page = Input::get('page', 1);
+        $perPage = 4;
+        $offset = ($page * $perPage) - $perPage;
+
+        return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
+            ['path' => $request->url(), 'query' => $request->query()]);
+    }
+
 }

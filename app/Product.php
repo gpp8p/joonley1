@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+
 use Exception;
 
 class Product extends Model
@@ -313,6 +314,7 @@ class Product extends Model
         }
         $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls, 'image_ids'=>$imageIds];
         array_push($results, $thisResultRow);
+
         return $results;
     }
 
@@ -364,6 +366,7 @@ class Product extends Model
         }
         $thisResultRow = ['product_id'=>$productId, 'product_name'=>$productName, 'category_name'=>$productCategory, 'price_q1'=>$productQ1, 'price_q10'=>$productQ10, 'created_at'=>$productCreatedAt, 'product_images'=>$imageUrls, 'image_ids'=>$imageIds];
         array_push($results, $thisResultRow);
+
         return $results;
 
 
@@ -384,4 +387,5 @@ class Product extends Model
         return $productsFound;
 
     }
+
 }

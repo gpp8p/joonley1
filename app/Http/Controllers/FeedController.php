@@ -13,8 +13,10 @@ class FeedController extends Controller
 {
     public function show(Request $request)
     {
+        $thisFeed = new Feed();
+        $feedItems = $thisFeed->getFeedItems();
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent']);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent', 'feedItems'=>$feedItems]);
 
     }
 
