@@ -95,6 +95,9 @@
                 @case('feedPreview')
                     @include('feedPreview')
                 @break
+                @case('viewUsers')
+                    @include('allUserList')
+                @break
 
 
             @endswitch

@@ -85,13 +85,14 @@ class User extends Authenticatable
 
     public function getUserList()
     {
-        $query = 'select users.name, users.email, userdetails.fname , userdetails.lname, userdetails.phone from users, userdetails '.
-        'where userdetails.user_id = users.id';
+        $query = 'select users.name as name, users.email as email, userdetails.fname as fname , users.buysell_type as buysell_type, userdetails.lname as lname, userdetails.phone as phone from users, userdetails '.
+        'where userdetails.user_id = users.id order by userdetails.lname';
 
         $users = DB::select($query);
         return $users;
 
     }
+
 
 
     public function getUserProfile($userEmail)

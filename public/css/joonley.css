@@ -64,6 +64,7 @@
 
 .introsection {
     padding-bottom: 15em;
+    margin-left: 15px;
 }
 .introTitle {
     padding-top: 1em;
@@ -132,6 +133,7 @@
 .intro4 {
     overflow: hidden;
     margin-left: 50%;
+    margin-right: 15px;
 }
 
 .loglink1 {
