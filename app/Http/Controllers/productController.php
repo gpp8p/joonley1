@@ -175,6 +175,7 @@ class productController extends Controller
         $thisUser = Auth::user();
         $thisProduct = new \App\Product;
         $productsFound = $thisProduct->getAllProductsWithPictures();
+        $productsFound = $this->arrayPaginator($productsFound, $request);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
 

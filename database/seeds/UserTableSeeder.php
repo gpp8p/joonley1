@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
             'email'=>   'gpp8pvirginia@gmail.com',
             'password'=> Hash::make('n1tad0g'),
             'userrole_id'=>$thisUserRole->id,
+            'buysell_type'=>'S',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -58,6 +59,7 @@ class UserTableSeeder extends Seeder
                 'email' => $faker->unique()->email,
                 'password'      => Hash::make('n1tad0g'),
                 'userrole_id'=>$thisUserRole->id,
+                'buysell_type'=>'B',
                 'created_at'=>\Carbon\Carbon::now(),
                 'updated_at'=>\Carbon\Carbon::now()
             ]);
@@ -93,6 +95,7 @@ class UserTableSeeder extends Seeder
                 'password'      => Hash::make('n1tad0g'),
                 'userrole_id'=>$thisUserRole->id,
                 'created_at'=>\Carbon\Carbon::now(),
+                'buysell_type'=>'S',
                 'updated_at'=>\Carbon\Carbon::now()
             ]);
             $lastUserDetailsRcd =DB::table('userdetails')->insertGetId([

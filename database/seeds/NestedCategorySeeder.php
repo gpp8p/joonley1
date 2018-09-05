@@ -23,10 +23,16 @@ class NestedCategorySeeder extends Seeder
 
         $thisNestedCategory = new \App\NestedCategory;
         $thisNestedCategory->addCategory('Handbags', 'ladies handbags', 'Select Product Category');
+        $thisNestedCategory->addCategory('Housewares', 'around the house..', 'Select Product Category');
+        $thisNestedCategory->addCategory('Vases', 'flower vases', 'Housewares');
+        $thisNestedCategory->addCategory('Candles', 'candles', 'Housewares');
         $thisNestedCategory->addCategory('Leather Purses', 'Leather Purses', 'Handbags');
         $thisNestedCategory->addCategory('Decorative Handbags', 'Leather Purses', 'Handbags');
         $thisNestedCategory->addCategory('Jewelry', 'Jewelry', 'Select Product Category');
         $thisNestedCategory->addCategory('Rings', 'Rings', 'Jewelry');
+        $thisNestedCategory->addCategory('Keychains', 'keychains', 'Jewelry');
+        $thisNestedCategory->addCategory('Leather Keychains', 'keychains made of leather', 'Keychains');
+        $thisNestedCategory->addCategory('Silver Keychains', 'keychains made of silver', 'Keychains');
         $thisNestedCategory->addCategory('Chains', 'Chains', 'Jewelry');
         $thisNestedCategory->addCategory('Bracelets', 'Bracelets', 'Select Product Category');
         $thisNestedCategory->addCategory('Gold Bracelets', 'Gold Bracelets', 'Bracelets');

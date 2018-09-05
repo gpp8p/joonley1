@@ -3,7 +3,7 @@
 @section('content')
     <div class="wrapper">
         <div class="box header">
-            <div class="jtitle">Joonley</div>
+            <div class="joonleyTitle">Joonley</div>
             <div class="menuicons">
                 <div></div>
                 <div>
@@ -39,7 +39,13 @@
                     @include('moreSidebar')
                 @break
                 @case('products')
-                    @include('productsSidebar')
+                    @if($adminView)
+                        @include('productsSidebarAdmin')
+                    @elseif(Auth::user()->buysell_type == 'B')
+                        @include('productsSidebarBuyer')
+                    @else
+                        @include('productsSidebar')
+                    @endif
                 @break
 
 

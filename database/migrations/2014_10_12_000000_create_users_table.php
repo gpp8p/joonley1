@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->unsignedInteger('userrole_id');
+            $table->char('buysell_type',1);
             $table->rememberToken();
             $table->timestamps();
         });

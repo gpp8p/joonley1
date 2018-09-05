@@ -22,6 +22,11 @@
         font-size: 15px;
         font-family: 'Fira Sans Condensed', sans-serif;
     }
+    .wide_input_field{
+        font-size: 18px;
+        margin-top: 15px;
+    }
+
     .lab{
         font-size: 15px;
         font-family: 'Fira Sans Condensed', sans-serif;

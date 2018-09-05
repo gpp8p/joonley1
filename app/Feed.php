@@ -15,7 +15,7 @@ class Feed extends Model
         $col3 = array();
         $col4 = array();
         $col = 0;
-        $feedQueryResult = DB::table('feed')->orderBy('created_at')->get();
+        $feedQueryResult = DB::table('feed')->orderBy('created_at','desc')->get();
         foreach($feedQueryResult as $thisFeed){
             $feedName = $thisFeed->name;
             $feedImage = $thisFeed->image_url;

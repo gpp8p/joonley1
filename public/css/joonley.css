@@ -365,6 +365,12 @@
 .sidenav a:hover {
     color: #f1030b;
 }
+.joonleyTitle{
+    font: 200 50px/1.2 'Leckerli One', Helvetica, sans-serif;
+    color: #092aff;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.2), 4px 4px 8px rgba(0,0,0,0.2);
+    margin-left: 20px;
+}
 
 /* Position and style the close button (top right corner) */
 .sidenav .closebtn {

@@ -258,6 +258,7 @@ class RegistrationController extends Controller
                 'email' => $thisRegistration->email,
                 'password' => Hash::make($thisRegistration->password),
                 'userrole_id' => $thisUserRole->id,
+                'buysell_type'=>$thisRegistration->buysell_type,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ]);

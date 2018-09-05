@@ -42,7 +42,7 @@ class RegistrationsSeeder extends Seeder
                 'strid' => $faker->randomNumber,
                 'strestab' => '2018',
                 'strtype'=>'rshop',
-                'password' => bcrypt('n1tad0g'),
+                'password' => 'n1tad0g',
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
                 'buysell_type'=>$regtype,
