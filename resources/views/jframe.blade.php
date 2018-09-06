@@ -98,6 +98,9 @@
                 @case('viewUsers')
                     @include('allUserList')
                 @break
+                @case('userEdit')
+                    @include('userEdit')
+                @break
 
 
             @endswitch

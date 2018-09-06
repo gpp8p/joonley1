@@ -45,7 +45,11 @@
 </style>
 
 <script language='javascript' type='text/javascript'>
-
+    var selectUser = function(event, evtId){
+        $("#selectedUser").val(evtId);
+        $('#userSelect').attr('action', "/userProfileEdit").submit();
+        return false;
+    }
 </script>
 
 <div class="fillFrame">
@@ -68,7 +72,7 @@
 
     </div>
     @foreach($allUsers as $thisUser)
-        <div class="viewRow">
+        <div class="viewRow" onclick="selectUser(event, '{{$thisUser->id}}');return null;" id="{{$thisUser->id}}">
             <div class="viewItem">
                 {{$thisUser->name}}
             </div>
@@ -98,6 +102,11 @@
                 {{$allUsers->links()}}
             </div>
         </div>
+
+        <form id="userSelect" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" id="selectedUser" name="selectedUser" value=""/>
+        </form>
 
 </div>
 

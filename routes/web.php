@@ -35,6 +35,8 @@ Route::get('/showRegistration','RegistrationController@showThisRequest')->name('
 Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOneRegistration');
 Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
 
+Route::post('/userProfileEdit', 'ProfileController@showProfileEdit')->name('userProfileEdit');
+
 Route::post('/feed', 'FeedController@show')->name('feed');
 Route::get('/feed', 'FeedController@show')->name('feed');
 Route::post('/favorites', 'FavoritesController@show')->name('favorites');

@@ -85,7 +85,7 @@ class User extends Authenticatable
 
     public function getUserList()
     {
-        $query = 'select users.name as name, users.email as email, userdetails.fname as fname , users.buysell_type as buysell_type, userdetails.lname as lname, userdetails.phone as phone from users, userdetails '.
+        $query = 'select users.id as id, users.name as name, users.email as email, userdetails.fname as fname , users.buysell_type as buysell_type, userdetails.lname as lname, userdetails.phone as phone from users, userdetails '.
         'where userdetails.user_id = users.id order by userdetails.lname';
 
         $users = DB::select($query);
@@ -109,6 +109,22 @@ class User extends Authenticatable
 //        $usersFound[0]->name = $userName;
         return $usersFound[0];
     }
+
+    public function getUserProfileById($userId)
+    {
+        $query = 'select users.id as uid,users.name as name,users.email as email,users.password as password, '.
+            'users.userrole_id as userrole_id, users.remember_token as users_remember_token, users.created_at as users_created_at, users.updated_at as users_updated_at, '.
+            'userdetails.admin,userdetails.title,userdetails.lname,userdetails.fname, '.
+            'userdetails.addr2,userdetails.city,userdetails.addr1, '.
+            'userrole.name as userrole_name, '.
+            'userdetails.state as state,userdetails.zip as zip,userdetails.country as country,userdetails.phone as phone, userdetails.created_at as userdetails_created_at, userdetails.updated_at as userdetails_updated_at  '.
+            'from users, userdetails, userrole where userdetails.user_id = users.id and users.userrole_id = userrole.id and users.id = ?';
+
+        $usersFound = DB::select($query, [$userId]);
+//        $usersFound[0]->name = $userName;
+        return $usersFound[0];
+    }
+
 
     public function getUserByName($userName)
     {
