@@ -36,6 +36,8 @@ Route::get('/getReg', 'RegistrationController@getOneRegistration')->name('getOne
 Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('approveReg');
 
 Route::post('/userProfileEdit', 'ProfileController@showProfileEdit')->name('userProfileEdit');
+Route::post('/userProfileEditSubmit', 'ProfileController@profileEditSubmit')->name('userProfileEditSubmit');
+Route::post('/showUserCompany', 'ProfileController@editCompanyInformation')->name('showUserCompany');
 
 Route::post('/feed', 'FeedController@show')->name('feed');
 Route::get('/feed', 'FeedController@show')->name('feed');

@@ -10,6 +10,7 @@ namespace App\Util;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Collection;
 
 class ArrayPaginator
@@ -20,4 +21,5 @@ class ArrayPaginator
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
+
 }
