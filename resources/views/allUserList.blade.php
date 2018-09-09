@@ -7,7 +7,7 @@
     }
     .viewRow{
         display:grid;
-        grid-template-columns: 20% 10% 20% 20% 20%;
+        grid-template-columns: 20% 10% 20% 20% 30%;
         grid-template-rows: auto;
         align-items: center;
         margin-left: 5px;
@@ -16,7 +16,7 @@
     }
     .viewTitles{
         display:grid;
-        grid-template-columns: 20% 10% 20% 20% 20%;
+        grid-template-columns: 20% 10% 20% 20% 30%;
         grid-template-rows: auto;
         align-items: center;
         margin-left: 5px;

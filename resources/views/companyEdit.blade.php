@@ -51,6 +51,10 @@
         margin-bottom: 5px;
     }
 
+    .select_narrow {
+        width:30%;
+    }
+
     .subCntr{
         margin-left: 30%;
         margin-top: 20px;
@@ -80,6 +84,90 @@
             </div>
         </div>
 
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Company Role:
+                </div>
+                <div class="explaination">
+                    Please enter or edit role in company:
+                </div>
+            </div>
+            <div class="input_field select_narrow">
+                <span><span class="lab">{{$userName}} is </span>
+                    <select style="margin-top: 12px;" class="selinput" id="companyrole" name="companyrole" value ="{{$thisCompanyData->companyrole_name}}">
+                        @foreach($companyRoles as $thisRole)
+                            @if(strcmp($thisRole[0], $thisCompanyData->companyrole_slug)==0)
+                                <option value="{{$thisRole[0]}}" selected>{{$thisRole[1]}}</option>
+                            @else
+                                <option value="{{$thisRole[0]}}">{{$thisRole[1]}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Company Address:
+                </div>
+                <div class="explaination">
+                    Please enter or edit line #1 of your company's address:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="addr1" id="addr1" class="wide_input_field" size="50" value ="{{$thisCompanyData->addr1}}"/>
+            </div>
+        </div>
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Company Address (line #2):
+                </div>
+                <div class="explaination">
+                    Please enter or edit line #2 of your company's address:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="addr2" id="addr2" class="wide_input_field" size="50" value ="{{$thisCompanyData->addr2}}"/>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    City:
+                </div>
+                <div class="explaination">
+                    Please enter or edit your city, state, and zipcode:
+                </div>
+            </div>
+            <div class="accross3">
+                <div>
+                    <span><input class="wide_input_field" type="text" name="city" id="city" class="wide_input_field" size="20" placeholder="city" value ="{{$thisCompanyData->city}}"/></span>
+                </div>
+                <div>
+                            <span><span class="lab">State:</span>
+                                    <select style="margin-top: 12px;" class="selinput" id="strstate" name="state" value ="{{$thisCompanyData->state}}">
+                                        @foreach($states as $thisState)
+                                            @if(strcmp($thisState[0], $thisCompanyData->state)==0)
+                                                <option value="{{$thisState[0]}}" selected>{{$thisState[1]}}</option>
+                                            @else
+                                                <option value="{{$thisState[0]}}">{{$thisState[1]}}</option>
+                                            @endif
+                                        @endforeach
+
+                                    </select>
+                                </span>
+                </div>
+                <div>
+                    <span><span class="lab">Zip:</span><input class="wide_input_field" type="text" name="zip" id="zip" class="wide_input_field" size="15" placeholder="zip" value ="{{$thisCompanyData->zip}}" /></span>
+                </div>
+            </div>
+        </div>
     </form>
 
 

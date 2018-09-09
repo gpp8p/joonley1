@@ -1,6 +1,11 @@
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 <style>
     /* registrations list styling */
+    .fillFrame{
+        background-color: #eeeeee;
+        height:100%;
+        width:100%;
+    }
     .registrations{
         display: grid;
         grid-template-rows:90% 10%;
@@ -8,35 +13,38 @@
         background-color: #eeeeee;
     }
     .regtable{
-        margin-left: 10px;
-        margin-right: 10px;
-        font-size: 125%;
+        margin-left: 3px;
+        margin-right: 3px;
         display:grid;
-        grid-template-rows: repeat(auto-fill, minmax(30px,1fr));
+        grid-template-rows: 30px 90%;
         background-color: #eeeeee;
     }
     .regheader {
-        color: #484848;
-        background-color: #eeeeee;
         display:grid;
         grid-template-columns: 50% 25% 25%;
+        align-items: center;
+        color: #ffffff;
+        background-color: #9d9d9d;
+
     }
     .regrow {
         display: grid;
         grid-template-columns: 50% 25% 25%;
-        color:blue;
+        color:black;
     }
     .regrow:hover{
-        color:red;
+        background-color: #07eefa;
     }
     .regcol {
         font-family: 'Fira Sans Condensed', sans-serif;
-        font-size:100%;
+        font-size:16px;
     }
-
     .registrationPager {
         display:grid;
         grid-template-columns:70% 30%
+    }
+    .regBody{
+        margin-top: 5px;
     }
 </style>
 <script language='javascript' type='text/javascript'>
@@ -44,25 +52,29 @@
         window.location.replace('{{route('showRegistration')}}?regId='+clickedElement.id);
     }
 </script>
-<div class="registrations">
-    <div class="regtable">
-        <div class="regheader">
-            <div>Email</div>
-            <div>First Name</div>
-            <div>Last Name</div>
-        </div>
-        @foreach ($outstandingRegistrations as $thisRegistration)
-            <div class="regrow" id="{{$thisRegistration->id}}" onclick="getOneRegistrationRequest(this);">
-                <div class="regcol">{{$thisRegistration->email}}</div>
-                <div class="regcol">{{$thisRegistration->fname}}</div>
-                <div class="regcol">{{$thisRegistration->lname}}</div>
+<div class="fillFrame">
+    <div class="registrations">
+        <div class="regtable">
+            <div class="regheader">
+                <div>Email</div>
+                <div>First Name</div>
+                <div>Last Name</div>
             </div>
-        @endforeach
-    </div>
-    <div class="registrationPager">
-        <div></div>
-        <div>
-            {{ $outstandingRegistrations->links() }}
+            <div class="regBody">
+                @foreach ($outstandingRegistrations as $thisRegistration)
+                    <div class="regrow" id="{{$thisRegistration->id}}" onclick="getOneRegistrationRequest(this);">
+                        <div class="regcol">{{$thisRegistration->email}}</div>
+                        <div class="regcol">{{$thisRegistration->fname}}</div>
+                        <div class="regcol">{{$thisRegistration->lname}}</div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="registrationPager">
+            <div></div>
+            <div>
+                {{ $outstandingRegistrations->links() }}
+            </div>
         </div>
     </div>
 </div>

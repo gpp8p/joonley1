@@ -234,7 +234,7 @@ class RegistrationController extends Controller
     }
 
     private function getOutstandingRegistrations(){
-        return DB::table('registrations')->where('reg_status','A')->paginate(15);
+        return DB::table('registrations')->where('reg_status','A')->paginate(20);
     }
 
     public function approveRegistration(Request $regApprovalRequest)

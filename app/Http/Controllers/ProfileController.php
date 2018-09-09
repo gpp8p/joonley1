@@ -41,11 +41,23 @@ class ProfileController extends Controller
     {
         $inData = $request->all();
         $thisUserId = $inData['userId'];
+        $thisUserName = $inData['userFname']." ".$inData['userLname'];
         $thisCompany = new Company;
         $companyData = $thisCompany->getCompanyInfoByUserId($thisUserId);
         $states = $this->getStates();
+        $companyRoles = $this->getCompanyRoles();
         $adminView = User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName] );
+    }
+
+    public function getCompanyRoles(){
+        $query = "select name, slug from companyrole";
+        $userroles = DB::select($query);
+        $roles = array();
+        foreach($userroles as $thisRole){
+            array_push($roles, [$thisRole->slug, $thisRole->name]);
+        }
+        return $roles;
     }
 
     public function getStates(){

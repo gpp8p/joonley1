@@ -204,6 +204,8 @@
     <form id="showCompanyInfo" method="POST">
         {{ csrf_field() }}
         <input type="hidden" name="userId" id="userId" value="{{$thisUserData->uid}}"/>
+        <input type="hidden" name="userLname" id="userLname" value="{{$thisUserData->lname}}"/>
+        <input type="hidden" name="userFname" id="userFname" value="{{$thisUserData->fname}}"/>
     </form>
     <div class="subCntr">
         <button type="button" onclick="submitUserEdit();return false;" class="btn" value="Update User">Update User</button>
