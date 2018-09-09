@@ -45,7 +45,7 @@ class ProfileController extends Controller
         $companyData = $thisCompany->getCompanyInfoByUserId($thisUserId);
         $states = $this->getStates();
         $adminView = User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'cmpanyEdit', 'thisCompanyData'=>$companyData, 'states'=>$states]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states]);
     }
 
     public function getStates(){

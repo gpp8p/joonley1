@@ -101,6 +101,9 @@
                 @case('userEdit')
                     @include('userEdit')
                 @break
+                @case('companyEdit')
+                    @include('companyEdit')
+                @break
 
 
             @endswitch
