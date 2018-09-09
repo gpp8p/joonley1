@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Company;
 use Illuminate\Support\Facades\DB;
 
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
         $thisUserData = $userModel->getUserProfileById($selectedUserId);
         $states = $this->getStates();
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'userEdit', 'thisUserData'=>$thisUserData, 'states'=>$states]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'userEdit', 'thisUserData'=>$thisUserData, 'states'=>$states]);
     }
 
     public function profileEditSubmit(Request $request){
@@ -39,7 +40,12 @@ class ProfileController extends Controller
     public function editCompanyInformation(Request $request)
     {
         $inData = $request->all();
+        $thisUserId = $inData['userId'];
+        $thisCompany = new Company;
+        $companyData = $thisCompany->getCompanyInfoByUserId($thisUserId);
+        $states = $this->getStates();
         $adminView = User::hasAccess(['\'admin-dashboard\'']);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'cmpanyEdit', 'thisCompanyData'=>$companyData, 'states'=>$states]);
     }
 
     public function getStates(){

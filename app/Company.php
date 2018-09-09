@@ -88,6 +88,18 @@ class Company extends Model
         }
     }
 
+    public function getCompanyInfoByUserId($userId){
+        $query = "select company.name as name, icon as icon, website as website, phone as phone, reseller_id as reseller_id, addr1 as addr1, addr2 as addr2, city as city, state as state, zip as zip, country as country, noshow as noshow, companyrole.name as companyrole_name ".
+            "from company, userincompany, companyrole ".
+            "where userincompany.company_id = company.id ".
+            "and companyrole.id = userincompany.companyrole_id ".
+            "and userincompany.user_id = ?";
+
+        $thisCompany = DB::select($query, [$userId]);
+        return $thisCompany;
+
+    }
+
     public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)
     {
         try {
