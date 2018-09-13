@@ -128,6 +128,29 @@ ENDQUERY;
         }
     }
 
+    public function getAllParentIds($nodeId)
+    {
+        $parentIds = array($nodeId);
+        $nextParentId = $this->immediateParentById($nodeId);
+        while($nextParentId!=null){
+            array_push($parentIds, $nextParentId['id']);
+            $nextParentId = $this->immediateParentById($nextParentId['id']);
+        }
+        return $parentIds;
+    }
+
+    public function immediateParentById($nodeId)
+    {
+        $query = 'SELECT parent.name, parent.id FROM nested_category AS node, nested_category AS parent WHERE node.lft BETWEEN parent.lft AND parent.rgt AND node.id = ? ORDER BY parent.lft';
+        $path =  DB::select($query, [$nodeId]);
+        if((count($path)-2)>0) {
+            return (array) $path[(count($path) - 2)];
+        }else{
+            return null;
+        }
+    }
+
+
 
 
 }

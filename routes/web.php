@@ -64,6 +64,7 @@ Route::get('/showAllProducts', 'ProductController@getBuyerProductView')->name('s
 
 Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
 Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
+Route::get('/getOptionsWithParents', 'OptionsController@getOptionsForCategoryWithParents')->name('getOptionsWithParents');
 
 //Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
 //Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
@@ -85,8 +86,11 @@ Route::post('/previewBack', 'ProductController@showOneProduct')->name('previewBa
 Route::post('/cancelFeedAdd', 'ProductController@getProductsForLoggedInUser')->name('previewCancel');
 
 Route::get('/test', function () {
-    $thisNestedCategory = new \App\NestedCategory();
-    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
+//    $thisNestedCategory = new \App\NestedCategory();
+//    $parentIds = $thisNestedCategory->getAllParentIds(17);
+//    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
+    $thisOptionsController = new \App\Http\Controllers\OptionsController();
+    $thisOptionsController->getOptionsForCategoryWithParents(18);
     return "<h2>Done!</h2>";
 });
 

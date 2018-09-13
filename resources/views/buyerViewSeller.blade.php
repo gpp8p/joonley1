@@ -61,16 +61,22 @@
 </style>
 
 <script language='javascript' type='text/javascript'>
-    var lastAddedCat = "";
-    var lastAddedCatName ="";
+    var lastAddedCat = [];
+    var lastAddedCatName =[];
     $( document ).ready(function() {
+        lastAddedCatName.push('Select Product Category');
+        lastAddedCat.push(0);
         getNextCats('Select Product Category')
     });
 
 
     function getNextCats(parentCatName){
         var childNodes = [];
-        childNodes.push(['select category',0]);
+        if(lastAddedCatName.length>1) {
+            childNodes.push(['select category', 0]);
+        }else{
+            childNodes.push(['all categories - select one', 0]);
+        }
         $.ajax({
             /* the route pointing to the post function */
             url: '/getCats',
@@ -100,14 +106,26 @@
     }
 
     function newSubCat(elem){
-        var selectedOptionName = elem.selectedOptions[0].innerText;
-        lastAddedCat = elem.value;
-        lastAddedCatName = selectedOptionName;
-        getNextCats(selectedOptionName);
+        if(elem.selectedOptions[0].innerText == 'Select Parent'){
+            gotoParent(elem);
+        } else{
+            var selectedOptionName = elem.selectedOptions[0].innerText;
+            lastAddedCat.push(elem.value);
+            lastAddedCatName.push(selectedOptionName);
+            getNextCats(selectedOptionName);
+        }
+
     }
 
     function gotoParent(elem){
-        getNextCats(lastAddedCatName);
+        lastAddedCat.pop();
+        lastAddedCatName.pop();
+        if(lastAddedCatName.length==0){
+            getNextCats('Select Product Category')
+        }else{
+            getNextCats(lastAddedCatName[lastAddedCatName.length-1]);
+        }
+
     }
 
     function createNextSelect(optNames){
@@ -116,13 +134,14 @@
             var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
             thisDivHtml = thisDivHtml+newOpt;
         }
+        thisDivHtml = thisDivHtml + "<option value='-1'>Select Parent</option>"
         thisDivHtml = thisDivHtml+"</select>";
         return thisDivHtml;
     }
 
     function createLeafSelect(){
         var thisDivHtml = "<select id ='categorySelect' onchange='gotoParent(this);'>";
-        var newOpt = "<option value='0'>No More Sub-Categories</option>";
+        var newOpt = "<option value='0'>No Sub-Categories Under:"+lastAddedCatName[lastAddedCatName.length-1]+"</option>";
         var newOpt = newOpt+"<option value='-1'>Select Parent</option>";
         thisDivHtml = thisDivHtml+newOpt;
         thisDivHtml = thisDivHtml+"</select>";
