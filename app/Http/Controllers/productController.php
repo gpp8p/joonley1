@@ -179,6 +179,15 @@ class productController extends Controller
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisUsersProducts'=>$productsFound]);
     }
 
+    public function getBuyerProductView(Request $request){
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        $thisUser = Auth::user();
+        $thisProduct = new \App\Product;
+
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'buyerProductsView']);
+
+    }
+
 
     public function showOneProduct(Request $request){
         $requestData = $request->all();

@@ -104,6 +104,9 @@
                 @case('companyEdit')
                     @include('companyEdit')
                 @break
+                @case('buyerProductsView')
+                    @include('buyerViewSeller')
+                @break
 
 
             @endswitch

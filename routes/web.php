@@ -58,7 +58,9 @@ Route::get('/admin', 'AdminController@show')->name('admin');
 Route::post('/products', 'ProductController@show')->name('products');
 Route::get('/products', 'ProductController@show')->name('products');
 Route::get('/newProduct', 'ProductController@newProduct')->name('newProduct');
-Route::get('/showAllProducts', 'ProductController@getAllProducts')->name('showAllProducts');
+Route::get('/showAllProductsAdmin', 'ProductController@getAllProducts')->name('showAllProductsAdmin');
+Route::get('/showAllProducts', 'ProductController@getBuyerProductView')->name('showAllProducts');
+
 
 Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
 Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
