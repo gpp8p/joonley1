@@ -14,12 +14,8 @@
         display:grid;
         grid-template-rows: 50px 50px 95%;
     }
-    .filterControls{
-
-        display:grid;
-        grid-template-columns: repeat(auto-fill, 30%);
-        align-items: center;
-        padding-left: 20%;
+    .optionSelect {
+        width:35%;
     }
     .pageTitle{
 
@@ -31,11 +27,23 @@
     }
     .filterControls{
         display:grid;
-        grid-template-columns: repeat(auto-fill, 30%);
+        grid-template-columns: repeat(auto-fill, 25%);
+        align-items: center;
+        padding-left: 10%;
         font-size: 12px;
         font-family: 'Fira Sans Condensed', sans-serif;
         font-weight: normal;
         color: black;
+    }
+    .optionSelect {
+        width:35%;
+    }
+    .selectLabel{
+
+    }
+    .selectOptions{
+        display:grid;
+        grid-template-rows: 20px 85%;
     }
     .flushLeft{
         justify-self: start;
@@ -58,6 +66,9 @@
     .productView{
 
     }
+    .submitButton{
+        width:70px;
+    }
 </style>
 
 <script language='javascript' type='text/javascript'>
@@ -77,6 +88,7 @@
         }else{
             childNodes.push(['all categories - select one', 0]);
         }
+        removeSubmitButton();
         $.ajax({
             /* the route pointing to the post function */
             url: '/getCats',
@@ -97,12 +109,47 @@
                     var selHtml = createLeafSelect();
                     $("#categoryControl").html(selHtml);
                 }
+                createSubmitButton();
+
             },
 
             error: function (data) {
                 alert('error');
             }
         });
+    }
+
+    function showDefaultOptions(catId){
+        $.ajax({
+            /* the route pointing to the post function */
+            url: '/getOptionsWithParents',
+            type: 'GET',
+            /* send the csrf-token and the input to the controller */
+            data: {categoryId:catId},
+            dataType: 'json',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function (data) {
+                for(i=0;i<data.length;i++){
+                    var optionHeader = data[i][0];
+                    var optionItems = data[i][1];
+                    var thisOptionSelect = "<span class='selectOptions' id='sopt"+optionHeader+"'><span class='selectLabel'>"+optionHeader+":</span><select class='optionSelect' size='"+optionItems.length+"' multiple >";
+                    var thisOptionHtml="";
+                    for(d=0;d<optionItems.length;d++){
+                        var thisItemValue = optionItems[d][0];
+                        var thisItemId = optionItems[d][1];
+                        thisOptionHtml = thisOptionHtml+"<option value=\""+thisItemId+"\" checked \>"+thisItemValue+"\<\/option\>";
+                    }
+                    thisOptionSelect = thisOptionSelect+thisOptionHtml+"\<\/select\></span>";
+                    $("#filters").append(thisOptionSelect);
+                    console.log(thisOptionSelect);
+                }
+            },
+
+            error: function (data) {
+                alert('error');
+            }
+        });
+
     }
 
     function newSubCat(elem){
@@ -112,6 +159,7 @@
             var selectedOptionName = elem.selectedOptions[0].innerText;
             lastAddedCat.push(elem.value);
             lastAddedCatName.push(selectedOptionName);
+            showDefaultOptions(elem.value);
             getNextCats(selectedOptionName);
         }
 
@@ -120,11 +168,15 @@
     function gotoParent(elem){
         lastAddedCat.pop();
         lastAddedCatName.pop();
+        $("span[id^='sopt']").remove();
+
         if(lastAddedCatName.length==0){
             getNextCats('Select Product Category')
         }else{
             getNextCats(lastAddedCatName[lastAddedCatName.length-1]);
         }
+        removeSubmitButton();
+
 
     }
 
@@ -148,6 +200,15 @@
         return thisDivHtml;
     }
 
+    function createSubmitButton(){
+        var buttonHtml = "<button id='subb' class='submitButton'>Search</button>";
+        $("#filters").append(buttonHtml);
+    }
+
+    function removeSubmitButton(){
+        $("#subb").remove();
+    }
+
 
 </script>
 
@@ -164,24 +225,15 @@
                 Next Step ->>
             </span>
         </div>
-        <div class="filterControls">
+        <form action="{{url('/productSearch')}}">
+            <div class="filterControls" id="filters">
             <span id="categoryControl">
 
             </span>
-            <span id="option1">
-                <select id="optionSelect">
-                    <option>Option 1</option>
-                    <option>Option 2</option>
-                    <option>Option 3</option>
-                    <option>Option 4</option>
-                    <option>Option 5</option>
-                    <option>Option 6</option>
-                    <option>Option 7</option>
-                    <option>Option 8</option>
-                </select>
-            </span>
 
-        </div>
+
+            </div>
+        </form>
         <div class='productView'>
 
         </div>
