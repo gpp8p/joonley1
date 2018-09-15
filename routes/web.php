@@ -66,6 +66,7 @@ Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
 Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
 Route::get('/getOptionsWithParents', 'OptionsController@getOptionsForCategoryWithParents')->name('getOptionsWithParents');
 
+
 //Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
 //Route::post('/multifileupload', 'HomeController@store')->name('multifileupload');
 
@@ -79,6 +80,8 @@ Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('ne
 
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
+Route::post('/productSearch', 'ProductController@productSearch')->name('productSearch');
+
 
 Route::post('/addToFeed', 'FeedController@addToFeed')->name('addToFeed');
 Route::post('/feedPreview', 'FeedController@showFeedPreview')->name('feedPreview');

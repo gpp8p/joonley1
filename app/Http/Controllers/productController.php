@@ -198,6 +198,12 @@ class productController extends Controller
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'oneProduct', 'thisProduct'=>$thisProductInfo]);
     }
 
+    public function productSearch(Request $request){
+        $requestData = $request->all();
+        $searchCriteria = json_decode($requestData['searchCriteria']);
+        $categoryId = $searchCriteria[0];
+    }
+
     public function arrayPaginator($array, $request)
     {
         $page = Input::get('page', 1);

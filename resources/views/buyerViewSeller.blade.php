@@ -12,7 +12,7 @@
     }
     .buyerViewWrapper{
         display:grid;
-        grid-template-rows: 50px 50px 95%;
+        grid-template-rows: 50px 100px 85%;
     }
     .optionSelect {
         width:35%;
@@ -33,6 +33,7 @@
         font-size: 12px;
         font-family: 'Fira Sans Condensed', sans-serif;
         font-weight: normal;
+        height:100px;
         color: black;
     }
     .optionSelect {
@@ -70,7 +71,7 @@
         width:70px;
     }
 </style>
-
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <script language='javascript' type='text/javascript'>
     var lastAddedCat = [];
     var lastAddedCatName =[];
@@ -84,7 +85,7 @@
     function getNextCats(parentCatName){
         var childNodes = [];
         if(lastAddedCatName.length>1) {
-            childNodes.push(['select category', 0]);
+            childNodes.push(['select sub-category of:'+lastAddedCatName[lastAddedCatName.length-1], 0]);
         }else{
             childNodes.push(['all categories - select one', 0]);
         }
@@ -201,12 +202,54 @@
     }
 
     function createSubmitButton(){
-        var buttonHtml = "<button id='subb' class='submitButton'>Search</button>";
+        var buttonHtml = "<button id='subb' onclick='submitData();return false;' class='submitButton'>Search</button>";
         $("#filters").append(buttonHtml);
     }
 
     function removeSubmitButton(){
         $("#subb").remove();
+    }
+
+    function submitData(event){
+        var selectedCategory = lastAddedCat[lastAddedCat.length-1];
+        var optionsPresent = $('.optionSelect');
+        var selectedOptionValues = [];
+        var submitData = [];
+        for(i=0;i<optionsPresent.length;i++){
+            var thisOptionSelect = optionsPresent[i];
+            var thisSelectedOptions = thisOptionSelect.selectedOptions;
+            for(j=0;j<thisSelectedOptions.length;j++){
+                var thisOption = thisSelectedOptions[j];
+                var thisOptionValue = thisOption.value;
+                selectedOptionValues.push(thisOptionValue);
+            }
+        }
+        submitData.push(selectedCategory);
+        submitData.push(selectedOptionValues);
+        var jsonSubmit = JSON.stringify(submitData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            /* the route pointing to the post function */
+            url: '/productSearch',
+            type: 'POST',
+            /* send the csrf-token and the input to the controller */
+            data: {searchCriteria:jsonSubmit},
+            dataType: 'json',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function (data) {
+
+            },
+
+            error: function (data) {
+                alert('error');
+            }
+        });
+
+        return false;
     }
 
 
@@ -227,6 +270,7 @@
         </div>
         <form action="{{url('/productSearch')}}">
             <div class="filterControls" id="filters">
+
             <span id="categoryControl">
 
             </span>
