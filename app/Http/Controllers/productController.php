@@ -123,7 +123,7 @@ class productController extends Controller
             ]);
             for ($i = 0; $i < sizeof($decodedData); $i++) {
                 $key = $decodedData[$i][0];
-                if (strpos($key, 'option')) {
+                if (strpos($key, 'option')===0) {
                     $optionId = substr($key, 6);
                     DB::table('hasoptions')->insert([
                         'product_id' => $newProductId,
@@ -132,7 +132,7 @@ class productController extends Controller
                         'updated_at' => \Carbon\Carbon::now()
                     ]);
                 }
-                if (strpos($key, 'term')) {
+                if (strpos($key, 'term')===0) {
                     $termId = substr($key, 4);
                     DB::table('hasterms')->insert([
                         'product_id' => $newProductId,
