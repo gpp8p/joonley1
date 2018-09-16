@@ -16,6 +16,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
+
+
 Auth::routes();
 
 
@@ -65,6 +67,8 @@ Route::get('/showAllProducts', 'ProductController@getBuyerProductView')->name('s
 Route::get('/getCats', 'NestedCategoryController@getCats')->name('getCats');
 Route::get('/getOptions', 'OptionsController@getOptionsForCategory')->name('getOptions');
 Route::get('/getOptionsWithParents', 'OptionsController@getOptionsForCategoryWithParents')->name('getOptionsWithParents');
+Route::get('/optionTypes', 'OptionsController@getOptionTypes')->name('optionTypes');
+Route::get('/optionValues', 'OptionsController@getOptionsForOptionType')->name('optionValues');
 
 
 //Route::get('/multifileupload', 'HomeController@multifileupload')->name('multifileupload');
@@ -88,12 +92,14 @@ Route::post('/feedPreview', 'FeedController@showFeedPreview')->name('feedPreview
 Route::post('/previewBack', 'ProductController@showOneProduct')->name('previewBack');
 Route::post('/cancelFeedAdd', 'ProductController@getProductsForLoggedInUser')->name('previewCancel');
 
+Route::get('/createCategory', 'NestedCategoryController@showCategoryEdit')->name('createCategory');
+
 Route::get('/test', function () {
 //    $thisNestedCategory = new \App\NestedCategory();
 //    $parentIds = $thisNestedCategory->getAllParentIds(17);
 //    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
     $thisOptionsController = new \App\Http\Controllers\OptionsController();
-    $thisOptionsController->getOptionsForCategoryWithParents(18);
+    $thisOptionsController->getOptionTypes();
     return "<h2>Done!</h2>";
 });
 

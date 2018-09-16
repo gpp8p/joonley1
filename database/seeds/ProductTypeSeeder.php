@@ -38,13 +38,13 @@ class ProductTypeSeeder extends Seeder
             'description'=>'Jewlrey'
         ]);
 
-        $blouseCategory = DB::table('producttype')->insertGetId([
-            'name'=>'Blouses',
+        $dressCategory = DB::table('producttype')->insertGetId([
+            'name'=>'Dresses',
             'parent_id'=>$thisCategory,
             'root'=>FALSE,
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now(),
-            'description'=>'Lady\'s Blouses'
+            'description'=>'Lady\'s Dresses'
         ]);
 
         $ringCategory = DB::table('producttype')->insertGetId([

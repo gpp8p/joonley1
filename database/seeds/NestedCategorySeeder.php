@@ -38,7 +38,7 @@ class NestedCategorySeeder extends Seeder
         $thisNestedCategory->addCategory('Gold Bracelets', 'Gold Bracelets', 'Bracelets');
         $thisNestedCategory->addCategory('Silver Bracelets', 'Silver Bracelets', 'Bracelets');
         $thisNestedCategory->addCategory('Plastic Bracelets', 'Plastic Bracelets', 'Bracelets');
-        $thisNestedCategory->addCategory('Blouses', 'Blouses', 'Select Product Category');
+        $thisNestedCategory->addCategory('Dresses', 'Dresses', 'Select Product Category');
 
 
     }

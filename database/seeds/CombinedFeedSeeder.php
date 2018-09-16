@@ -639,7 +639,7 @@ class CombinedFeedSeeder extends Seeder
 
 
 
-        $productType = DB::table('nested_category')->where('name', 'Blouses')->first();
+        $productType = DB::table('nested_category')->where('name', 'Dresses')->first();
 
         $newCompanyId = DB::table('company')->insertGetId([
             'name'=>    'Dress Makers Unlimited',
@@ -922,12 +922,12 @@ class CombinedFeedSeeder extends Seeder
 
 
         $thisProduct = DB::table('product')->insertGetId([
-            'name'=>'Work Blouses',
+            'name'=>'Work Dresses',
             'type_id'=>$productType->id,
             'price_q1'=>10.95,
             'price_q10'=>9.50,
             'ship_weight'=>0.2,
-            'description'=>'work blouse',
+            'description'=>'work dress',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
@@ -947,12 +947,12 @@ class CombinedFeedSeeder extends Seeder
         ]);
 
         $thisProduct = DB::table('product')->insertGetId([
-            'name'=>'Play Blouses',
+            'name'=>'Play Dresses',
             'type_id'=>$productType->id,
             'price_q1'=>10.95,
             'price_q10'=>9.50,
             'ship_weight'=>0.2,
-            'description'=>'play blouse',
+            'description'=>'play dress',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

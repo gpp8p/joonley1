@@ -107,6 +107,9 @@
                 @case('buyerProductsView')
                     @include('buyerViewSeller')
                 @break
+                @case('createCategories')
+                    @include('createCategory')
+                @break
 
 
             @endswitch

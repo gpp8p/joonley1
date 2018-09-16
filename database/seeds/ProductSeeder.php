@@ -68,14 +68,14 @@ class ProductSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now()
         ]);
 
-        $productType = DB::table('nested_category')->where('name', 'Blouses')->first();
+        $productType = DB::table('nested_category')->where('name', 'Dresses')->first();
         DB::table('product')->insert([
-            'name'=>'Parisian Blouse',
+            'name'=>'Parisian Dress',
             'type_id'=>$productType->id,
             'price_q1'=>20.95,
             'price_q10'=>15.50,
             'ship_weight'=>1.9,
-            'description'=>'Latest fashion blouse from Paris',
+            'description'=>'Latest fashion dress from Paris',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);

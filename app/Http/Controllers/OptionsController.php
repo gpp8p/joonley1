@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Options;
 use \App\NestedCategory;
+use Illuminate\Support\Facades\DB;
 
 class OptionsController extends Controller
 {
@@ -13,6 +14,14 @@ class OptionsController extends Controller
         $categoryId = $inData['categoryId'];
         $returnArray = $this->catOptions($categoryId);
         return json_encode($returnArray);
+    }
+
+    public function getOptionsForOptionType(Request $request){
+        $inData =  $request->all();
+        $optionTypeId = $inData['optionTypeId'];
+        $query = "Select specification as name, id as id from options where optiontype_id = ?";
+        $optionTypes = DB::select($query, [$optionTypeId]);
+        return json_encode($optionTypes);
     }
 
     public function getOptionsForCategoryWithParents(Request $request){
@@ -51,5 +60,12 @@ class OptionsController extends Controller
             array_push($returnArray,$optionArrayElement);
         }
         return $returnArray;
+    }
+
+    public function getOptionTypes(){
+        $query = "select name, id from optiontype";
+        $optionTypes = DB::select($query);
+        return json_encode($optionTypes);
+
     }
 }
