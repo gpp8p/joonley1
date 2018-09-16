@@ -86,22 +86,62 @@
         font-size: 12px;
         margin-right: 5px;
     }
+    .optionValues{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+    }
+    .optionList{
+        color:black;
+    }
+    .optList{
+
+    }
+    .optListHdr{
+        font-size: 12px;
+
+    }
+    .optListItem{
+        font-size: 10px;
+        margin-left: 2px;
+        font-weight: normal;
+    }
 
 
 
     .filterControls{
         display:grid;
-        grid-template-columns: repeat(auto-fill, 25%);
-        align-items: center;
-        padding-left: 10%;
+        grid-template-columns:20% 80%;
         font-size: 12px;
         font-family: 'Fira Sans Condensed', sans-serif;
         font-weight: normal;
         height:100px;
         color: black;
     }
+
+    .optionCheckBoxes{
+        display:grid;
+        grid-template-columns:auto;
+        grid-template-rows: 50%;
+        font-size: 12px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+        height:100px;
+        color: black;
+    }
+    .optsNowClass{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+    }
+
+    .categorySelect{
+
+    }
     .optionSelect {
-        width:35%;
+
     }
     .selectLabel{
 
@@ -110,6 +150,22 @@
         display:grid;
         grid-template-rows: 20px 85%;
     }
+    .optionLabel{
+        font-size: 12px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+
+    }
+    .optionSelectGroup{
+        display:grid;
+        grid-template-rows: 50% 50%;
+        margin-right: 20px;
+
+    }
+    .optionTypeSelector{
+
+    }
+
     .flushLeft{
         justify-self: start;
         font-size: 12px;
@@ -143,7 +199,6 @@
         lastAddedCatName.push('Select Product Category');
         lastAddedCat.push(0);
         getNextCats('Select Product Category');
-        getOptionTypes();
     });
 
 
@@ -183,6 +238,39 @@
         });
     }
 
+    function showDefaultOptions(catId){
+        $.ajax({
+            /* the route pointing to the post function */
+            url: '/getOptionsWithParents',
+            type: 'GET',
+            /* send the csrf-token and the input to the controller */
+            data: {categoryId:catId},
+            dataType: 'json',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function (data) {
+                for(i=0;i<data.length;i++){
+                    var optionHeader = data[i][0];
+                    var optionItems = data[i][1];
+                    var thisOptionListing = "<span class='optionList' id='olist"+optionHeader+"'>";
+                    thisOptionListing = thisOptionListing+"<dl class='optList'><dt class='optListHdr'>"+optionHeader+"<a id='olremove"+optionHeader+"' class='optListControl' onclick='removeOptionType(this);' >\<--remove</a></dt>";
+                    for(d=0;d<optionItems.length;d++){
+                        var thisItemValue = optionItems[d][0];
+                        thisOptionListing = thisOptionListing+"<dt class='optListItem'> - "+thisItemValue+"</dt>";
+                    }
+                    thisOptionListing = thisOptionListing+"</dl></span>";
+                    $("#optsNow").append(thisOptionListing);
+                    console.log(thisOptionListing);
+                }
+            },
+
+            error: function (data) {
+                alert('error');
+            }
+        });
+
+    }
+
+
     function getOptionTypes(){
         $.ajax({
             /* the route pointing to the post function */
@@ -193,9 +281,15 @@
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-                var optionSelectElement = createSimpleSelect('optionTypeSelect', 'selectThisOption(this);', data, 'Select Type' );
-                $("#optSelect").append(optionSelectElement);
-                console.log(optionSelectElement);
+                var numberOfSelects = $("#optSelect select").length;
+                var optionSelectElement = createSimpleSelect('optionTypeSelect'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
+                var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
+                optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
+                optionSelectGroup = optionSelectGroup+optionSelectElement;
+                optionSelectGroup = optionSelectGroup+"</span><span class='optionCheckBox' id='ocb"+numberOfSelects+"'></span>";
+                optionSelectGroup = optionSelectGroup+"</span>";
+                $("#optSelect").append(optionSelectGroup);
+                console.log(optionSelectGroup);
             },
 
             error: function (data) {
@@ -205,7 +299,9 @@
     }
 
     function selectThisOption(elem){
+        var parentId = elem.parentElement.id;
         var selectedOptionId = elem.selectedOptions[0].value;
+        var targetElement = parentId.substring(3);
         $.ajax({
             /* the route pointing to the post function */
             url: '/optionValues',
@@ -215,23 +311,25 @@
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-                var allOptionsDiv = "<div class='allOptions'>";
+                var allOptionsDiv = "<span class='allOptions'>";
 
-                var itemsDiv = "<div class='itemsDiv'>";
+                var itemsDiv = "<span class='itemsDiv'>";
                 for(d=0;d<data.length;d++){
                     var thisItemId = data[d].id;
                     var thisItemValue = data[d].name;
-                    var thisItemCheckbox = "<div class='optionCheckBoxDiv'>"
+                    var thisItemCheckbox = "<span class='optionCheckBoxDiv'>"
                     thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
-                    thisItemCheckbox = thisItemCheckbox + "<label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label>";
-                    thisItemCheckbox = thisItemCheckbox + "</div>";
+                    thisItemCheckbox = thisItemCheckbox + " - <label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label></br>";
+                    thisItemCheckbox = thisItemCheckbox + "</span>";
                     itemsDiv = itemsDiv+thisItemCheckbox;
                 }
-                itemsDiv = itemsDiv+"</div>";
+                itemsDiv = itemsDiv+"</span>";
                 allOptionsDiv = allOptionsDiv+itemsDiv;
 
-                allOptionsDiv = allOptionsDiv+"</div>";
+                allOptionsDiv = allOptionsDiv+"</span>";
                 console.log(allOptionsDiv);
+//                console.log("ocb"+targetElement);
+                $("#ocb"+targetElement).append(allOptionsDiv);
             },
 
             error: function (data) {
@@ -247,6 +345,7 @@
             var selectedOptionName = elem.selectedOptions[0].innerText;
             lastAddedCat.push(elem.value);
             lastAddedCatName.push(selectedOptionName);
+            showDefaultOptions(elem.value);
             getNextCats(selectedOptionName);
         }
 
@@ -255,7 +354,7 @@
     function gotoParent(elem){
         lastAddedCat.pop();
         lastAddedCatName.pop();
-
+        $(".optionList").remove();
 
         if(lastAddedCatName.length==0){
             getNextCats('Select Product Category')
@@ -322,7 +421,10 @@
             </div>
         </div>
         <div class="filterControls" id="filters">
-            <span id="categoryControl">
+            <span id="categoryControl" class="categorySelect">
+
+            </span>
+            <span id="optsNow" class="optsNowClass">
 
             </span>
         </div>
@@ -350,16 +452,16 @@
                 <div class="explaination">
                     Please select appropriate options for this category or enter a new option type.
                 </div>
-                <div class="optionControls">
-                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="addExistingOptionType();">Add Existing Type</button>
+                <div class="optionControle">
+                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="getOptionTypes();">Add Existing Type</button>
                     <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="createNewOptionType();">New Type</button>
                 </div>
 
             </div>
         </div>
 
-        <div class="filterControls">
-            <span id="optSelect">
+        <div class="optionCheckBoxes">
+            <span id="optSelect" class="optionValues">
 
             </span>
         </div>
