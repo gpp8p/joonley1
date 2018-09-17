@@ -55,7 +55,9 @@
     .wide_input_field{
         font-size: 12px;
         margin-top: 15px;
+        color: black;
     }
+
 
     .selinput {
         width: 50%;
@@ -198,6 +200,35 @@
     .submitButton{
         width:70px;
     }
+
+    input[type="file"] {
+        display: none;
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 3px 9px;
+        cursor: pointer;
+        color:black;
+        font-size: 12px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+    }
+    .imgupload{
+        display:grid;
+        grid-template-columns: 30% 30%;
+    }
+    .uplButton{
+        height: 30%;
+        width:50%;
+    }
+    .uplImage{
+
+    }
+    .submitForm{
+        margin-left: 40%;
+    }
+
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script language='javascript' type='text/javascript'>
@@ -290,9 +321,9 @@
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
                 var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
-                var optionSelectElement = createSimpleSelect('optionTypeSelect'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
+                var optionSelectElement = createSimpleSelect('osl_'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
                 var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
-                optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
+                optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl_"+numberOfSelects+"'>";
                 optionSelectGroup = optionSelectGroup+optionSelectElement;
                 optionSelectGroup = optionSelectGroup+"</span><span class='optionCheckBox' id='ocb"+numberOfSelects+"'></span>";
                 optionSelectGroup = optionSelectGroup+"</span>";
@@ -307,38 +338,13 @@
     }
 
 
-    function newOptionTypes(){
-        $.ajax({
-            /* the route pointing to the post function */
-            url: '/optionTypes',
-            type: 'GET',
-            /* send the csrf-token and the input to the controller */
-            data: {},
-            dataType: 'json',
-            /* remind that 'data' is the response of the AjaxController */
-            success: function (data) {
-                var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
-                var optionSelectElement = createSimpleSelect('optionTypeSelect'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
-                var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
-                optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
-                optionSelectGroup = optionSelectGroup+optionSelectElement;
-                optionSelectGroup = optionSelectGroup+"</span><span class='optionCheckBox' id='ocb"+numberOfSelects+"'></span>";
-                optionSelectGroup = optionSelectGroup+"</span>";
-                $("#optSelect").append(optionSelectGroup);
-                console.log(optionSelectGroup);
-            },
-
-            error: function (data) {
-                alert('error');
-            }
-        });
-    }
 
     function addOptionValue(elem){
         var newTypeInputElementId = elem.id;
         var target = 'ocb'+newTypeInputElementId.substring(3);
-        var newInputId = 'inf'+newTypeInputElementId.substring(3);
-        var newInputField = createNewOptionInput(newInputId, "", 'showOptionValueInput(this);', "", 'Option Value');
+        var existingValueInputs = $("#"+target+" input").length;
+        var newInputId = 'inf'+newTypeInputElementId.substring(3)+'_'+existingValueInputs;
+        var newInputField = createNewOptionInput(newInputId, "", 'showOptionValueInput(this);', 'Option Value');
         $("#"+target).append(newInputField);
 
     }
@@ -347,9 +353,9 @@
         var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
         var createElement = createNewOptionInput('optionTypeSelect'+numberOfSelects, 'showOptionValueInput(this);', "", 'Option Name' )
         var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
-        optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
+        optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl_"+numberOfSelects+"'>";
         optionSelectGroup = optionSelectGroup+createElement+"<i id='opv"+numberOfSelects+"' class='fa fa-plus-circle fa-lg' onclick='addOptionValue(this);' true'></i>";
-        optionSelectGroup = optionSelectGroup+"</span><span class='optionValueBox' id='ocb"+numberOfSelects+"'></span>";
+        optionSelectGroup = optionSelectGroup+"</span><span class='optionValueBox' id='ocb_"+numberOfSelects+"'></span>";
         optionSelectGroup = optionSelectGroup+"</span>";
         $("#optSelect").append(optionSelectGroup);
         console.log(optionSelectGroup);
@@ -360,13 +366,15 @@
     function selectThisOption(elem){
         var parentId = elem.parentElement.id;
         var selectedOptionId = elem.selectedOptions[0].value;
-        var targetElement = parentId.substring(3);
+        var targetElement = parentId.substring(4);
         $.ajax({
             /* the route pointing to the post function */
             url: '/optionValues',
             type: 'GET',
             /* send the csrf-token and the input to the controller */
             data: {optionTypeId:selectedOptionId},
+            thisParentId: parentId,
+            thisSelectedOptionId:selectedOptionId,
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
@@ -377,7 +385,7 @@
                     var thisItemId = data[d].id;
                     var thisItemValue = data[d].name;
                     var thisItemCheckbox = "<span class='optionCheckBoxDiv'>"
-                    thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
+                    thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='"+this.thisSelectedOptionId+"_"+thisItemId+"' id='option"+thisItemId+"'/>";
                     thisItemCheckbox = thisItemCheckbox + " - <label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label></br>";
                     thisItemCheckbox = thisItemCheckbox + "</span>";
                     itemsDiv = itemsDiv+thisItemCheckbox;
@@ -449,7 +457,7 @@
     }
 
     function createNewOptionInput(newOptionId, newOptionOnBlur, optNames, newOptPrompt){
-        var newOptionInput = "<input type='text' class='newOptionInputClass' size = '12' onblur='"+newOptionOnBlur+"' id='nopt'"+newOptionId+"' placeholder='"+newOptPrompt+"'/>";
+        var newOptionInput = "<input type='text' class='newOptionInputClass' size = '12' onblur='"+newOptionOnBlur+"' name='"+newOptionId+"' id='"+newOptionId+"' placeholder='"+newOptPrompt+"'/>";
         return newOptionInput;
     }
 
@@ -472,67 +480,107 @@
         $("#subb").remove();
     }
 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah')
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
 
 
 </script>
 <div class="fillFrame">
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Category:
+    <form method="post" action="{{ url('/createSubCategory') }}">
+        {{ csrf_field() }}
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Category:
+                </div>
+                <div class="explaination">
+                    Please select a category to which you wish to add a sub-category.  You may navigate up and down the category/sub-category tree by either selecting a sub-category or picking 'select parent'
+                </div>
             </div>
-            <div class="explaination">
-                Please select a category to which you wish to add a sub-category.  You may navigate up and down the category/sub-category tree by either selecting a sub-category or picking 'select parent'
-            </div>
-        </div>
-        <div class="filterControls" id="filters">
+            <div class="filterControls" id="filters">
             <span id="categoryControl" class="categorySelect">
 
             </span>
-            <span id="optsNow" class="optsNowClass">
+                <span id="optsNow" class="optsNowClass">
 
             </span>
-        </div>
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                New Sub-Category:
-            </div>
-            <div class="explaination">
-                Please enter the name of the new sub-category you wish to add to the category you have selected above
             </div>
         </div>
-        <div class="input_field">
-            <input type="text" name="subcategory_name" id="subcategory_name" class="wide_input_field" size="32" />
-        </div>
-
-    </div>
-    <div class="content_row">
-        <div class="explained_label">
-            <div class="lab">
-                Options:
-            </div>
-            <div class="optionExplaination">
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    New Sub-Category:
+                </div>
                 <div class="explaination">
-                    Please select appropriate options for this category or enter a new option type.
+                    Please enter the name of the new sub-category you wish to add to the category you have selected above
                 </div>
-                <div class="optionControle">
-                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="getOptionTypes();">Add Existing Type</button>
-                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="createOptionTypes();">New Type</button>
+            </div>
+            <div class="input_field">
+                <input type="text" name="subcategory_name" id="subcategory_name" class="wide_input_field" size="32" />
+            </div>
+
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Upload Example Photo:
                 </div>
+                <div class="explaination">
+                    Please select a photo of an example product for this category
+                </div>
+            </div>
+            <div class = 'imgupload'>
+            <span class="uplButton">
+                <label class="custom-file-upload">
+                    <input type="file" name="example_image" onchange="readURL(this);" />
+                    Upload Example Photo
+                 </label>
+            </span>
+                <span class="uplImage">
+                <img id="blah" src="#" alt=" " />
+            </span>
 
             </div>
+
         </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Options:
+                </div>
+                <div class="optionExplaination">
+                    <div class="explaination">
+                        Please select appropriate options for this category or enter a new option type.
+                    </div>
+                    <div class="optionControle">
+                        <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="getOptionTypes();return false;">Add Existing Type</button>
+                        <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="createOptionTypes();return false;">New Type</button>
+                    </div>
 
-        <div class="optionCheckBoxes">
-            <span id="optSelect" class="optionValues">
+                </div>
+            </div>
 
-            </span>
+            <div class="optionCheckBoxes">
+                <span id="optSelect" class="optionValues">
+
+                </span>
+            </div>
         </div>
-
-
-
-    </div>
-
+        <div class="submitForm">
+            <button class ='btn optionButtons' id="submitForm" name="submitForm" type="submit">Create New Suib-Category</button>
+        </div>
+    </form>
 </div>

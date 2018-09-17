@@ -93,6 +93,7 @@ Route::post('/previewBack', 'ProductController@showOneProduct')->name('previewBa
 Route::post('/cancelFeedAdd', 'ProductController@getProductsForLoggedInUser')->name('previewCancel');
 
 Route::get('/createCategory', 'NestedCategoryController@showCategoryEdit')->name('createCategory');
+Route::post('/createSubCategory', 'NestedCategoryController@createSubCategory')->name('createSubCategory');
 
 Route::get('/test', function () {
 //    $thisNestedCategory = new \App\NestedCategory();
