@@ -130,6 +130,14 @@
         height:100px;
         color: black;
     }
+    .optionValueBox{
+        display:grid;
+        grid-template-rows: auto;
+        font-size: 12px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+        color: black;
+    }
     .optsNowClass{
         display:flex;
         flex-direction: row;
@@ -281,7 +289,7 @@
             dataType: 'json',
             /* remind that 'data' is the response of the AjaxController */
             success: function (data) {
-                var numberOfSelects = $("#optSelect select").length;
+                var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
                 var optionSelectElement = createSimpleSelect('optionTypeSelect'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
                 var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
                 optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
@@ -297,6 +305,57 @@
             }
         });
     }
+
+
+    function newOptionTypes(){
+        $.ajax({
+            /* the route pointing to the post function */
+            url: '/optionTypes',
+            type: 'GET',
+            /* send the csrf-token and the input to the controller */
+            data: {},
+            dataType: 'json',
+            /* remind that 'data' is the response of the AjaxController */
+            success: function (data) {
+                var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
+                var optionSelectElement = createSimpleSelect('optionTypeSelect'+numberOfSelects, 'selectThisOption(this);', data, 'Select Type' );
+                var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
+                optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
+                optionSelectGroup = optionSelectGroup+optionSelectElement;
+                optionSelectGroup = optionSelectGroup+"</span><span class='optionCheckBox' id='ocb"+numberOfSelects+"'></span>";
+                optionSelectGroup = optionSelectGroup+"</span>";
+                $("#optSelect").append(optionSelectGroup);
+                console.log(optionSelectGroup);
+            },
+
+            error: function (data) {
+                alert('error');
+            }
+        });
+    }
+
+    function addOptionValue(elem){
+        var newTypeInputElementId = elem.id;
+        var target = 'ocb'+newTypeInputElementId.substring(3);
+        var newInputId = 'inf'+newTypeInputElementId.substring(3);
+        var newInputField = createNewOptionInput(newInputId, "", 'showOptionValueInput(this);', "", 'Option Value');
+        $("#"+target).append(newInputField);
+
+    }
+
+    function createOptionTypes(){
+        var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
+        var createElement = createNewOptionInput('optionTypeSelect'+numberOfSelects, 'showOptionValueInput(this);', "", 'Option Name' )
+        var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
+        optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl"+numberOfSelects+"'>";
+        optionSelectGroup = optionSelectGroup+createElement+"<i id='opv"+numberOfSelects+"' class='fa fa-plus-circle fa-lg' onclick='addOptionValue(this);' true'></i>";
+        optionSelectGroup = optionSelectGroup+"</span><span class='optionValueBox' id='ocb"+numberOfSelects+"'></span>";
+        optionSelectGroup = optionSelectGroup+"</span>";
+        $("#optSelect").append(optionSelectGroup);
+        console.log(optionSelectGroup);
+    }
+
+
 
     function selectThisOption(elem){
         var parentId = elem.parentElement.id;
@@ -389,6 +448,12 @@
         return thisDivHtml;
     }
 
+    function createNewOptionInput(newOptionId, newOptionOnBlur, optNames, newOptPrompt){
+        var newOptionInput = "<input type='text' class='newOptionInputClass' size = '12' onblur='"+newOptionOnBlur+"' id='nopt'"+newOptionId+"' placeholder='"+newOptPrompt+"'/>";
+        return newOptionInput;
+    }
+
+
     function createLeafSelect(){
         var thisDivHtml = "<select id ='categorySelect' onchange='gotoParent(this);'>";
         var newOpt = "<option value='0'>No Sub-Categories Under:"+lastAddedCatName[lastAddedCatName.length-1]+"</option>";
@@ -454,7 +519,7 @@
                 </div>
                 <div class="optionControle">
                     <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="getOptionTypes();">Add Existing Type</button>
-                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="createNewOptionType();">New Type</button>
+                    <button class ='btn optionButtons' id="addOptionType" name="addOptionType" onClick="createOptionTypes();">New Type</button>
                 </div>
 
             </div>
