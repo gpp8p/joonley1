@@ -246,9 +246,11 @@
         if(lastAddedCatName.length>1) {
             childNodes.push(['select sub-category of:'+lastAddedCatName[lastAddedCatName.length-1], 0]);
             $("#parent_category").val(lastAddedCatName[lastAddedCatName.length-1]);
+            $("#parent_category_id").val(lastAddedCat[lastAddedCat.length-1]);
         }else{
             childNodes.push(['all categories - select one', 0]);
             $("#parent_category").val('Select Product Category');
+            $("#parent_category_id").val(lastAddedCat[lastAddedCat.length-1]);
         }
 ;
         $.ajax({
@@ -585,5 +587,6 @@
             <button class ='btn optionButtons' id="submitForm" name="submitForm" type="submit">Create New Suib-Category</button>
         </div>
         <input type="hidden" name="parent_category" id="parent_category"/>
+        <input type="hidden" name="parent_category_id" id="parent_category_id"/>
     </form>
 </div>

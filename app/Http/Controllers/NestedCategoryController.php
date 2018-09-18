@@ -39,6 +39,38 @@ class NestedCategoryController extends Controller
                 array_push($newOptionValues, $thisKey);
             }
         }
+        foreach($existingOptionValues as $existingOptionKey){
+            $explodedOptionKey = explode('_',$existingOptionKey);
+            $optionId = $explodedOptionKey[2];
+            DB::table('defaultoptions')->insert([
+                'producttype_id'=>$newNestedCategoryId,
+                'options_id'=>$optionId,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+
+        }
+        $newOptions = array();
+        foreach($newOptionTypes as $thisNewOptionType){
+            $explodedNewOptionKey = explode('_',$thisNewOptionType);
+            $newOptionIndex = $explodedNewOptionKey[0]+'_'+$explodedNewOptionKey[0];
+            $optionId = $explodedOptionKey[2];
+/*
+            $inseretedOptionTypeId = DB::table('optiontype')->insertGetId([
+                'name' => $inData[$thisNewOptionType],
+                'slug' => $inData[$thisNewOptionType],
+                'description'=> $inData[$thisNewOptionType],
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now(),
+            ]);
+*/
+            $newOptions[$newOptionIndex]=$inseretedOptionTypeId;
+        }
+        foreach($newOptionValues as $thisNewOptionValue){
+            $explodedNewOptionValue = explode('_',$thisNewOptionValue);
+            $optionTypeReference = $explodedNewOptionValue[0];
+            $optionTypeField = $explodedNewOptionValue[1];
+        }
 //       $request->logo->storeAs('example_image', '/categories/cat1.png');
     }
 
