@@ -25,10 +25,18 @@ class NestedCategoryController extends Controller
     public function createSubCategory(Request $request){
         $inData =  $request->all();
         $keys = array_keys($inData);
-        $optionValues=array();
+        $existingOptionValues=array();
+        $newOptionTypes=array();
+        $newOptionValues = array();
         foreach($keys as $thisKey){
-            if($this->startsWith($thisKey, 'inf')){
-                array_push($optionValues, $thisKey);
+            if($this->startsWith($thisKey, 'exo_')){
+                array_push($existingOptionValues, $thisKey);
+            }
+            if($this->startsWith($thisKey, 'ots_')){
+                array_push($newOptionTypes, $thisKey);
+            }
+            if($this->startsWith($thisKey, 'inf_')){
+                array_push($newOptionValues, $thisKey);
             }
         }
 //       $request->logo->storeAs('example_image', '/categories/cat1.png');

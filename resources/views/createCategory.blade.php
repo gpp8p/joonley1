@@ -245,8 +245,10 @@
         var childNodes = [];
         if(lastAddedCatName.length>1) {
             childNodes.push(['select sub-category of:'+lastAddedCatName[lastAddedCatName.length-1], 0]);
+            $("#parent_category").val(lastAddedCatName[lastAddedCatName.length-1]);
         }else{
             childNodes.push(['all categories - select one', 0]);
+            $("#parent_category").val('Select Product Category');
         }
 ;
         $.ajax({
@@ -341,17 +343,17 @@
 
     function addOptionValue(elem){
         var newTypeInputElementId = elem.id;
-        var target = 'ocb'+newTypeInputElementId.substring(3);
+        var target = 'ocb_'+newTypeInputElementId.substring(3);
         var existingValueInputs = $("#"+target+" input").length;
-        var newInputId = 'inf'+newTypeInputElementId.substring(3)+'_'+existingValueInputs;
-        var newInputField = createNewOptionInput(newInputId, "", 'showOptionValueInput(this);', 'Option Value');
+        var newInputId = 'inf_'+newTypeInputElementId.substring(3)+'_'+existingValueInputs;
+        var newInputField = createNewOptionInput(newInputId, '', '', 'Option Value');
         $("#"+target).append(newInputField);
 
     }
 
     function createOptionTypes(){
         var numberOfSelects = $("#optSelect select").length+$("#optSelect input").length;
-        var createElement = createNewOptionInput('optionTypeSelect'+numberOfSelects, 'showOptionValueInput(this);', "", 'Option Name' )
+        var createElement = createNewOptionInput('ots_'+numberOfSelects, 'showOptionValueInput(this);', "", 'Option Name' )
         var optionSelectGroup = "<span class='optionSelectGroup' id='osg"+numberOfSelects+"'>";
         optionSelectGroup = optionSelectGroup+"<span class='optionTypeSelector' id='osl_"+numberOfSelects+"'>";
         optionSelectGroup = optionSelectGroup+createElement+"<i id='opv"+numberOfSelects+"' class='fa fa-plus-circle fa-lg' onclick='addOptionValue(this);' true'></i>";
@@ -385,7 +387,7 @@
                     var thisItemId = data[d].id;
                     var thisItemValue = data[d].name;
                     var thisItemCheckbox = "<span class='optionCheckBoxDiv'>"
-                    thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='"+this.thisSelectedOptionId+"_"+thisItemId+"' id='option"+thisItemId+"'/>";
+                    thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='exo_"+this.thisSelectedOptionId+"_"+thisItemId+"' id='option"+thisItemId+"'/>";
                     thisItemCheckbox = thisItemCheckbox + " - <label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label></br>";
                     thisItemCheckbox = thisItemCheckbox + "</span>";
                     itemsDiv = itemsDiv+thisItemCheckbox;
@@ -582,5 +584,6 @@
         <div class="submitForm">
             <button class ='btn optionButtons' id="submitForm" name="submitForm" type="submit">Create New Suib-Category</button>
         </div>
+        <input type="hidden" name="parent_category" id="parent_category"/>
     </form>
 </div>
