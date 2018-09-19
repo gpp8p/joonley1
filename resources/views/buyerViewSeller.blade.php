@@ -65,6 +65,9 @@
         font-weight: normal;
     }
     .productView{
+        display: none;
+    }
+    .categoryView{
 
     }
     .submitButton{
@@ -75,6 +78,7 @@
 <script language='javascript' type='text/javascript'>
     var lastAddedCat = [];
     var lastAddedCatName =[];
+    var imagePrefix = 'http://localhost/joonley1/storage/app/public/storage/categories/';
     $( document ).ready(function() {
         lastAddedCatName.push('Select Product Category');
         lastAddedCat.push(0);
@@ -185,6 +189,7 @@
         var thisDivHtml = "<select id ='categorySelect' onchange='newSubCat(this);' id='nxt_selector'>";
         for(i=0;i<optNames.length;i++){
             var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
+            var thisCard = buildCategoryCard(optNames[i][1], optNames[i][0]);
             thisDivHtml = thisDivHtml+newOpt;
         }
         thisDivHtml = thisDivHtml + "<option value='-1'>Select Parent</option>"
@@ -252,6 +257,15 @@
         return false;
     }
 
+    function buildCategoryCard(categoryId, categoryName){
+        var cardHtml="<div class='categoryCard' id='catCard"+categoryId+"'>";
+        cardHtml=cardHtml+"<span class='categoryImage'><img src='"+imagePrefix+categoryId+".jpg'/></span>";
+        cardHtml = cardHtml + "<span class='categoryTitle'>"+categoryName+"</span>";
+        cardHtml = cardHtml+"</div>";
+        console.log(cardHtml);
+
+    }
+
 
 </script>
 
@@ -280,6 +294,12 @@
         </form>
         <div class='productView'>
 
+
+        </div>
+        <div class="categoryView">
+            <div class="thisLevelCats">
+
+            </div>
         </div>
 
     </div>
