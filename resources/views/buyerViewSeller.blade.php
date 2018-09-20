@@ -70,6 +70,30 @@
     .categoryView{
 
     }
+
+    .categoryCard{
+
+        align-self: center;
+    }
+    .categoryImage{
+
+    }
+    img{
+       margin-left: 3%;
+    }
+    .categoryTitle{
+        font-size: 14px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: bold;
+        color: black;
+        margin-left: 35%;
+    }
+    .thisLevelCats{
+        display:grid;
+        grid-template-columns: 23% 23% 23% 23%;
+        grid-template-rows: auto;
+        align-items: center;
+    }
     .submitButton{
         width:70px;
     }
@@ -78,7 +102,7 @@
 <script language='javascript' type='text/javascript'>
     var lastAddedCat = [];
     var lastAddedCatName =[];
-    var imagePrefix = 'http://localhost/joonley1/storage/app/public/storage/categories/';
+    var imagePrefix = 'http://localhost/joonley1/storage/app/public/categories/';
     $( document ).ready(function() {
         lastAddedCatName.push('Select Product Category');
         lastAddedCat.push(0);
@@ -187,13 +211,20 @@
 
     function createNextSelect(optNames){
         var thisDivHtml = "<select id ='categorySelect' onchange='newSubCat(this);' id='nxt_selector'>";
+        $(".categoryCard").remove();
         for(i=0;i<optNames.length;i++){
             var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
             var thisCard = buildCategoryCard(optNames[i][1], optNames[i][0]);
+            if(optNames[i][1]>0){
+                $("#categoryCardDisplay").append(thisCard);
+            }
+
             thisDivHtml = thisDivHtml+newOpt;
         }
         thisDivHtml = thisDivHtml + "<option value='-1'>Select Parent</option>"
         thisDivHtml = thisDivHtml+"</select>";
+        var parentCard = buildParentCard(0,'Go Back');
+        $("#categoryCardDisplay").append(parentCard);
         return thisDivHtml;
     }
 
@@ -259,11 +290,21 @@
 
     function buildCategoryCard(categoryId, categoryName){
         var cardHtml="<div class='categoryCard' id='catCard"+categoryId+"'>";
-        cardHtml=cardHtml+"<span class='categoryImage'><img src='"+imagePrefix+categoryId+".jpg'/></span>";
+        cardHtml=cardHtml+"<img height='200' onclick=\"getNextCats('"+categoryName+"');\" src='"+imagePrefix+categoryId+".jpg'/>";
         cardHtml = cardHtml + "<span class='categoryTitle'>"+categoryName+"</span>";
         cardHtml = cardHtml+"</div>";
         console.log(cardHtml);
+        return cardHtml;
+    }
 
+
+    function buildParentCard(categoryId, categoryName){
+        var cardHtml="<div class='categoryCard' id='catCard"+categoryId+"'>";
+        cardHtml=cardHtml+"<img height='200' onclick=\"gotoParent(this);\" src='"+imagePrefix+"parent.jpg'/>";
+        cardHtml = cardHtml + "<span class='categoryTitle'>"+categoryName+"</span>";
+        cardHtml = cardHtml+"</div>";
+        console.log(cardHtml);
+        return cardHtml;
     }
 
 
@@ -297,7 +338,7 @@
 
         </div>
         <div class="categoryView">
-            <div class="thisLevelCats">
+            <div class="thisLevelCats" id="categoryCardDisplay">
 
             </div>
         </div>
