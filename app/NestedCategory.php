@@ -86,6 +86,7 @@ ENDQUERY;
             DB::rollBack();
             throw new Exception('Could not insert category:'.$e->getMessage());
         }
+        return $categoryId;
     }
 
     public function deleteCategory($nodeName)

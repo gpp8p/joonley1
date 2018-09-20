@@ -114,8 +114,10 @@
         var childNodes = [];
         if(lastAddedCatName.length>1) {
             childNodes.push(['select sub-category of:'+lastAddedCatName[lastAddedCatName.length-1], 0]);
+            $("#goBack").show();
         }else{
             childNodes.push(['all categories - select one', 0]);
+            $("#goBack").hide();
         }
         removeSubmitButton();
         $.ajax({
@@ -188,10 +190,17 @@
             var selectedOptionName = elem.selectedOptions[0].innerText;
             lastAddedCat.push(elem.value);
             lastAddedCatName.push(selectedOptionName);
-            showDefaultOptions(elem.value);
             getNextCats(selectedOptionName);
+            showDefaultOptions(elem.value);
         }
+    }
 
+    function imageSelected(selectedName, selectedValue){
+        var selectedOptionName = selectedName;
+        lastAddedCat.push(selectedValue);
+        lastAddedCatName.push(selectedOptionName);
+        showDefaultOptions(selectedValue);
+        getNextCats(selectedOptionName);
     }
 
     function gotoParent(elem){
@@ -223,8 +232,8 @@
         }
         thisDivHtml = thisDivHtml + "<option value='-1'>Select Parent</option>"
         thisDivHtml = thisDivHtml+"</select>";
-        var parentCard = buildParentCard(0,'Go Back');
-        $("#categoryCardDisplay").append(parentCard);
+//        var parentCard = buildParentCard(0,'Go Back');
+//        $("#categoryCardDisplay").append(parentCard);
         return thisDivHtml;
     }
 
@@ -290,7 +299,9 @@
 
     function buildCategoryCard(categoryId, categoryName){
         var cardHtml="<div class='categoryCard' id='catCard"+categoryId+"'>";
-        cardHtml=cardHtml+"<img height='200' onclick=\"getNextCats('"+categoryName+"');\" src='"+imagePrefix+categoryId+".jpg'/>";
+ //       cardHtml=cardHtml+"<img height='200' onclick=\"getNextCats('"+categoryName+"');\" src='"+imagePrefix+categoryId+".jpg'/>";
+
+        cardHtml=cardHtml+"<img height='200' onclick=\"imageSelected('"+categoryName+"',"+categoryId+");\" src='"+imagePrefix+categoryId+".jpg'/>";
         cardHtml = cardHtml + "<span class='categoryTitle'>"+categoryName+"</span>";
         cardHtml = cardHtml+"</div>";
         console.log(cardHtml);
@@ -342,6 +353,10 @@
 
             </div>
         </div>
+        <span id="goBack">
+            <button class="btn" onclick="gotoParent(this);" style="width:10%;margin-left: 42%;">Go Back</button>
+        </span>
+
 
     </div>
 

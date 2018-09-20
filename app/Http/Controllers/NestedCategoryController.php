@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\NestedCategory;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NestedCategoryController extends Controller
 {
@@ -39,9 +40,14 @@ class NestedCategoryController extends Controller
                 array_push($newOptionValues, $thisKey);
             }
         }
+        $thisNestedCategory = new NestedCategory;
+        $newNestedCategoryId = $thisNestedCategory->addCategory($inData['subcategory_name'], $inData['subcategory_name'], $inData['parent_category']);
+
+
         foreach($existingOptionValues as $existingOptionKey){
             $explodedOptionKey = explode('_',$existingOptionKey);
             $optionId = $explodedOptionKey[2];
+
             DB::table('defaultoptions')->insert([
                 'producttype_id'=>$newNestedCategoryId,
                 'options_id'=>$optionId,
@@ -53,9 +59,9 @@ class NestedCategoryController extends Controller
         $newOptions = array();
         foreach($newOptionTypes as $thisNewOptionType){
             $explodedNewOptionKey = explode('_',$thisNewOptionType);
-            $newOptionIndex = $explodedNewOptionKey[0]+'_'+$explodedNewOptionKey[0];
-            $optionId = $explodedOptionKey[2];
-/*
+            $newOptionIndex = $explodedNewOptionKey[1];
+//            $optionId = $explodedOptionKey[2];
+
             $inseretedOptionTypeId = DB::table('optiontype')->insertGetId([
                 'name' => $inData[$thisNewOptionType],
                 'slug' => $inData[$thisNewOptionType],
@@ -63,15 +69,34 @@ class NestedCategoryController extends Controller
                 'created_at'=>\Carbon\Carbon::now(),
                 'updated_at'=>\Carbon\Carbon::now(),
             ]);
-*/
-            $newOptions[$newOptionIndex]=$inseretedOptionTypeId;
+
+//            $newOptions[$newOptionIndex]=$inseretedOptionTypeId;
+            $newOptions[$newOptionIndex]=999;
         }
         foreach($newOptionValues as $thisNewOptionValue){
             $explodedNewOptionValue = explode('_',$thisNewOptionValue);
-            $optionTypeReference = $explodedNewOptionValue[0];
-            $optionTypeField = $explodedNewOptionValue[1];
+            $optionTypeReference = $explodedNewOptionValue[1];
+            $thisOptionTypeId = $newOptions[$optionTypeReference];
+//            $optionTypeField = $explodedNewOptionValue[1];
+            $newOptionVal = $inData[$thisNewOptionValue];
+
+            $newOptionId = DB::table('options')->insertGetId([
+                'optiontype_id'=>$inseretedOptionTypeId,
+                'specification'=>$newOptionVal,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+
+            DB::table('defaultoptions')->insert([
+                'producttype_id'=>$newNestedCategoryId,
+                'options_id'=>$newOptionId,
+                'created_at'=>\Carbon\Carbon::now(),
+                'updated_at'=>\Carbon\Carbon::now()
+            ]);
+
+
         }
-//       $request->logo->storeAs('example_image', '/categories/cat1.png');
+       $request->file('example_image')->storeAs('public/categories',$newNestedCategoryId.'.jpg');
     }
 
     private function startsWith($haystack, $needle) {

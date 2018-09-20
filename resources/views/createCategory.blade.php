@@ -503,7 +503,7 @@
 
 </script>
 <div class="fillFrame">
-    <form method="post" action="{{ url('/createSubCategory') }}">
+    <form method="post" action="{{ url('/createSubCategory') }}" enctype="multipart/form-data" >
         {{ csrf_field() }}
         <div class="content_row">
             <div class="explained_label">
