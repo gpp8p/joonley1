@@ -84,7 +84,7 @@
         background-color: white;
     }
     .expanding_div{
-        width:40%
+        width:100%
     }
     .ediv{
         background-color: #07eefa;
@@ -117,7 +117,14 @@
         grid-template-rows: repeat(auto-fill, minmax(30px,0.5fr));
     }
 
+    .allOptionsRow {
+
+    }
+
     .allOptions{
+        display:grid;
+        grid-template-columns: auto;
+        width:100%;
         font-family: 'Fira Sans Condensed', sans-serif;
         padding:20px;
         margin-left: 10px;
@@ -211,23 +218,24 @@
             success: function (data) {
                 var allOptionsDiv = "<div class='allOptions'>";
                 for(i=0;i<data.length;i++){
-                    var optionHeader = data[i][0];
-                    var thisOptionHeaderDiv = "<div class='optionHeader'>"+optionHeader+"</div>";
+                    var optionHeader = data[i][0]+": ";
+                    var thisOptionHeaderDiv = "<span class='optionHeader'>"+optionHeader+"</span>";
                     var optionItems = data[i][1];
-                    var itemsDiv = "<div class='itemsDiv'>";
+                    var itemsDiv = "<span class='itemsDiv'>";
                     for(d=0;d<optionItems.length;d++){
                         var thisItemValue = optionItems[d][0];
                         var thisItemId = optionItems[d][1];
-                        var thisItemCheckbox = "<div class='optionCheckBoxDiv'>"
+                        var thisItemCheckbox = "<span class='optionCheckBoxDiv'>"
                         thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
                         thisItemCheckbox = thisItemCheckbox + "<label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label>";
-                        thisItemCheckbox = thisItemCheckbox + "</div>";
+                        thisItemCheckbox = thisItemCheckbox + "</span>";
                         itemsDiv = itemsDiv+thisItemCheckbox;
                     }
-                    itemsDiv = itemsDiv+"</div>";
-                    allOptionsDiv = allOptionsDiv+thisOptionHeaderDiv+itemsDiv;
+                    itemsDiv = itemsDiv+"</span>";
+                    allOptionsDiv = allOptionsDiv+'<span>'+thisOptionHeaderDiv+itemsDiv+'</span>';
                 }
                 allOptionsDiv = allOptionsDiv+"</div>";
+                console.log(allOptionsDiv);
                 $("#disappearing_div").html(allOptionsDiv);
                 $("#options_div").show();
             },
