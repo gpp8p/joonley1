@@ -84,9 +84,7 @@
         background-color: white;
     }
     .expanding_div{
-        display:flex;
-        grid-template-columns: repeat(auto-fill, minmax(15%,1fr));
-
+        width:40%
     }
     .ediv{
         background-color: #07eefa;
@@ -153,7 +151,8 @@
 
 <script language='javascript' type='text/javascript'>
 
-    var lastAddedCat = "";
+    var lastAddedCat = [];
+    var lastAddedCatName =[];
     $( document ).ready(function() {
         $("#options_div").hide();
         $("#errorDiv").hide();
@@ -162,7 +161,14 @@
 
     function getNextCats(parentCatName){
         var childNodes = [];
-        childNodes.push(['select category',0]);
+        if(lastAddedCatName.length>0) {
+            childNodes.push(['select sub-category of:'+lastAddedCatName[lastAddedCatName.length-1], 0]);
+            $("#goBack").show();
+        }else{
+            childNodes.push(['all categories - select one', 0]);
+            $("#goBack").hide();
+        }
+//        removeSubmitButton();
         $.ajax({
             /* the route pointing to the post function */
             url: '/getCats',
@@ -177,14 +183,14 @@
                 }
                 if(data.length>0){
                     var selHtml = createNextSelect(childNodes);
-                    $('#seldiv').remove();
-                    $('#expanding_container').append(selHtml);
-                    $('#expanding_container').append(selectdiv);
+                    $("#expanding_container").html(selHtml);
+
                 }else{
-                    $('#seldiv').remove();
-                    showDefaultOptions(lastAddedCat);
-                    $('#expanding_container').append(createBackButton ());
+                    var selHtml = createLeafSelect();
+                    $("#expanding_container").html(selHtml);
                 }
+//                createSubmitButton();
+
             },
 
             error: function (data) {
@@ -196,7 +202,7 @@
     function showDefaultOptions(catId){
         $.ajax({
             /* the route pointing to the post function */
-            url: '/getOptions',
+            url: '/getOptionsWithParents',
             type: 'GET',
             /* send the csrf-token and the input to the controller */
             data: {categoryId:catId},
@@ -232,7 +238,7 @@
         });
 
     }
-
+/*
     function createNextSelect(optNames){
         var thisDivHtml = "<div class='esdiv' id='seldiv'><select id ='categorySelect' onchange='addCat(this);' id='nxt_selector'>";
         for(i=0;i<optNames.length;i++){
@@ -244,21 +250,66 @@
         return thisDivHtml;
 
     }
+*/
+    function createNextSelect(optNames){
+        var thisDivHtml = "<select id ='categorySelect' onchange='newSubCat(this);' id='nxt_selector'>";
+        $(".categoryCard").remove();
+        for(i=0;i<optNames.length;i++){
+            var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
+            thisDivHtml = thisDivHtml+newOpt;
+        }
+        thisDivHtml = thisDivHtml + "<option value='-1'>Select Parent</option>"
+        thisDivHtml = thisDivHtml+"</select>";
+        return thisDivHtml;
+    }
+
 
     function createBackButton (){
         var backButton = "<div class='backdiv' id = 'backButton' onclick='removeCat(lastAddedCat);'>Go Back</div>";
         return backButton;
     }
 
-    function  addCat(elem){
-        $("#backButton").remove();
-        var selectedOptionName = elem.selectedOptions[0].innerText;
-        lastAddedCat = elem.value;
-        var new_box = "<div class='ediv' id='cat"+elem.value+"'>"+selectedOptionName+"</div>";
-        $('#expanding_container').append(new_box);
-        getNextCats(selectedOptionName);
+    function newSubCat(elem){
+        if(elem.selectedOptions[0].innerText == 'Select Parent'){
+            gotoParent(elem);
+        } else{
+            var selectedOptionName = elem.selectedOptions[0].innerText;
+            lastAddedCat.push(elem.value);
+            lastAddedCatName.push(selectedOptionName);
+            getNextCats(selectedOptionName);
+            $('.allOptions').remove();
+            showDefaultOptions(elem.value);
+        }
+    }
+    function gotoParent(elem){
+        lastAddedCat.pop();
+        lastAddedCatName.pop();
+        $("span[id^='sopt']").remove();
+
+        if(lastAddedCatName.length==0){
+            getNextCats('Select Product Category');
+            $('.allOptions').remove();
+        }else{
+            getNextCats(lastAddedCatName[lastAddedCatName.length-1]);
+            $('.allOptions').remove();
+            showDefaultOptions(lastAddedCat[lastAddedCat.length-1]);
+        }
+//        removeSubmitButton();
+
+
     }
 
+
+    /*
+        function  addCat(elem){
+            $("#backButton").remove();
+            var selectedOptionName = elem.selectedOptions[0].innerText;
+            lastAddedCat = elem.value;
+            var new_box = "<div class='ediv' id='cat"+elem.value+"'>"+selectedOptionName+"</div>";
+            $('#expanding_container').append(new_box);
+            getNextCats(selectedOptionName);
+        }
+    */
     function removeCat(){
         $("#options_div").hide();
         $('#seldiv').remove();
