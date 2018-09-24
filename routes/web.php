@@ -81,6 +81,7 @@ Route::get('/uploadImages', 'UploadImagesController@create')->name('uploadImages
 
 Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
 Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
+Route::post('/newProductAdd', 'ProductController@newProductAdd')->name('newProductAdd');
 
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');

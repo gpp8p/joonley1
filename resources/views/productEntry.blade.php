@@ -153,6 +153,37 @@
         margin-left: 8px;
         color:red;
     }
+    input[type="file"] {
+        display: none;
+    }
+    .imgupload{
+        display:grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px,0.8fr));
+    }
+    .uplButton{
+        height: 30%;
+        width:50%;
+    }
+    .uplImage{
+
+    }
+
+    .imageContainer{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 3px 9px;
+        cursor: pointer;
+        color:black;
+        font-size: 12px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+    }
+
 
 </style>
 
@@ -160,9 +191,12 @@
 
     var lastAddedCat = [];
     var lastAddedCatName =[];
+    var numberOfImages = 0;
+
     $( document ).ready(function() {
         $("#options_div").hide();
         $("#errorDiv").hide();
+        $("#uplButton").html(newImageUploadButton(numberOfImages, 'Upload Product Photo'));
         getNextCats('Select Product Category')
     });
 
@@ -399,9 +433,48 @@
         }
 
     }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            $("#uplImage").append(newImageShow(numberOfImages));
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var idOfImage = 'imageid'+(numberOfImages-1);
+                $('#'+idOfImage)
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(200);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            $("#productImage"+numberOfImages).hide();
+            numberOfImages++;
+            $("#uplButton").append(newImageUploadButton(numberOfImages, 'Upload Another Photo'));
+        }
+    }
+
+    function newImageShow(imgNumber){
+        var thisImageShower = "<img id='imageid"+imgNumber+"' src='#' alt=' ' />";
+        console.log(thisImageShower);
+        return thisImageShower;
+    }
+
+    function newImageUploadButton(nthImage, msg){
+
+            var iname = "productImage"+nthImage;
+            var inpname="productImageInput"+nthImage;
+
+
+           var newButton = "<label class='custom-file-upload' id='"+iname+"'> <input type='file' name='"+inpname+"' onchange='readURL(this);' />"+msg+"</label>";
+
+            console.log(newButton);
+
+        return newButton;
+
+    }
 
 </script>
-<form id="newProductForm" method="post" action="{{ url('/newProductSubmit') }}">
+<form id="newProductForm" method="post" action="{{ url('/newProductAdd') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
 
 
@@ -504,6 +577,28 @@
 
             </div>
         </div>
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Upload Product Photo:
+                </div>
+                <div class="explaination">
+                    Please select a photo of your product.
+                </div>
+            </div>
+            <div class = 'imgupload'>
+                <span class="uplButton" id="uplButton">
+
+                </span>
+                <span class="imageContainer" id="uplImage">
+
+                </span>
+            </div>
+        </div>
+
+
+
 
         <div class="content_row">
             <div class="explained_label">

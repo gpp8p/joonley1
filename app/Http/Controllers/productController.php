@@ -47,6 +47,11 @@ class productController extends Controller
         return view('upload',['productData'=>$encodedData, 'product_name'=>$inData['product_name']]);
     }
 
+    public function newProductAdd(Request $request){
+        $inData =  $request->all();
+        $productName = $inData['product_name'];
+    }
+
     public function newProductCreate(Request $request){
         $urlPrefix = 'http://localhost/joonley1/storage/app/public/';
         $thumbNailType = DB::table('mediatype')->where('slug', 'thumb')->first();
