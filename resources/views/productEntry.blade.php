@@ -189,6 +189,7 @@
 
 <script language='javascript' type='text/javascript'>
 
+    
     var lastAddedCat = [];
     var lastAddedCatName =[];
     var numberOfImages = 0;
