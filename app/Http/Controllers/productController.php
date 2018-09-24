@@ -135,6 +135,28 @@ class productController extends Controller
             return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productError', 'errorMessage'=>$e->getMessage()]);
         }
         DB::commit();
+        $thisCategoryName = DB::table('nested_category')->where('id', $productCategoryId)->first();
+        $returnData = array();
+        $catNameLine = array();
+        $catNameLine[0]= 'categoryName';
+        $catNameLine[1] = $thisCategoryName->name;
+        array_push($returnData, $catNameLine);
+        foreach($inDataKeys as $thisInDataKey){
+                $thisIndataLine = array();
+                $thisIndataLine[0]= $thisInDataKey;
+                $thisIndataLine[1] = $inData[$thisInDataKey];
+                array_push($returnData, $thisIndataLine);
+        }
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        $currentUser = new User;
+        $thisUsersCollections = $currentUser->getCollectionsForLoggedInUser();
+        $thisTerms = new Terms();
+        $thisUserCompanies = $currentUser->getCompaniesForLoggedInUser();
+        $thisCompanyTerms = [];
+        foreach($thisUserCompanies as $company){
+            array_push($thisCompanyTerms,$thisTerms->getTermsForCompany($company->comp_id));
+        }
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms, 'lastEnteredData'=>$returnData]);
     }
 
     public function newProductCreate(Request $request){

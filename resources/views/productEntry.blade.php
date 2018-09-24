@@ -193,11 +193,25 @@
     var lastAddedCatName =[];
     var numberOfImages = 0;
 
+
+     @isset($lastEnteredData)
+            var previousData = {};
+            @foreach($lastEnteredData as $thisLastEnteredData)
+                previousData['{{$thisLastEnteredData[0]}}'] = "{{$thisLastEnteredData[1]}}" ;
+            @endforeach
+     @endisset
+
     $( document ).ready(function() {
         $("#options_div").hide();
         $("#errorDiv").hide();
         $("#uplButton").html(newImageUploadButton(numberOfImages, 'Upload Product Photo'));
-        getNextCats('Select Product Category')
+        @isset($lastEnteredData)
+            var previousCategoryName = previousData['categoryName'];
+            getNextCats(previousCategoryName);
+        @else
+            getNextCats('Select Product Category')
+        @endisset
+
     });
 
     function getNextCats(parentCatName){
@@ -304,6 +318,16 @@
         thisDivHtml = thisDivHtml+"</select>";
         return thisDivHtml;
     }
+
+    function createLeafSelect(){
+        var thisDivHtml = "<select id ='categorySelect' onchange='gotoParent(this);'>";
+        var newOpt = "<option value='"+lastAddedCat[lastAddedCat.length-1]+"'>No Sub-Categories Under:"+lastAddedCatName[lastAddedCatName.length-1]+"</option>";
+        var newOpt = newOpt+"<option value='-1'>Select Parent</option>";
+        thisDivHtml = thisDivHtml+newOpt;
+        thisDivHtml = thisDivHtml+"</select>";
+        return thisDivHtml;
+    }
+
 
 
     function createBackButton (){
