@@ -50,6 +50,91 @@ class productController extends Controller
     public function newProductAdd(Request $request){
         $inData =  $request->all();
         $productName = $inData['product_name'];
+        $imageType = DB::table('mediatype')->where('slug', 'image')->first();
+        $urlPrefix = 'http://localhost/joonley1/storage/app/public/';
+        $thisUser = Auth::user();
+        $categoryTree = explode(',', $inData['lastAddedCat']);
+        $productCategoryId = $categoryTree[count($categoryTree)-1];
+
+        DB::beginTransaction();
+        try {
+            $newProductId = DB::table('product')->insertgetId([
+                'name' => $inData['product_name'],
+                'type_id' => $productCategoryId,
+                'price_q1' => $inData['q1_price'],
+                'price_q10' => $inData['q10_price'],
+                'ship_weight' => $inData['weight_lbs'],
+                'ship_weight_oz' => $inData['weight_oz'],
+                'whenmade' => $inData['product_when'],
+                'whomade' => $inData['product_src'],
+                'prodis' => $inData['product_when'],
+                'description' => $inData['product_description'],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+
+            $imagePrefix = "productImageInput";
+            $inDataKeys = array_keys($inData);
+            $imagePath = public_path() . '/storage/' . $thisUser->id;
+            if (!file_exists($imagePath)) {
+                $directoryCreated = mkdir($imagePath);
+            }
+
+            foreach ($inDataKeys as $thisInDataKey) {
+                if (substr($thisInDataKey, 0, strlen($imagePrefix)) === $imagePrefix) {
+                    $newFileName = str_random(40) . ".jpg";
+                    $request->file($thisInDataKey)->storeAs('public/' . $thisUser->id, $newFileName);
+                    $newProductFileLinkId = DB::table('medialink')->insertgetId([
+                        'mediatype_id' => $imageType->id,
+                        'pertainsto' => 'product',
+                        'url' => $urlPrefix . $thisUser->id . '/' . $newFileName,
+                        'url_thumb' => $urlPrefix . $thisUser->id . '/' . $newFileName,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                    DB::table('producthaslinks')->insert([
+                        'product_id' => $newProductId,
+                        'medialink_id' => $newProductFileLinkId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                }
+            }
+            $productStatus = DB::table('containedas')->where('slug', $inData['prodStatus'])->first();
+            DB::table('collectionhas')->insert([
+                'product_id' => $newProductId,
+                'collection_id' => $inData['product_catalog'],
+                'containedas_id' => $productStatus->id,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+            foreach ($inDataKeys as $thisInDataKey) {
+                if (strpos($thisInDataKey, 'option') === 0) {
+                    $optionId = substr($thisInDataKey, 6);
+                    DB::table('hasoptions')->insert([
+                        'product_id' => $newProductId,
+                        'options_id' => $optionId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                    if (strpos($thisInDataKey, 'term') === 0) {
+                        $termId = substr($thisInDataKey, 4);
+                        DB::table('hasterms')->insert([
+                            'product_id' => $newProductId,
+                            'terms_id' => $termId,
+                            'created_at' => \Carbon\Carbon::now(),
+                            'updated_at' => \Carbon\Carbon::now()
+                        ]);
+
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            $adminView =User::hasAccess(['\'admin-dashboard\'']);
+            return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productError', 'errorMessage'=>$e->getMessage()]);
+        }
+        DB::commit();
     }
 
     public function newProductCreate(Request $request){
