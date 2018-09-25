@@ -211,6 +211,7 @@
             lastAddedCat = previousData['lastAddedCat'].split(',');
             lastAddedCatName = previousData['lastAddedCatName'].split(',');
             getNextCats(previousCategoryName);
+            showDefaultOptions(lastAddedCat[lastAddedCat.length-1]);
         @else
             getNextCats('Select Product Category')
         @endisset
