@@ -189,7 +189,7 @@
 
 <script language='javascript' type='text/javascript'>
 
-    
+
     var lastAddedCat = [];
     var lastAddedCatName =[];
     var numberOfImages = 0;
@@ -208,6 +208,8 @@
         $("#uplButton").html(newImageUploadButton(numberOfImages, 'Upload Product Photo'));
         @isset($lastEnteredData)
             var previousCategoryName = previousData['categoryName'];
+            lastAddedCat = previousData['lastAddedCat'].split(',');
+            lastAddedCatName = previousData['lastAddedCatName'].split(',');
             getNextCats(previousCategoryName);
         @else
             getNextCats('Select Product Category')
@@ -454,6 +456,7 @@
             $("#errorDiv").show();
         }else{
             $("#lastAddedCat").val(lastAddedCat);
+            $("#lastAddedCatName").val(lastAddedCatName);
             $("#newProductForm").submit();
         }
 
@@ -726,5 +729,6 @@
         <button type="button" onclick="submitNewProductForm();return false;" class="btn" value="Next">Next->></button>
     </div>
     <input type="hidden" id="lastAddedCat" name="lastAddedCat"/>
+    <input type="hidden" id="lastAddedCatName" name="lastAddedCatName"/>
 
 </form>
