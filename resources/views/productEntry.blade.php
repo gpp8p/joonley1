@@ -193,10 +193,11 @@
     var lastAddedCat = [];
     var lastAddedCatName =[];
     var numberOfImages = 0;
+    var previousData = {};
 
 
      @isset($lastEnteredData)
-            var previousData = {};
+
             @foreach($lastEnteredData as $thisLastEnteredData)
                 previousData['{{$thisLastEnteredData[0]}}'] = "{{$thisLastEnteredData[1]}}" ;
             @endforeach
@@ -212,6 +213,12 @@
             lastAddedCatName = previousData['lastAddedCatName'].split(',');
             getNextCats(previousCategoryName);
             showDefaultOptions(lastAddedCat[lastAddedCat.length-1]);
+            $("#product_src").val(previousData['product_src']);
+            $("#product_what").val(previousData['product_what']);
+            $("#product_when").val(previousData['product_when']);
+
+
+
         @else
             getNextCats('Select Product Category')
         @endisset
@@ -277,8 +284,15 @@
                     for(d=0;d<optionItems.length;d++){
                         var thisItemValue = optionItems[d][0];
                         var thisItemId = optionItems[d][1];
+                        var thisItemName = 'option'+thisItemId;
+                        var prevItemValue = previousData[thisItemName];
                         var thisItemCheckbox = "<span class='optionCheckBoxDiv'>"
-                        thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
+                        if(typeof prevItemValue==='undefined'){
+                            thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'  />";
+                        }else{
+                            thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"' checked />";
+                        }
+ //                       thisItemCheckbox = thisItemCheckbox+"<input type='checkbox' name='option"+thisItemId+"' id='option"+thisItemId+"'/>";
                         thisItemCheckbox = thisItemCheckbox + "<label class='optionLabel'  for='option"+thisItemId+"'>"+thisItemValue+"</label>";
                         thisItemCheckbox = thisItemCheckbox + "</span>";
                         itemsDiv = itemsDiv+thisItemCheckbox;
