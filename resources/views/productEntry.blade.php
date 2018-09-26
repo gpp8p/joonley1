@@ -216,6 +216,11 @@
             $("#product_src").val(previousData['product_src']);
             $("#product_what").val(previousData['product_what']);
             $("#product_when").val(previousData['product_when']);
+            $("#product_catalog").val(previousData['product_catalog']);
+            $("#q1_price").val(previousData['q1_price']);
+            $("#q10_price").val(previousData['q10_price']);
+            $("#weight_lbs").val(previousData['weight_lbs']);
+            $("#weight_oz").val(previousData['weight_oz']);
 
 
 
@@ -326,7 +331,7 @@
     }
 */
     function createNextSelect(optNames){
-        var thisDivHtml = "<select id ='categorySelect' onchange='newSubCat(this);' id='nxt_selector'>";
+        var thisDivHtml = "<select class='wideselects' id ='categorySelect' onchange='newSubCat(this);' id='nxt_selector'>";
         $(".categoryCard").remove();
         for(i=0;i<optNames.length;i++){
             var newOpt = "<option value='"+optNames[i][1]+"'>"+optNames[i][0]+"</option>";
@@ -338,7 +343,7 @@
     }
 
     function createLeafSelect(){
-        var thisDivHtml = "<select id ='categorySelect' onchange='gotoParent(this);'>";
+        var thisDivHtml = "<select class='wideselects' id ='categorySelect' onchange='gotoParent(this);'>";
         var newOpt = "<option value='"+lastAddedCat[lastAddedCat.length-1]+"'>No Sub-Categories Under:"+lastAddedCatName[lastAddedCatName.length-1]+"</option>";
         var newOpt = newOpt+"<option value='-1'>Select Parent</option>";
         thisDivHtml = thisDivHtml+newOpt;
@@ -729,14 +734,22 @@
                 </div>
             </div>
             <div class="termCheckBoxDiv">
-                @foreach($thisCompanyTerms as $companyTerms)
-                    @foreach($companyTerms as $thisTerm)
+
+                    @foreach($thisCompanyTerms as $thisTerm)
                         <div class="termDiv">
-                            <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}"/>
+                            @isset( $thisTerm->currentValue)
+                                @if(strcmp($thisTerm->currentValue,'on')==0)
+                                    <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}" checked />
+                                @else
+                                    <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}" />
+                                @endif
+                            @else
+                                 <input type="checkbox" id="term{{$thisTerm->id}}" name="term{{$thisTerm->id}}" />
+                            @endisset
                             <label class="optionLabel" for="term{{$thisTerm->id}}">{{$thisTerm->specification}}</label>
                         </div>
                     @endforeach
-                @endforeach
+
             </div>
         </div>
     </div>

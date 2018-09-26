@@ -28,7 +28,11 @@ class productController extends Controller
         $thisUserCompanies = $currentUser->getCompaniesForLoggedInUser();
         $thisCompanyTerms = [];
         foreach($thisUserCompanies as $company){
-           array_push($thisCompanyTerms,$thisTerms->getTermsForCompany($company->comp_id));
+            $thisCompanyTerm = $thisTerms->getTermsForCompany($company->comp_id);
+            foreach($thisCompanyTerm as $thisTerm){
+                $thisId = 'term'.$thisTerm->id;
+                array_push($thisCompanyTerms, $thisTerm);
+            }
         }
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms]);
     }
@@ -153,8 +157,14 @@ class productController extends Controller
         $thisTerms = new Terms();
         $thisUserCompanies = $currentUser->getCompaniesForLoggedInUser();
         $thisCompanyTerms = [];
+        $i=0;
         foreach($thisUserCompanies as $company){
-            array_push($thisCompanyTerms,$thisTerms->getTermsForCompany($company->comp_id));
+            $thisCompanyTerm = $thisTerms->getTermsForCompany($company->comp_id);
+            foreach($thisCompanyTerm as $thisTerm){
+                $thisId = 'term'.$thisTerm->id;
+                $thisTerm->currentValue = $inData[$thisId];
+                array_push($thisCompanyTerms, $thisTerm);
+            }
         }
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'newProductsContent', 'thisUsersCollections'=>$thisUsersCollections, 'thisCompanyTerms'=>$thisCompanyTerms, 'lastEnteredData'=>$returnData]);
     }
