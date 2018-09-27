@@ -1,6 +1,3 @@
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 1</a></div>
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 2</a></div>
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 3</a></div>
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 4</a></div>
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 5</a></div>
-<div><a class="sidebarItem" href="{{ route('search') }}">Item 6</a></div>
+<div><a class="sidebarItem" href="{{ route('showAllProducts') }}">Categories</a></div>
+<div><a class="sidebarItem" href="{{ route('search') }}">New</a></div>
+<div><a class="sidebarItem" href="{{ route('search') }}">Location</a></div>

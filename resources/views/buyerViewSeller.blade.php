@@ -134,13 +134,13 @@
                 }
                 if(data.length>0){
                     var selHtml = createNextSelect(childNodes);
-                    $("#categoryControl").html(selHtml);
+//                    $("#categoryControl").html(selHtml);
 
                 }else{
                     var selHtml = createLeafSelect();
-                    $("#categoryControl").html(selHtml);
+//                    $("#categoryControl").html(selHtml);
                 }
-                createSubmitButton();
+//                createSubmitButton();
 
             },
 
@@ -172,6 +172,7 @@
                     }
                     thisOptionSelect = thisOptionSelect+thisOptionHtml+"\<\/select\></span>";
                     $("#filters").append(thisOptionSelect);
+                    createSubmitButton();
                     console.log(thisOptionSelect);
                 }
             },
@@ -234,6 +235,7 @@
         thisDivHtml = thisDivHtml+"</select>";
 //        var parentCard = buildParentCard(0,'Go Back');
 //        $("#categoryCardDisplay").append(parentCard);
+//        showDefaultOptions(lastAddedCat[lastAddedCat.length-1]);
         return thisDivHtml;
     }
 
@@ -325,13 +327,13 @@
     <div class="buyerViewWrapper">
         <div class="pageTitle">
             <span class="flushLeft">
-                <<- Previous Step
+
             </span>
             <span class="titleCentered">
                 Select Items
             </span>
             <span class="flushRight">
-                Next Step ->>
+
             </span>
         </div>
         <form action="{{url('/productSearch')}}">
