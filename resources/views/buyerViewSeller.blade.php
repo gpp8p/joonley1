@@ -134,10 +134,15 @@
                 }
                 if(data.length>0){
                     var selHtml = createNextSelect(childNodes);
+//                    showDefaultOptions(lastAddedCat[lastAddedCat.length-1]);
 //                    $("#categoryControl").html(selHtml);
 
                 }else{
                     var selHtml = createLeafSelect();
+                    $("#categoryName").val(lastAddedCatName[lastAddedCatName.length-1]);
+                    $("#categoryId").val(lastAddedCat[lastAddedCat.length-1]);
+                    $("#showCategoryProducts").submit();
+
 //                    $("#categoryControl").html(selHtml);
                 }
 //                createSubmitButton();
@@ -192,7 +197,7 @@
             lastAddedCat.push(elem.value);
             lastAddedCatName.push(selectedOptionName);
             getNextCats(selectedOptionName);
-            showDefaultOptions(elem.value);
+//            showDefaultOptions(elem.value);
         }
     }
 
@@ -200,8 +205,8 @@
         var selectedOptionName = selectedName;
         lastAddedCat.push(selectedValue);
         lastAddedCatName.push(selectedOptionName);
-        showDefaultOptions(selectedValue);
         getNextCats(selectedOptionName);
+//        showDefaultOptions(selectedValue);
     }
 
     function gotoParent(elem){
@@ -336,16 +341,6 @@
 
             </span>
         </div>
-        <form action="{{url('/productSearch')}}">
-            <div class="filterControls" id="filters">
-
-            <span id="categoryControl">
-
-            </span>
-
-
-            </div>
-        </form>
         <div class='productView'>
 
 
@@ -358,6 +353,13 @@
         <span id="goBack">
             <button class="btn" onclick="gotoParent(this);" style="width:10%;margin-left: 42%;">Go Back</button>
         </span>
+
+        <form method = "post" id = "showCategoryProducts" action="{{url('/showCategoryProducts')}}">
+            {{ csrf_field() }}
+            <input type="hidden" id="categoryName" name="categoryName" />
+            <input type="hidden" id="categoryId" name="categoryId" />
+        </form>
+
 
 
     </div>

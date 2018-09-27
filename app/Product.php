@@ -372,6 +372,59 @@ class Product extends Model
 
     }
 
+    public function getCategoryProductsWithPictures($categoryId){
+
+        $query = "select distinct company.name as company_name, company.city as company_city, company.state as company_state, product.description as product_description, ".
+            "company.icon as company_icon, company.id as company_id, product.name as product_name, product.id as product_id, url as url ".
+            "from product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink ".
+            "where collectionhas.product_id = product.id ".
+            "and collectionhas.containedas_id = containedas.id ".
+            "and containedas.slug='issale' ".
+            "and collectionhas.collection_id = collection.id ".
+            "and hascollection.collection_id = collection.id ".
+            "and hascollection.company_id = company.id ".
+            "and producthaslinks.product_id = product.id ".
+            "and producthaslinks.medialink_id = medialink.id ".
+            "and product.type_id = ? order by product.id";
+
+        $productsFound = DB::select($query, [$categoryId]);
+        $currentProductId = $productsFound[0]->product_id;
+        $imageUrls=array();
+        $imageIds = array();
+        $results = array();
+        $numberOfRecords = sizeof($productsFound);
+        foreach($productsFound as $thisProductFound){
+            if($thisProductFound->product_id==$currentProductId) {
+                array_push($imageUrls, $thisProductFound->url);
+                $companyName = $thisProductFound->company_name;
+                $companyCity = $thisProductFound->company_city;
+                $companyState = $thisProductFound->company_state;
+                $companyIcon = $thisProductFound->company_icon;
+                $companyId = $thisProductFound->company_id;
+                $productName = $thisProductFound->product_name;
+                $productId = $thisProductFound->product_id;
+                $url = $thisProductFound->url;
+                $productDescription = $thisProductFound->product_description;
+            }else{
+                $thisResultRow = ['company_name'=>$companyName, 'company_city'=>$companyCity, 'company_state'=>$companyState, 'company_icon'=>$companyIcon, 'company_id'=>$companyId, 'product_name'=>$productName, 'product_id'=>$productId, 'url'=>$imageUrls, 'product_description'=>$productDescription ];
+                array_push($results, $thisResultRow);
+                $imageUrls = array();
+                $companyName = $thisProductFound->company_name;
+                $companyCity = $thisProductFound->company_city;
+                $companyState = $thisProductFound->company_state;
+                $companyIcon = $thisProductFound->company_icon;
+                $companyId = $thisProductFound->company_id;
+                $productName = $thisProductFound->product_name;
+                $productId = $thisProductFound->product_id;
+                $url = $thisProductFound->url;
+                $productDescription = $thisProductFound->product_description;
+            }
+        }
+        $thisResultRow = ['company_name'=>$companyName, 'company_city'=>$companyCity, 'company_state'=>$companyState, 'company_icon'=>$companyIcon, 'company_id'=>$companyId, 'product_name'=>$productName, 'product_id'=>$productId, 'url'=>$imageUrls, 'product_description'=>$productDescription ];
+        array_push($results, $thisResultRow);
+        return $results;
+    }
+
     public function getAllMyProducts($thisUserId){
         $query = "select distinct product.name as product_name, product.id as product_id, nested_category.name as category_name, product.price_q1, product.price_q10, product.created_at ".
             "from product, nested_category, collectionhas, collection, hascollection, company, userincompany, users ".

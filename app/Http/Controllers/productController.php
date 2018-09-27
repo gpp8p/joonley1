@@ -310,6 +310,27 @@ class productController extends Controller
 
     }
 
+    public function showCategoryProducts(Request $request){
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        $inData =  $request->all();
+        $thisCategoryName = $inData['categoryName'];
+        $thisCategoryId = $inData['categoryId'];
+        $query = "select distinct company.name as company_name, company.city as company_city, company.state as company_state, ".
+            "company.icon as company_icon, product.name as product_name, product.id as product_id, url as url ".
+            "from product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink ".
+            "where collectionhas.product_id = product.id ".
+            "and collectionhas.containedas_id = containedas.id ".
+            "and containedas.slug='issale' ".
+            "and collectionhas.collection_id = collection.id ".
+            "and hascollection.collection_id = collection.id ".
+            "and hascollection.company_id = company.id ".
+            "and producthaslinks.product_id = product.id ".
+            "and producthaslinks.medialink_id = medialink.id ".
+            "and product.type_id = ? order by product.id";
+
+
+    }
+
 
     public function showOneProduct(Request $request){
         $requestData = $request->all();

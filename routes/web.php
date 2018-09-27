@@ -82,6 +82,7 @@ Route::get('/uploadImages', 'UploadImagesController@create')->name('uploadImages
 Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->name('newProductSubmit');
 Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
 Route::post('/newProductAdd', 'ProductController@newProductAdd')->name('newProductAdd');
+Route::post('/showCategoryProducts', 'ProductController@showCategoryProducts')->name('showCategoryProducts');
 
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');
@@ -100,8 +101,10 @@ Route::get('/test', function () {
 //    $thisNestedCategory = new \App\NestedCategory();
 //    $parentIds = $thisNestedCategory->getAllParentIds(17);
 //    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
-    $thisOptionsController = new \App\Http\Controllers\OptionsController();
-    $thisOptionsController->getOptionTypes();
+//    $thisOptionsController = new \App\Http\Controllers\OptionsController();
+//    $thisOptionsController->getOptionTypes();
+    $thisProduct = new \App\Product();
+    $thisProductList = $thisProduct->getCategoryProductsWithPictures(21);
     return "<h2>Done!</h2>";
 });
 
