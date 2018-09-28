@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Terms;
+use App\Product;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -315,19 +316,47 @@ class productController extends Controller
         $inData =  $request->all();
         $thisCategoryName = $inData['categoryName'];
         $thisCategoryId = $inData['categoryId'];
-        $query = "select distinct company.name as company_name, company.city as company_city, company.state as company_state, ".
-            "company.icon as company_icon, product.name as product_name, product.id as product_id, url as url ".
-            "from product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink ".
-            "where collectionhas.product_id = product.id ".
-            "and collectionhas.containedas_id = containedas.id ".
-            "and containedas.slug='issale' ".
-            "and collectionhas.collection_id = collection.id ".
-            "and hascollection.collection_id = collection.id ".
-            "and hascollection.company_id = company.id ".
-            "and producthaslinks.product_id = product.id ".
-            "and producthaslinks.medialink_id = medialink.id ".
-            "and product.type_id = ? order by product.id";
-
+        $searchResult = array();
+        $col1 = array();
+        $col2 = array();
+        $col3 = array();
+        $col4 = array();
+        $col = 0;
+        $thisProduct = new Product;
+        $productsForThisCategory = $thisProduct->getCategoryProductsWithPictures($thisCategoryId);
+        foreach($productsForThisCategory as $prod){
+            $companyName = $prod['company_name'];
+            $companyCity = $prod['company_city'];
+            $companyState = $prod['company_state'];
+            $companyIcon = $prod['company_icon'];
+            $companyId = $prod['company_id'];
+            $productName = $prod['product_name'];
+            $productId = $prod['product_id'];
+            $productImages = $prod['url'];
+            $productDescription = $prod['product_description'];
+            $thisResultRow = ['company_name'=>$companyName, 'company_city'=>$companyCity, 'company_state'=>$companyState, 'company_icon'=>$companyIcon, 'company_id'=>$companyId, 'product_name'=>$productName, 'product_id'=>$productId, 'url'=>$productImages, 'product_description'=>$productDescription ];
+            switch($col){
+                case 0:
+                    array_push($col1, $thisResultRow);
+                    break;
+                case 1:
+                    array_push($col2, $thisResultRow);
+                    break;
+                case 2:
+                    array_push($col3, $thisResultRow);
+                    break;
+                case 3:
+                    array_push($col4, $thisResultRow);
+                    break;
+            }
+            if($col==3){
+                $col=0;
+            }else{
+                $col++;
+            }
+        }
+        $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisCategoryProducts'=>$productData]);
 
     }
 
