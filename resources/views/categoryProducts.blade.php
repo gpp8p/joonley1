@@ -42,12 +42,16 @@
 
     }
 
-    .feedItem{
+    .categoryItem{
         border-radius: 10px;
-        border-color: #ff070f;
+        background-color: rgba(0, 255, 248, 0.2);
         border-style: solid;
         border-width: 1px;
-        margin-top: 3px;
+        border-color: #6610f2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 4px;
+        margin-bottom: 4px;
 
     }
 
@@ -67,7 +71,9 @@
         width:90%;
     }
 
-    .companyInfo {
+    .companyhdr {
+        display:grid;
+        grid-template-columns: 15% 85%;
         color:black;
         text-align: left;
         font-family: 'Fira Sans Condensed', sans-serif;
@@ -76,6 +82,13 @@
 
     }
 
+    .companyIcon{
+
+    }
+    .companyInfo {
+        display:grid;
+        grid-template-rows: auto;
+    }
     .name{
         color:black;
         text-align: center;
@@ -151,78 +164,22 @@
     <div class="feedWrapper">
         <div class="col1">
             @foreach($thisCategoryProducts['col1'] as $thisCategoryItem)
-                <div class="feedItem">
-                    <div class="name">
-                        {{$thisCategoryItem['product_name']}}
-                    </div>
-                    <div>
-                        <img src="{{$thisCategoryItem['url']}}"/>
-                    </div>
-                    <div class="description">
-                        {{$thisCategoryItem['product_description']}}
-                    </div>
-                    <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
-                    </div>
-                </div>
-
+                @include('categoryViewItem')
             @endforeach
         </div>
         <div class="col2">
             @foreach($thisCategoryProducts['col2'] as $thisCategoryItem)
-                <div class="feedItem">
-                    <div class="name">
-                        {{$thisCategoryItem['product_name']}}
-                    </div>
-                    <div>
-                        <img src="{{$thisCategoryItem['url']}}"/>
-                    </div>
-                    <div class="description">
-                        {{$thisCategoryItem['product_description']}}
-                    </div>
-                    <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
-                    </div>
-                </div>
-
+                @include('categoryViewItem')
             @endforeach
         </div>
         <div class="col3">
             @foreach($thisCategoryProducts['col3'] as $thisCategoryItem)
-                <div class="feedItem">
-                    <div class="name">
-                        {{$thisCategoryItem['product_name']}}
-                    </div>
-                    <div>
-                        <img src="{{$thisCategoryItem['url']}}"/>
-                    </div>
-                    <div class="description">
-                        {{$thisCategoryItem['product_description']}}
-                    </div>
-                    <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
-                    </div>
-                </div>
-
+                @include('categoryViewItem')
             @endforeach
         </div>
         <div class="col4">
             @foreach($thisCategoryProducts['col4'] as $thisCategoryItem)
-                <div class="feedItem">
-                    <div class="name">
-                        {{$thisCategoryItem['product_name']}}
-                    </div>
-                    <div>
-                        <img src="{{$thisCategoryItem['url']}}"/>
-                    </div>
-                    <div class="description">
-                        {{$thisCategoryItem['product_description']}}
-                    </div>
-                    <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
-                    </div>
-                </div>
-
+                @include('categoryViewItem')
             @endforeach
         </div>
     </div>

@@ -312,6 +312,7 @@ class productController extends Controller
     }
 
     public function showCategoryProducts(Request $request){
+        $iconPrefix = 'http://localhost/joonley1/storage/app/public/company_icons/';
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         $inData =  $request->all();
         $thisCategoryName = $inData['categoryName'];
@@ -328,7 +329,7 @@ class productController extends Controller
             $companyName = $prod['company_name'];
             $companyCity = $prod['company_city'];
             $companyState = $prod['company_state'];
-            $companyIcon = $prod['company_icon'];
+            $companyIcon = $iconPrefix.$prod['company_icon'];
             $companyId = $prod['company_id'];
             $productName = $prod['product_name'];
             $productId = $prod['product_id'];
