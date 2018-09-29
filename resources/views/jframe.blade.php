@@ -110,6 +110,9 @@
                 @case('createCategories')
                     @include('createCategory')
                 @break
+                @case('categoryProducts')
+                    @include('categoryProducts')
+                @break
 
 
             @endswitch

@@ -416,7 +416,7 @@ class Product extends Model
                 $companyId = $thisProductFound->company_id;
                 $productName = $thisProductFound->product_name;
                 $productId = $thisProductFound->product_id;
-                $url = $thisProductFound->url;
+                array_push($imageUrls, $thisProductFound->url);
                 $productDescription = $thisProductFound->product_description;
             }
         }

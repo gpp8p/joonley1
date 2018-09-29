@@ -332,7 +332,7 @@ class productController extends Controller
             $companyId = $prod['company_id'];
             $productName = $prod['product_name'];
             $productId = $prod['product_id'];
-            $productImages = $prod['url'];
+            $productImages = $prod['url'][0];
             $productDescription = $prod['product_description'];
             $thisResultRow = ['company_name'=>$companyName, 'company_city'=>$companyCity, 'company_state'=>$companyState, 'company_icon'=>$companyIcon, 'company_id'=>$companyId, 'product_name'=>$productName, 'product_id'=>$productId, 'url'=>$productImages, 'product_description'=>$productDescription ];
             switch($col){
@@ -356,7 +356,7 @@ class productController extends Controller
             }
         }
         $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'productsForUser', 'thisCategoryProducts'=>$productData]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'categoryProducts', 'thisCategoryProducts'=>$productData]);
 
     }
 
