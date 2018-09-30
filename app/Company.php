@@ -100,6 +100,32 @@ class Company extends Model
 
     }
 
+    public function getCompanyProductsWithOptionsImages($companyId){
+
+        $query = "select distinct product.id as product_id, product.name as product_name, options.specification as option_specification, ".
+            "options.id as option_id, optiontype.name as optiontype_name, optiontype.id as optiontype_id, medialink.url as url, medialink.id as medialink_id ".
+            "from options, hasoptions, optiontype, product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink ".
+            "where hasoptions.product_id = product.id ".
+            "and hasoptions.options_id = options.id ".
+            "and options.optiontype_id = optiontype.id ".
+            "and collectionhas.product_id = product.id ".
+            "and collectionhas.containedas_id = containedas.id ".
+            "and containedas.slug='issale' ".
+            "and collectionhas.collection_id = collection.id ".
+            "and hascollection.collection_id = collection.id ".
+            "and hascollection.company_id = company.id ".
+            "and producthaslinks.product_id = product.id ".
+            "and producthaslinks.medialink_id = medialink.id ".
+            "and company.id = ? order by product.id, optiontype.id, options.id, medialink.id " ;
+
+        $thisCompanyProducts = DB::select($query, [$companyId]);
+        foreach($thisCompanyProducts as $thisProduct){
+
+        }
+
+
+    }
+
     public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)
     {
         try {
