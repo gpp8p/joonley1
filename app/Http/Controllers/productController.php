@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Terms;
 use App\Product;
+use App\Company;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -362,6 +363,9 @@ class productController extends Controller
     }
 
 
+
+
+
     public function showOneProduct(Request $request){
         $requestData = $request->all();
         $productId = $requestData['product_id'];
@@ -377,6 +381,43 @@ class productController extends Controller
         $categoryId = $searchCriteria[0];
     }
 
+    public function showCompanyProducts(Request $request){
+        $inData = $request->all();
+        $thisCompanyId = $inData['companyId'];
+        $thisCompany = new Company;
+        $companyProducts = $thisCompany->getCompanyProductsWithOptionsImages($thisCompanyId);
+        $col1 = array();
+        $col2 = array();
+        $col3 = array();
+        $col4 = array();
+        $col = 0;
+        foreach($companyProducts as $thisCompanyProduct){
+            switch($col){
+                case 0:
+                    array_push($col1, $thisCompanyProduct);
+                    break;
+                case 1:
+                    array_push($col2, $thisCompanyProduct);
+                    break;
+                case 2:
+                    array_push($col3, $thisCompanyProduct);
+                    break;
+                case 3:
+                    array_push($col4, $thisCompanyProduct);
+                    break;
+            }
+            if($col==3){
+                $col=0;
+            }else{
+                $col++;
+            }
+        }
+        $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'companyProducts'=>$productData]);
+
+    }
+
     public function arrayPaginator($array, $request)
     {
         $page = Input::get('page', 1);
@@ -386,5 +427,7 @@ class productController extends Controller
         return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
             ['path' => $request->url(), 'query' => $request->query()]);
     }
+
+
 
 }

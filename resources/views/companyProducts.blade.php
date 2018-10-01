@@ -153,42 +153,35 @@
 
 
 </style>
-
 <script language='javascript' type='text/javascript'>
-    function showCompanyProducts(companyId){
-        $("#companyId").val(companyId);
-        $("#companyProductsForm").submit();
-        return false;
-    }
+
 
 </script>
-
-
 <div class="fillFrame">
     <div class="feedWrapper">
         <div class="col1">
-            @foreach($thisCategoryProducts['col1'] as $thisCategoryItem)
-                @include('categoryViewItem')
+            @foreach($companyProducts['col1'] as $thisCompanyItem)
+                {{$thisCompanyItem[0]}}
+                @include('individualCompanyProduct')
             @endforeach
         </div>
         <div class="col2">
-            @foreach($thisCategoryProducts['col2'] as $thisCategoryItem)
-                @include('categoryViewItem')
+            @foreach($companyProducts['col2'] as $thisCompanyItem)
+                {{$thisCompanyItem[0]}}
+                @include('individualCompanyProduct')
             @endforeach
         </div>
         <div class="col3">
-            @foreach($thisCategoryProducts['col3'] as $thisCategoryItem)
-                @include('categoryViewItem')
+            @foreach($companyProducts['col3'] as $thisCompanyItem)
+                {{$thisCompanyItem[0]}}
+                @include('individualCompanyProduct')
             @endforeach
         </div>
         <div class="col4">
-            @foreach($thisCategoryProducts['col4'] as $thisCategoryItem)
-                @include('categoryViewItem')
+            @foreach($companyProducts['col4'] as $thisCompanyItem)
+                {{$thisCompanyItem[0]}}
+                @include('individualCompanyProduct')
             @endforeach
         </div>
     </div>
 </div>
-<form id="companyProductsForm" method="POST" action="{{url('/showCompanyProducts')}}">
-    {{ csrf_field() }}
-    <input type="hidden" id="companyId" name="companyId"/>
-</form>

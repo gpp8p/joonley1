@@ -83,6 +83,7 @@ Route::post('/newProductSubmit', 'ProductController@processNewProductInitial')->
 Route::post('/newProductCreate', 'ProductController@newProductCreate')->name('newProductCreate');
 Route::post('/newProductAdd', 'ProductController@newProductAdd')->name('newProductAdd');
 Route::post('/showCategoryProducts', 'ProductController@showCategoryProducts')->name('showCategoryProducts');
+Route::post('/showCompanyProducts', 'ProductController@showCompanyProducts')->name('showCompanyProducts');
 
 Route::get('/showProducts', 'ProductController@getProductsForLoggedInUser')->name('showProducts');
 Route::post('/showOneProduct','ProductController@showOneProduct' )->name('showOneProduct');

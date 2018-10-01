@@ -113,6 +113,9 @@
                 @case('categoryProducts')
                     @include('categoryProducts')
                 @break
+                @case('companyProducts')
+                    @include('companyProducts')
+                @break
 
 
             @endswitch

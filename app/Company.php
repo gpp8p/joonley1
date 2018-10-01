@@ -146,7 +146,7 @@ class Company extends Model
                         $currentOptionTypeId = $thisProduct->optiontype_id;
                         if ($thisProduct->product_id != $currentProductId) {
                             $currentProductId = $thisProduct->product_id;
-                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages);
+                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0]);
                             array_push($results,$productRow);
                             $optionType=array();
                         }
