@@ -119,11 +119,46 @@ class Company extends Model
             "and company.id = ? order by product.id, optiontype.id, options.id, medialink.id " ;
 
         $thisCompanyProducts = DB::select($query, [$companyId]);
+        $optionType = array();
+        $options=array();
+        $productRow = array();
+        $results=array();
+        $images=array();
+        $currentProductId = $thisCompanyProducts[0]->product_id;
+        $currentOptionTypeId = $thisCompanyProducts[0]->optiontype_id;
+        $currentOptionId = $thisCompanyProducts[0]->option_id;
+        $currentMediaLinkId = $thisCompanyProducts[0]->medialink_id;
+        $thisOptionSpecification="";
+        $thisOptionTypeName="";
+        $currentImages = array();
         foreach($thisCompanyProducts as $thisProduct){
 
+
+                if ($thisProduct->option_id != $currentOptionId) {
+                    $currentImages=$images;
+                    $images=array();
+                    array_push($options, $thisOptionSpecification);
+                    $currentOptionId = $thisProduct->option_id;
+                    $thisOptionSpecification = $thisProduct->option_specification;
+                    if ($thisProduct->optiontype_id != $currentOptionTypeId) {
+                        $optionType[$thisOptionTypeName] = $options;
+                        $options = array();
+                        $currentOptionTypeId = $thisProduct->optiontype_id;
+                        if ($thisProduct->product_id != $currentProductId) {
+                            $currentProductId = $thisProduct->product_id;
+                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages);
+                            array_push($results,$productRow);
+                            $optionType=array();
+                        }
+                    } else {
+                        $thisOptionTypeName = $thisProduct->optiontype_name;
+                    }
+                } else {
+                    $thisOptionSpecification = $thisProduct->option_specification;
+                }
+                array_push($images, $thisProduct->url);
         }
-
-
+        return $results;
     }
 
     public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)

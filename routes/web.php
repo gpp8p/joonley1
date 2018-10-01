@@ -103,8 +103,10 @@ Route::get('/test', function () {
 //    $immediateChildern = $thisNestedCategory->findChildNodes("Bracelets");
 //    $thisOptionsController = new \App\Http\Controllers\OptionsController();
 //    $thisOptionsController->getOptionTypes();
-    $thisProduct = new \App\Product();
-    $thisProductList = $thisProduct->getCategoryProductsWithPictures(21);
+//    $thisProduct = new \App\Product();
+//    $thisProductList = $thisProduct->getCategoryProductsWithPictures(21);
+        $thisComnpany = new \App\Company();
+        $thisProductList = $thisComnpany->getCompanyProductsWithOptionsImages(13);
     return "<h2>Done!</h2>";
 });
 
