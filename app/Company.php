@@ -102,9 +102,9 @@ class Company extends Model
 
     public function getCompanyProductsWithOptionsImages($companyId){
 
-        $query = "select distinct product.id as product_id, product.name as product_name, options.specification as option_specification, ".
+        $query = "select distinct product.id as product_id, product.type_id as type, nested_category.name as category, product.name as product_name, options.specification as option_specification, ".
             "options.id as option_id, optiontype.name as optiontype_name, optiontype.id as optiontype_id, medialink.url as url, medialink.id as medialink_id ".
-            "from options, hasoptions, optiontype, product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink ".
+            "from options, hasoptions, optiontype, product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink, nested_category ".
             "where hasoptions.product_id = product.id ".
             "and hasoptions.options_id = options.id ".
             "and options.optiontype_id = optiontype.id ".
@@ -116,7 +116,8 @@ class Company extends Model
             "and hascollection.company_id = company.id ".
             "and producthaslinks.product_id = product.id ".
             "and producthaslinks.medialink_id = medialink.id ".
-            "and company.id = ? order by product.id, optiontype.id, options.id, medialink.id " ;
+            "and nested_category.id = product.type_id ".
+            "and company.id = ? order by type, product.id, optiontype.id, options.id, medialink.id " ;
 
         $thisCompanyProducts = DB::select($query, [$companyId]);
         $optionType = array();
@@ -124,10 +125,13 @@ class Company extends Model
         $productRow = array();
         $results=array();
         $images=array();
+        $categories = array();
         $currentProductId = $thisCompanyProducts[0]->product_id;
         $currentOptionTypeId = $thisCompanyProducts[0]->optiontype_id;
         $currentOptionId = $thisCompanyProducts[0]->option_id;
         $currentMediaLinkId = $thisCompanyProducts[0]->medialink_id;
+        $currentCategoryId = $thisCompanyProducts[0]->type;
+        $currentCategoryName = $thisCompanyProducts[0]->category;
         $thisOptionSpecification="";
         $thisOptionTypeName="";
         $currentImages = array();
@@ -149,6 +153,14 @@ class Company extends Model
                             $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0]);
                             array_push($results,$productRow);
                             $optionType=array();
+                            if($thisProduct->type != $currentCategoryId){
+                                $categories[$currentCategoryName] = $results;
+                                $currentCategoryId = $thisProduct->type;
+                                $currentCategoryName = $thisProduct->category;
+                                $results=array();
+                            }else{
+                                $categories[$currentCategoryName] = $results;
+                            }
                         }
                     } else {
                         $thisOptionTypeName = $thisProduct->optiontype_name;
@@ -158,7 +170,7 @@ class Company extends Model
                 }
                 array_push($images, $thisProduct->url);
         }
-        return $results;
+        return $categories;
     }
 
     public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)

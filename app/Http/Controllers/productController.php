@@ -385,36 +385,42 @@ class productController extends Controller
         $inData = $request->all();
         $thisCompanyId = $inData['companyId'];
         $thisCompany = new Company;
-        $companyProducts = $thisCompany->getCompanyProductsWithOptionsImages($thisCompanyId);
-        $col1 = array();
-        $col2 = array();
-        $col3 = array();
-        $col4 = array();
-        $col = 0;
-        foreach($companyProducts as $thisCompanyProduct){
-            switch($col){
-                case 0:
-                    array_push($col1, $thisCompanyProduct);
-                    break;
-                case 1:
-                    array_push($col2, $thisCompanyProduct);
-                    break;
-                case 2:
-                    array_push($col3, $thisCompanyProduct);
-                    break;
-                case 3:
-                    array_push($col4, $thisCompanyProduct);
-                    break;
+        $companyCategories = $thisCompany->getCompanyProductsWithOptionsImages($thisCompanyId);
+        $companyCategoryKeys = array_keys($companyCategories);
+        $categoryCompanyProducts = array();
+        foreach($companyCategoryKeys as $thisCompanyCategoryKey){
+            $companyProducts = $companyCategories[$thisCompanyCategoryKey];
+            $col1 = array();
+            $col2 = array();
+            $col3 = array();
+            $col4 = array();
+            $col = 0;
+            foreach($companyProducts as $thisCompanyProduct){
+                switch($col){
+                    case 0:
+                        array_push($col1, $thisCompanyProduct);
+                        break;
+                    case 1:
+                        array_push($col2, $thisCompanyProduct);
+                        break;
+                    case 2:
+                        array_push($col3, $thisCompanyProduct);
+                        break;
+                    case 3:
+                        array_push($col4, $thisCompanyProduct);
+                        break;
+                }
+                if($col==3){
+                    $col=0;
+                }else{
+                    $col++;
+                }
             }
-            if($col==3){
-                $col=0;
-            }else{
-                $col++;
-            }
+            $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
+            $categoryCompanyProducts[$thisCompanyCategoryKey]=$productData;
         }
-        $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'companyProducts'=>$productData]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'categoryCompanyProducts'=>$categoryCompanyProducts, 'categoryKeys'=>$companyCategoryKeys]);
 
     }
 

@@ -55,6 +55,14 @@
 
     }
 
+    .categoryTitle{
+        font-family: 'Fira Sans Condensed', sans-serif;
+        color:black;
+        font-size: 24px;
+        margin-left: 40%;
+        padding-top: 5px;
+    }
+
     img {
         display: block;
         margin-left: auto;
@@ -69,6 +77,54 @@
         font-family: 'Fira Sans Condensed', sans-serif;
         font-size: 10px;
         width:90%;
+    }
+
+    .productName{
+        color:black;
+        text-align: center;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 14px;
+        width:90%;
+
+    }
+    .productDetail{
+        display:grid;
+        grid-template-columns: 50% 50%;
+    }
+    .productPrices{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .price{
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 14px;
+        color:black;
+        margin-left: 4px;
+        height: 20px;
+
+    }
+    .quantitySelect{
+
+    }
+    .optionsArea {
+        display:grid;
+        grid-template-rows: auto;
+        grid-row-gap: 0;
+        margin-left: 5px;
+    }
+    .optionSelect{
+        height: 21px;
+    }
+    .orderArea {
+        display:grid;
+        grid-template-rows: auto;
+    }
+
+    .optionTitle {
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-size: 14px;
+        color:black
     }
 
     .companyhdr {
@@ -158,30 +214,35 @@
 
 </script>
 <div class="fillFrame">
-    <div class="feedWrapper">
-        <div class="col1">
-            @foreach($companyProducts['col1'] as $thisCompanyItem)
-                {{$thisCompanyItem[0]}}
-                @include('individualCompanyProduct')
-            @endforeach
+    @foreach($categoryKeys as $thisCategoryKey)
+        @php
+            $companyProducts = $categoryCompanyProducts[$thisCategoryKey];
+        @endphp
+        <div class="categoryTitle">
+            {{$thisCategoryKey}}
         </div>
-        <div class="col2">
-            @foreach($companyProducts['col2'] as $thisCompanyItem)
-                {{$thisCompanyItem[0]}}
-                @include('individualCompanyProduct')
-            @endforeach
+
+        <div class="feedWrapper">
+            <div class="col1">
+                @foreach($companyProducts['col1'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col2">
+                @foreach($companyProducts['col2'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col3">
+                @foreach($companyProducts['col3'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col4">
+                @foreach($companyProducts['col4'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
         </div>
-        <div class="col3">
-            @foreach($companyProducts['col3'] as $thisCompanyItem)
-                {{$thisCompanyItem[0]}}
-                @include('individualCompanyProduct')
-            @endforeach
-        </div>
-        <div class="col4">
-            @foreach($companyProducts['col4'] as $thisCompanyItem)
-                {{$thisCompanyItem[0]}}
-                @include('individualCompanyProduct')
-            @endforeach
-        </div>
-    </div>
+    @endforeach
 </div>
