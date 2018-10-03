@@ -24,6 +24,15 @@ class Terms extends Model
         return $termsFound;
     }
 
+    public function getAllTerms(){
+        $query = "select terms.id as terms_id, terms.specification as terms_specification, termstype.id as termstype_id, termstype.name as termstype_name ".
+            "from terms, termstype ".
+            "where terms.termstype_id = termstype.id ".
+            "order by termstype.id, terms.id";
+        $termsFound = DB::select($query);
+        return $termsFound;
+    }
+
     public function getTermsForCompany($companyId){
         $query = "select terms.id, terms.specification from terms, defaultterms, company ".
             "where terms.id = defaultterms.terms_id ".

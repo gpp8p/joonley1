@@ -11,6 +11,19 @@
         text-align: center;
         padding-top: 5px;
     }
+    .termsDisplay{
+        font-size: 15px;
+        color:black;
+        margin-left: 5px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+    }
+    .termLabel{
+        font-size: 12px;
+        margin-left: 5px;
+    }
+    li{
+        list-style-type: none;
+    }
 
     .content_row{
         display: grid;
@@ -168,6 +181,44 @@
                 </div>
             </div>
         </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Default Company Terms:
+                </div>
+                <div class="explaination">
+                    Please check the possible available terms your company will be offering for product sales:
+                </div>
+            </div>
+            <div class="input_field">
+                <div class="termsDisplay">
+                    @php
+                        $termKeys = array_keys($terms);
+                    @endphp
+                    @foreach($termKeys as $thisKey)
+                        {{$thisKey}}
+                        <ul>
+                            @php
+                                $termValues = $terms[$thisKey];
+                            @endphp
+                            @foreach($termValues as $thisTermValue)
+                                <li>
+                                    <input type="checkbox" name="term_{{$thisTermValue[1]}}" value="{{$thisTermValue[0]}}"/><span class="termLabel">{{$thisTermValue[0]}}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <br/>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
     </form>
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Company;
+use App\Terms;
 use Illuminate\Support\Facades\DB;
 
 
@@ -44,10 +45,31 @@ class ProfileController extends Controller
         $thisUserName = $inData['userFname']." ".$inData['userLname'];
         $thisCompany = new Company;
         $companyData = $thisCompany->getCompanyInfoByUserId($thisUserId);
+        $termsObject = new Terms;
+        $allTerms = $termsObject->getAllTerms();
+        $currentTermsTypeId = $allTerms[0]->termstype_id;
+        $currentTermsId = $allTerms[0]->terms_id;
+        $currentTermsTypeName = $allTerms[0]->termstype_name;
+        $terms = array();
+        $termsTypes = array();
+//        $thisTermsReference = array($allTerms[0]->terms_specification, $allTerms[0]->terms_id);
+        foreach($allTerms as $thisTerm){
+            if($thisTerm->termstype_id!=$currentTermsId){
+                $termsTypes[$currentTermsTypeName]=$terms;
+                $currentTermsTypeName = $thisTerm->termstype_name;
+                $thisTermsReference = array($thisTerm->terms_specification, $thisTerm->terms_id);
+                $terms=array();
+                array_push($terms, $thisTermsReference);
+            }else{
+                $thisTermsReference = array($thisTerm->terms_specification, $thisTerm->terms_id);
+                array_push($terms, $thisTermsReference);
+            }
+        }
+        $termsTypes[$currentTermsTypeName]=$terms;
         $states = $this->getStates();
         $companyRoles = $this->getCompanyRoles();
         $adminView = User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName] );
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName, 'terms'=>$termsTypes] );
     }
 
     public function getCompanyRoles(){
