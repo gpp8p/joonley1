@@ -73,14 +73,18 @@
         margin-top: 20px;
     }
 
+
 </style>
 
 <script language='javascript' type='text/javascript'>
-
+    function submitCompanyEdit(){
+        $("#companyEditForm").submit();
+        return false;
+    }
 </script>
 
 <div class="fillFrame">
-    <form id="companyEditForm" method="POST">
+    <form id="companyEditForm" method="POST" action="{{url('/companyEditUpdate')}}">
         {{ csrf_field() }}
 
         <div class="content_row">
@@ -212,7 +216,54 @@
                 </div>
             </div>
         </div>
+        @php
+            $cols=0;
+            $row=0;
 
+        @endphp
+        <div class="bstates">
+            <span class="bstates_col">
+                @while($row<13)
+                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                    @php
+                        $row++;
+                    @endphp
+                @endwhile
+            </span>
+            <span class="bstates_col">
+                @while($row<13)
+                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                    @php
+                        $row++;
+                    @endphp
+                @endwhile
+            </span>
+            <span class="bstates_col">
+                @while($row<13)
+                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                    @php
+                        $row++;
+                    @endphp
+                @endwhile
+            </span>
+            <span class="bstates_col">
+                @while($row<13)
+                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                    @php
+                        $row++;
+                    @endphp
+                @endwhile
+            </span>
+        </div>
+        <div class="subCntr">
+            <button type="button" onclick="submitCompanyEdit();return false;" class="btn" >Update Information</button>
+        </div>
+
+
+
+
+
+        <input type="hiddden" name="company_id" value="{{$thisCompanyData->company_id}}" />
 
 
 

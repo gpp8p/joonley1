@@ -72,6 +72,16 @@ class ProfileController extends Controller
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName, 'terms'=>$termsTypes] );
     }
 
+    public function companyEditUpdate(Request $request){
+        $inData = $request->all();
+        $thisCompanyId = $inData['company_id'];
+        DB::table('company')->where('id', $thisCompanyId)->update([
+
+
+        ]);
+
+    }
+
     public function getCompanyRoles(){
         $query = "select name, slug from companyrole";
         $userroles = DB::select($query);
@@ -81,6 +91,8 @@ class ProfileController extends Controller
         }
         return $roles;
     }
+
+
 
     public function getStates(){
         $states = array();

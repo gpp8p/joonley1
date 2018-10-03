@@ -89,7 +89,7 @@ class Company extends Model
     }
 
     public function getCompanyInfoByUserId($userId){
-        $query = "select company.name as name, icon as icon, website as website, phone as phone, reseller_id as reseller_id, addr1 as addr1, addr2 as addr2, city as city, state as state, zip as zip, country as country, noshow as noshow, companyrole.name as companyrole_name, companyrole.slug as companyrole_slug ".
+        $query = "select company.name as name, company.id as company_id, icon as icon, website as website, phone as phone, reseller_id as reseller_id, addr1 as addr1, addr2 as addr2, city as city, state as state, zip as zip, country as country, noshow as noshow, companyrole.name as companyrole_name, companyrole.slug as companyrole_slug ".
             "from company, userincompany, companyrole ".
             "where userincompany.company_id = company.id ".
             "and companyrole.id = userincompany.companyrole_id ".
