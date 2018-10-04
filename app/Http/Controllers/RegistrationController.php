@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Feed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
@@ -129,7 +130,11 @@ class RegistrationController extends Controller
         }
         Auth::login($user, true);
         $adminView=FALSE;
-        return view('feed',['adminView'=>$adminView]);
+        $thisFeed = new Feed();
+        $feedItems = $thisFeed->getFeedItems();
+        $adminView =User::hasAccess(['\'admin-dashboard\'']);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent', 'feedItems'=>$feedItems]);
+
     }
 
     public function processSellerForm(Request $sellerRequest){
@@ -175,7 +180,8 @@ class RegistrationController extends Controller
                 'strid' => $input['strid'],
                 'strestab' => $input['strestab'],
                 'strtype'=>$input['strtype'],
-                'password' => bcrypt($input['password']),
+//                'password' => bcrypt($input['password']),
+                'password' =>$input['password'],
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now(),
                 'buysell_type'=>'S',
@@ -288,12 +294,37 @@ class RegistrationController extends Controller
                 DB::rollBack();
                 return view('error', ["error_message"=>$e->getMessage()]);
             }
+            try {
+                if ($thisRegistration->buysell_type == 'S') {
+                    $mainCatalogType = DB::table('collectiontype')->where('slug', 'rcatalog')->first();
+                    $mainCatalogTypeId = $mainCatalogType->id;
+                    $newCollectionId = DB::table('collection')->insertGetId([
+                        'name' => 'Main Catalog',
+                        'slug' => 'mcatalog' . '_' . $newCompayId,
+                        'status' => 'open',
+                        'description' => 'Primary Product Catalog for: ' . $thisRegistration->strname,
+                        'type_id' => $mainCatalogTypeId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                    DB::table('hascollection')->insert([
+                        'collection_id' => $newCollectionId,
+                        'company_id' => $newCompayId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                }
+            } catch (Exception $e) {
+                DB::rollBack();
+                return view('error', ["error_message"=>$e->getMessage()]);
+            }
+
         }else{
             $companyFound = TRUE;
         }
         $thisCompanyType = DB::table('companytype')->where('slug',$thisRegistration->strtype)->first();
         if($thisCompanyType==null){
-            throw new Exception('Store type unknown:'.$inData['strtype']);
+            throw new Exception('Store type unknown');
         }else{
             try {
                 $newCompayId = DB::table('compcanbe')->insert([
