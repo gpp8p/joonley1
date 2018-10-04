@@ -73,6 +73,18 @@
         margin-top: 20px;
     }
 
+    .bstates{
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+    }
+
+    .bstates_col {
+        color: black;
+        font-size: 10px;
+        font-family: 'Fira Sans Condensed', sans-serif;
+        font-weight: normal;
+    }
+
 
 </style>
 
@@ -216,54 +228,72 @@
                 </div>
             </div>
         </div>
-        @php
-            $cols=0;
-            $row=0;
 
-        @endphp
-        <div class="bstates">
-            <span class="bstates_col">
-                @while($row<13)
-                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
-                    @php
-                        $row++;
-                    @endphp
-                @endwhile
-            </span>
-            <span class="bstates_col">
-                @while($row<13)
-                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
-                    @php
-                        $row++;
-                    @endphp
-                @endwhile
-            </span>
-            <span class="bstates_col">
-                @while($row<13)
-                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
-                    @php
-                        $row++;
-                    @endphp
-                @endwhile
-            </span>
-            <span class="bstates_col">
-                @while($row<13)
-                    <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
-                    @php
-                        $row++;
-                    @endphp
-                @endwhile
-            </span>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Do not show my products in:
+                </div>
+                <div class="explaination">
+                    Please check the states where you do not want buyers to see your products
+                </div>
+            </div>
+            <div class="input_field">
+                @php
+                    $cols=0;
+                    $row=1;
+
+                @endphp
+                <div class="bstates">
+                    <span class="bstates_col">
+                        @while($row<13)
+                            <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                            @php
+                                $row++;
+                            @endphp
+                            <br/>
+                        @endwhile
+                    </span>
+                    <span class="bstates_col">
+                        @while($row>12 && $row < 25)
+                            <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                            @php
+                                $row++;
+                            @endphp
+                            <br/>
+                        @endwhile
+                    </span>
+                    <span class="bstates_col">
+                        @while($row>24 && $row <38)
+                            <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                            @php
+                                $row++;
+                            @endphp
+                            <br/>
+                        @endwhile
+                    </span>
+                    <span class="bstates_col">
+                        @while($row>37 && $row <51)
+                            <input type="checkbox" name="omit_{{$states[$row][0]}}" value="{{$states[$row][0]}}"/><span class="termLabel">{{$states[$row][1]}}</span>
+                            @php
+                                $row++;
+                            @endphp
+                            <br/>
+                        @endwhile
+                    </span>
+                </div>
+                <div class="subCntr">
+                    <button type="button" onclick="submitCompanyEdit();return false;" class="btn" >Update Information</button>
+                </div>
+
+            </div>
         </div>
-        <div class="subCntr">
-            <button type="button" onclick="submitCompanyEdit();return false;" class="btn" >Update Information</button>
-        </div>
 
 
 
 
 
-        <input type="hiddden" name="company_id" value="{{$thisCompanyData->company_id}}" />
+        <input type="hidden" name="company_id" value="{{$thisCompanyData->company_id}}" />
 
 
 
