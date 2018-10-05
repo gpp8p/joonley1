@@ -268,6 +268,28 @@ class RegistrationController extends Controller
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ]);
+            if($approveType=='admin'){
+                $adminValue = 1;
+            }else{
+                $adminValue=0;
+            }
+
+            $lastUserDetailsRcd = DB::table('userdetails')->insertGetId([
+                'admin' => $adminValue,
+                'lname' => $thisRegistration->lname,
+                'fname' => $thisRegistration->fname,
+                'addr1' => $thisRegistration->straddr1,
+                'addr2' => $thisRegistration->straddr2,
+                'city' => $thisRegistration->strcity,
+                'state' => $thisRegistration->strstate,
+                'zip' => $thisRegistration->strzip,
+                'country' => $thisRegistration->country,
+                'phone' => $thisRegistration->phone,
+                'user_id' => $newUserId,
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
+            ]);
+
         } catch (Exception $e) {
             DB::rollBack();
             return view('error', ["error_message"=>$e->getMessage()]);
@@ -327,7 +349,7 @@ class RegistrationController extends Controller
             throw new Exception('Store type unknown');
         }else{
             try {
-                $newCompayId = DB::table('compcanbe')->insert([
+                $newCompayTypeId = DB::table('compcanbe')->insert([
                     'ctype_id' => $thisCompanyType->id,
                     'company_id' => $newCompayId,
                     'created_at' => \Carbon\Carbon::now(),

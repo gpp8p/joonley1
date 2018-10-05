@@ -97,6 +97,10 @@
     .submitButton{
         width:70px;
     }
+    img{
+        height:90%;
+        width:90%;
+    }
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script language='javascript' type='text/javascript'>

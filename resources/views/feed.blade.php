@@ -44,11 +44,14 @@
 
     .feedItem{
         border-radius: 10px;
-        border-color: #ff070f;
+        background-color: rgba(0, 255, 248, 0.2);
         border-style: solid;
         border-width: 1px;
-        margin-top: 3px;
-
+        border-color: #6610f2;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 4px;
+        margin-bottom: 4px;
     }
 
     img {
@@ -63,7 +66,7 @@
         color:black;
         text-align: center;
         font-family: 'Fira Sans Condensed', sans-serif;
-        font-size: 10px;
+        font-size: 12px;
         width:90%;
     }
 
@@ -71,7 +74,7 @@
         color:black;
         text-align: center;
         font-family: 'Fira Sans Condensed', sans-serif;
-        font-size: 14px;
+        font-size: 16px;
 
     }
 
@@ -79,7 +82,8 @@
     .ifooter{
         margin-left: 5%;
         margin-right: 5%;
-        padding-top: 15px;
+        padding-top: 3px;
+        margin-bottom: 4px;
 
     }
 
@@ -128,12 +132,20 @@
         filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6',GradientType=0);
         background-color:#1e62d0;
     }
+    img{
+        height:90%;
+        width:90%;
+    }
 
 
 </style>
 
 <script language='javascript' type='text/javascript'>
-
+    function showCompanyProducts(companyId){
+        $("#companyId").val(companyId);
+        $("#companyProductsForm").submit();
+        return false;
+    }
 
 </script>
 
@@ -153,7 +165,7 @@
                         {{$thisFeedItem['description']}}
                     </div>
                     <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
+                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" onclick="showCompanyProducts({{$thisFeedItem['company_id']}});return false;" class="but1">View Shop</a></span>
                     </div>
                 </div>
 
@@ -172,7 +184,7 @@
                         {{$thisFeedItem['description']}}
                     </div>
                     <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
+                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" onclick="showCompanyProducts({{$thisFeedItem['company_id']}});return false;" class="but1">View Shop</a></span>
                     </div>
                 </div>
 
@@ -191,7 +203,7 @@
                         {{$thisFeedItem['description']}}
                     </div>
                     <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
+                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" onclick="showCompanyProducts({{$thisFeedItem['company_id']}});return false;" class="but1">View Shop</a></span>
                     </div>
                 </div>
 
@@ -210,7 +222,7 @@
                         {{$thisFeedItem['description']}}
                     </div>
                     <div class="ifooter">
-                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" class="but1">View Shop</a></span>
+                        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#" onclick="showCompanyProducts({{$thisFeedItem['company_id']}});return false;" class="but1">View Shop</a></span>
                     </div>
                 </div>
 
@@ -218,3 +230,7 @@
         </div>
     </div>
 </div>
+<form id="companyProductsForm" method="POST" action="{{url('/showCompanyProducts')}}">
+    {{ csrf_field() }}
+    <input type="hidden" id="companyId" name="companyId"/>
+</form>

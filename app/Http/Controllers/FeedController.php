@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Product;
 use App\Feed;
+use App\Company;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
@@ -16,7 +17,7 @@ class FeedController extends Controller
         $thisFeed = new Feed();
         $feedItems = $thisFeed->getFeedItems();
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent', 'feedItems'=>$feedItems]);
+        return view('feedFrame',['adminView'=>$adminView,'sidebar'=>'feed', 'contentWindow'=>'feedContent', 'feedItems'=>$feedItems]);
 
     }
 
@@ -41,7 +42,8 @@ class FeedController extends Controller
         $requestData = $request->all();
         $productId = $requestData['product_id'];
         $collectionId = $requestData['collection_id'];
-        $companyId = DB::table('hascollection')->where('collection_id', $collectionId)->first()->id;
+        $companyObject = new Company;
+        $companyId = $companyObject->getCompanyIdForProduct($productId);
         $imageUrl = $requestData['image_url'];
         $productDescription = trim($requestData['feed_blurb']);
         $productName = $requestData['product_name'];

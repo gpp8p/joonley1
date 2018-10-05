@@ -27,5 +27,14 @@ class OptionTypeSeeder extends Seeder
             'updated_at'=>\Carbon\Carbon::now(),
         ]);
 
+        DB::table('optiontype')->insert([
+            'name' => 'null',
+            'slug' => 'null',
+            'description'=> 'null',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now(),
+        ]);
+
+
     }
 }

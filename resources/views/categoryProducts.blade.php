@@ -150,6 +150,10 @@
         filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6',GradientType=0);
         background-color:#1e62d0;
     }
+    img{
+        height:90%;
+        width:90%;
+    }
 
 
 </style>

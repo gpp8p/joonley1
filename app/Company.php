@@ -173,6 +173,18 @@ class Company extends Model
         return $categories;
     }
 
+    public function getCompanyIdForProduct($productId){
+
+        $query = "select company.id as company_id from company, collectionhas, collection, hascollection ".
+                "where company.id = hascollection.company_id ".
+                "and collection.id = hascollection.collection_id ".
+                "and collectionhas.collection_id = collection.id ".
+                "and collectionhas.product_id = ?";
+
+        $thisCompanyId = DB::select($query, [$productId]);
+        return $thisCompanyId[0]->company_id;
+    }
+
     public function editCompany($companyId, $companyName, $companyWeb, $companyPhone, $companyLocations, $companyTypeIds)
     {
         try {

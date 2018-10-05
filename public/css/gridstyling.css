@@ -58,7 +58,7 @@ body {
 
 .menuicons{
     display: grid;
-    grid-template-columns: 35% 65%;
+    grid-template-columns: 25% 75%;
     font-size: 75%;
 }
 
@@ -100,6 +100,26 @@ body {
 
     background-color: #eeeeee;
     color: #444;
+}
+
+.wrap1 {
+    flex:1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0% 100%;
+    grid-template-rows: 80px 2px 79.5% 10%;
+    grid-template-areas:
+            "header  header"
+            "bar bar"
+            "sidebar content"
+            "footer footer";
+
+    background-color: #eeeeee;
+    color: #444;
+}
+.bar1 {
+    background-color: black;
+    width:100%;
 }
 
 
@@ -157,3 +177,7 @@ body {
 
 }
 
+.istyle {
+    heighht:10%;
+    width:10%;
+}
