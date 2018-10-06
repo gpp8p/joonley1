@@ -40,7 +40,7 @@ Route::post('/approveReg', 'RegistrationController@approveRegistration')->name('
 Route::post('/userProfileEdit', 'ProfileController@showProfileEdit')->name('userProfileEdit');
 Route::post('/userProfileEditSubmit', 'ProfileController@profileEditSubmit')->name('userProfileEditSubmit');
 Route::post('/showUserCompany', 'ProfileController@editCompanyInformation')->name('showUserCompany');
-Route::post('/companyEditUpdate', 'ProfileController@updateCompanyInformation')->name('cmpanyEditUpdate');
+Route::post('/companyEditUpdate', 'ProfileController@companyEditUpdate')->name('cmpanyEditUpdate');
 
 Route::post('/feed', 'FeedController@show')->name('feed');
 Route::get('/feed', 'FeedController@show')->name('feed');

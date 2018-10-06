@@ -168,6 +168,34 @@
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">
+                    Phone:
+                </div>
+                <div class="explaination">
+                    Please enter or edit your company's phone#:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="website" id="website" class="wide_input_field" size="50" value ="{{$thisCompanyData->phone}}"/>
+            </div>
+        </div>
+
+
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Website:
+                </div>
+                <div class="explaination">
+                    Please enter or edit the url of your company's website:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="website" id="website" class="wide_input_field" size="50" value ="{{$thisCompanyData->website}}"/>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
                     City:
                 </div>
                 <div class="explaination">
@@ -197,6 +225,33 @@
                 </div>
             </div>
         </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Country:
+                </div>
+                <div class="explaination">
+                    Please enter or edit the country in which your company is located:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="country" id="country" class="wide_input_field" size="50" value ="{{$thisCompanyData->country}}"/>
+            </div>
+        </div>
+        <div class="content_row">
+            <div class="explained_label">
+                <div class="lab">
+                    Reseller ID:
+                </div>
+                <div class="explaination">
+                    Please enter or edit your company's reseller ID:
+                </div>
+            </div>
+            <div class="input_field">
+                <input type="text" name="reseller_id" id="reseller_id" class="wide_input_field" size="50" value ="{{$thisCompanyData->reseller_id}}"/>
+            </div>
+        </div>
+
         <div class="content_row">
             <div class="explained_label">
                 <div class="lab">

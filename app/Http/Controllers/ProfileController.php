@@ -75,11 +75,43 @@ class ProfileController extends Controller
     public function companyEditUpdate(Request $request){
         $inData = $request->all();
         $thisCompanyId = $inData['company_id'];
+        $defaultTerms = DB::table('defaultterms')->where('company_id',$thisCompanyId)->first();
+/*
+        if(array_length($defaultTerms)>0){
+            DB::table('defaultterms')->where('company_id', $thisCompanyId)->delete();
+        }
+        $keys = array_keys($inData);
+
+        foreach($keys as $thisKey){
+            if($this->startsWith($thisKey, 'term_')){
+                $explodedTermKey = explode('_',$thisKey);
+                DB::table('defaultterms')->insert([
+                    'terms_id'=>$explodedTermKey[1],
+                    'company_id'=>$thisCompanyId,
+                    'created_at'=>\Carbon\Carbon::now(),
+                    'updated_at'=>\Carbon\Carbon::now()
+                ]);
+            }
+        }
+
         DB::table('company')->where('id', $thisCompanyId)->update([
+            'name'=>    $inData['name'],
+            'website'=> 'www.rings.com',
+            'icon'=>'12345678.jpg',
+            'phone'=> $inData['phone'],
+            'addr1' =>$inData['name'],
+            'addr2' =>$$inData['addr2'],
+            'city' => $inData['city'],
+            'state' => $inData['state'],
+            'zip' => $inData['zip'],
+            'country' =>$inData['country'],
+            'reseller_id'=>'1234567890',
+            'created_at'=>\Carbon\Carbon::now(),
+            'updated_at'=>\Carbon\Carbon::now()
 
 
         ]);
-
+*/
     }
 
     public function getCompanyRoles(){
@@ -149,5 +181,11 @@ class ProfileController extends Controller
         array_push($states,["WI","Wisconsin"]);
         array_push($states,["WY","Wyoming"]);
         return $states;
+    }
+
+    private function startsWith($haystack, $needle) {
+        // search backwards starting from haystack length characters from the end
+        return $needle === ''
+            || strrpos($haystack, $needle, -strlen($haystack)) !== false;
     }
 }

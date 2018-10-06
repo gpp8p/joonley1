@@ -16,7 +16,7 @@ class CreateCompanyTable extends Migration
         Schema::create('company', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('website',128);
+            $table->string('website',128)->nullable();
             $table->string('icon',128);
             $table->string ('phone', 64);
             $table->string ('reseller_id', 64);
@@ -26,8 +26,6 @@ class CreateCompanyTable extends Migration
             $table->string('state',64 );
             $table->string('zip',12 );
             $table->string('country',64 )->nullable();
-            $table->string('noshow', 128)->nullable();
-//            $table->unsignedInteger('location_id');
             $table->timestamps();
 
         });
