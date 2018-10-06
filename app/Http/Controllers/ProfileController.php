@@ -86,37 +86,47 @@ class ProfileController extends Controller
             DB::table('defaultterms')->where('company_id', $thisCompanyId)->delete();
         }
         $keys = array_keys($inData);
-
-        foreach($keys as $thisKey){
-            if($this->startsWith($thisKey, 'term_')){
-                $explodedTermKey = explode('_',$thisKey);
-                DB::table('defaultterms')->insert([
-                    'terms_id'=>$explodedTermKey[1],
-                    'company_id'=>$thisCompanyId,
-                    'created_at'=>\Carbon\Carbon::now(),
-                    'updated_at'=>\Carbon\Carbon::now()
-                ]);
+        DB::beginTransaction();
+        try {
+            foreach ($keys as $thisKey) {
+                if ($this->startsWith($thisKey, 'term_')) {
+                    $explodedTermKey = explode('_', $thisKey);
+                    DB::table('defaultterms')->insert([
+                        'terms_id' => $explodedTermKey[1],
+                        'company_id' => $thisCompanyId,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now()
+                    ]);
+                }
             }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return view('error', ["error_message"=>'could not update rcompany data'])
         }
 
-        DB::table('company')->where('id', $thisCompanyId)->update([
-            'name'=>    $inData['name'],
-            'website'=> $inData['website'],
+        try {
+            DB::table('company')->where('id', $thisCompanyId)->update([
+                'name' => $inData['name'],
+                'website' => $inData['website'],
 //            'icon'=>$inData['icon'],
-            'phone'=> $inData['phone'],
-            'addr1' =>$inData['name'],
-            'addr2' =>$inData['addr2'],
-            'city' => $inData['city'],
-            'state' => $inData['state'],
-            'zip' => $inData['zip'],
-            'country' =>$inData['country'],
-            'reseller_id'=>$inData['reseller_id'],
-            'created_at'=>\Carbon\Carbon::now(),
-            'updated_at'=>\Carbon\Carbon::now()
+                'phone' => $inData['phone'],
+                'addr1' => $inData['name'],
+                'addr2' => $inData['addr2'],
+                'city' => $inData['city'],
+                'state' => $inData['state'],
+                'zip' => $inData['zip'],
+                'country' => $inData['country'],
+                'reseller_id' => $inData['reseller_id'],
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at' => \Carbon\Carbon::now()
 
 
-        ]);
-
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return view('error', ["error_message"=>'could not update rcompany data'])
+        }
+        DB::commit();
     }
 
     public function getCompanyRoles(){
