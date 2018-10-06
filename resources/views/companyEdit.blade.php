@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="input_field">
-                <input type="text" name="website" id="website" class="wide_input_field" size="50" value ="{{$thisCompanyData->phone}}"/>
+                <input type="text" name="phone" id="phone" class="wide_input_field" size="50" value ="{{$thisCompanyData->phone}}"/>
             </div>
         </div>
 
@@ -273,8 +273,20 @@
                                 $termValues = $terms[$thisKey];
                             @endphp
                             @foreach($termValues as $thisTermValue)
+
                                 <li>
-                                    <input type="checkbox" name="term_{{$thisTermValue[1]}}" value="{{$thisTermValue[0]}}"/><span class="termLabel">{{$thisTermValue[0]}}</span>
+                                    @php
+                                        if(in_array($thisTermValue[1], $existingCompanyTerms)){
+                                            $hasTerm=1;
+                                        }else{
+                                            $hasTerm=0;
+                                        }
+                                    @endphp
+                                    @if($hasTerm==1)
+                                        <input type="checkbox" name="term_{{$thisTermValue[1]}}" value="{{$thisTermValue[0]}}" checked /><span class="termLabel">{{$thisTermValue[0]}}</span>
+                                    @else
+                                        <input type="checkbox" name="term_{{$thisTermValue[1]}}" value="{{$thisTermValue[0]}}"/><span class="termLabel">{{$thisTermValue[0]}}</span>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>

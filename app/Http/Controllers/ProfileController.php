@@ -46,6 +46,11 @@ class ProfileController extends Controller
         $thisCompany = new Company;
         $companyData = $thisCompany->getCompanyInfoByUserId($thisUserId);
         $termsObject = new Terms;
+        $companyTerms = $termsObject->getTermsForCompany($companyData[0]->company_id);
+        $companyTermIds = array();
+        foreach($companyTerms as $thisCompanyTerm){
+            array_push($companyTermIds, $thisCompanyTerm->id);
+        }
         $allTerms = $termsObject->getAllTerms();
         $currentTermsTypeId = $allTerms[0]->termstype_id;
         $currentTermsId = $allTerms[0]->terms_id;
@@ -69,15 +74,15 @@ class ProfileController extends Controller
         $states = $this->getStates();
         $companyRoles = $this->getCompanyRoles();
         $adminView = User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName, 'terms'=>$termsTypes] );
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'admin', 'contentWindow'=>'companyEdit', 'thisCompanyData'=>$companyData[0], 'existingCompanyTerms'=>$companyTermIds, 'states'=>$states, 'companyRoles'=>$companyRoles, 'userName'=>$thisUserName, 'terms'=>$termsTypes] );
     }
 
     public function companyEditUpdate(Request $request){
         $inData = $request->all();
         $thisCompanyId = $inData['company_id'];
         $defaultTerms = DB::table('defaultterms')->where('company_id',$thisCompanyId)->first();
-/*
-        if(array_length($defaultTerms)>0){
+
+        if(count($defaultTerms)>0){
             DB::table('defaultterms')->where('company_id', $thisCompanyId)->delete();
         }
         $keys = array_keys($inData);
@@ -96,22 +101,22 @@ class ProfileController extends Controller
 
         DB::table('company')->where('id', $thisCompanyId)->update([
             'name'=>    $inData['name'],
-            'website'=> 'www.rings.com',
-            'icon'=>'12345678.jpg',
+            'website'=> $inData['website'],
+//            'icon'=>$inData['icon'],
             'phone'=> $inData['phone'],
             'addr1' =>$inData['name'],
-            'addr2' =>$$inData['addr2'],
+            'addr2' =>$inData['addr2'],
             'city' => $inData['city'],
             'state' => $inData['state'],
             'zip' => $inData['zip'],
             'country' =>$inData['country'],
-            'reseller_id'=>'1234567890',
+            'reseller_id'=>$inData['reseller_id'],
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
 
 
         ]);
-*/
+
     }
 
     public function getCompanyRoles(){
