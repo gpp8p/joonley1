@@ -101,7 +101,7 @@ class ProfileController extends Controller
             }
         } catch (Exception $e) {
             DB::rollBack();
-            return view('error', ["error_message"=>'could not update rcompany data'])
+            return view('error', ["error_message"=>'could not update rcompany data']);
         }
 
         try {
@@ -124,7 +124,7 @@ class ProfileController extends Controller
             ]);
         } catch (Exception $e) {
             DB::rollBack();
-            return view('error', ["error_message"=>'could not update rcompany data'])
+            return view('error', ["error_message"=>'could not update rcompany data']);
         }
         DB::commit();
     }

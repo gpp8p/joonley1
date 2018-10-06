@@ -164,7 +164,11 @@ class productController extends Controller
             $thisCompanyTerm = $thisTerms->getTermsForCompany($company->comp_id);
             foreach($thisCompanyTerm as $thisTerm){
                 $thisId = 'term'.$thisTerm->id;
-                $thisTerm->currentValue = $inData[$thisId];
+                if(array_key_exists ( $thisId, $inData)){
+                    $thisTerm->currentValue = $inData[$thisId];
+                }else{
+                    $thisTerm->currentValue = "";
+                }
                 array_push($thisCompanyTerms, $thisTerm);
             }
         }
