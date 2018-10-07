@@ -114,6 +114,7 @@ class productController extends Controller
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at' => \Carbon\Carbon::now()
             ]);
+            $noOption=1;
             foreach ($inDataKeys as $thisInDataKey) {
                 if (strpos($thisInDataKey, 'option') === 0) {
                     $optionId = substr($thisInDataKey, 6);
@@ -123,6 +124,7 @@ class productController extends Controller
                         'created_at' => \Carbon\Carbon::now(),
                         'updated_at' => \Carbon\Carbon::now()
                     ]);
+                    $noOption=0;
                     if (strpos($thisInDataKey, 'term') === 0) {
                         $termId = substr($thisInDataKey, 4);
                         DB::table('hasterms')->insert([
@@ -134,6 +136,15 @@ class productController extends Controller
 
                     }
                 }
+            }
+            if($noOption==1){
+                $type = DB::table('optiontype')->where('slug', 'null')->first();
+                DB::table('hasoptions')->insert([
+                    'product_id' => $newProductId,
+                    'options_id' => $type->id,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now()
+                ]);
             }
         } catch (Exception $e) {
             DB::rollback();

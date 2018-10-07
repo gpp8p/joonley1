@@ -111,7 +111,7 @@ class OptionSeeder extends Seeder
         $type = DB::table('optiontype')->where('slug', 'null')->first();
         DB::table('options')->insert([
             'optiontype_id'=>$type->id,
-            'specification'=>'small',
+            'specification'=>'null',
             'created_at'=>\Carbon\Carbon::now(),
             'updated_at'=>\Carbon\Carbon::now()
         ]);
