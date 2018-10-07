@@ -138,7 +138,7 @@ class productController extends Controller
                 }
             }
             if($noOption==1){
-                $type = DB::table('optiontype')->where('slug', 'null')->first();
+                $type = DB::table('options')->where('specification', 'null')->first();
                 DB::table('hasoptions')->insert([
                     'product_id' => $newProductId,
                     'options_id' => $type->id,
@@ -285,7 +285,7 @@ class productController extends Controller
                 }
             }
             if($noOption==1){
-                $type = DB::table('optiontype')->where('slug', 'null')->first();
+                $type = DB::table('options')->where('specification', 'null')->first();
                 DB::table('hasoptions')->insert([
                     'product_id' => $newProductId,
                     'options_id' => $type->id,

@@ -92,9 +92,8 @@
         grid-template-columns: 50% 50%;
     }
     .productPrices{
-        display:flex;
-        flex-direction: row;
-        justify-content: flex-start;
+        display:grid;
+        grid-template-rows: auto;
     }
     .price{
         font-family: 'Fira Sans Condensed', sans-serif;

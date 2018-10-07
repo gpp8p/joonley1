@@ -102,7 +102,7 @@ class Company extends Model
 
     public function getCompanyProductsWithOptionsImages($companyId){
 
-        $query = "select distinct product.id as product_id, product.type_id as type, nested_category.name as category, product.name as product_name, options.specification as option_specification, ".
+        $query = "select distinct product.id as product_id, product.price_q1 as price_q1, product.price_q10 as price_q10, product.type_id as type, nested_category.name as category, product.name as product_name, options.specification as option_specification, ".
             "options.id as option_id, optiontype.name as optiontype_name, optiontype.id as optiontype_id, medialink.url as url, medialink.id as medialink_id ".
             "from options, hasoptions, optiontype, product, collectionhas, collectiontype, collection, containedas, hascollection, company, producthaslinks, medialink, nested_category ".
             "where hasoptions.product_id = product.id ".
@@ -135,14 +135,53 @@ class Company extends Model
         $thisOptionSpecification="";
         $thisOptionTypeName="";
         $currentImages = array();
-        $unsavedImages =0;
-        $unsavedOptionTypes = 0;
-        $unsavedOptions=0;
+        $unsavedImages =1;
+        $unsavedOptionTypes = 1;
+        $unsavedOptions=1;
         $unsavedCategories=1;
+        $prodArray = array();
+        $prod = $thisCompanyProducts[0];
+
+        $optTypeArray = array();
+        $thisOptType = $prod->optiontype_id;
+        array_push($optTypeArray, $thisOptType);
+
+        $optArray = array();
         foreach($thisCompanyProducts as $thisProduct){
-                if($thisProduct->option_specification=='null'){
-                    continue;
+            if($thisProduct->product_id==32){
+                $b=0;
+            }
+            if($thisProduct->product_id != $prod->product_id){
+                $optArray=array();
+                $prodLine = array($prod, $optTypeArray);
+                array_push($prodArray, $prodLine);
+                $optTypeArray = array();
+                $prod = $thisProduct;
+                array_push($optArray, $prod->option_id);
+                $thisOptType = $prod->optiontype_id;
+                array_push($optTypeArray, $thisOptType);
+            }else{
+                $prod = $thisProduct;
+
+                if($prod->optiontype_id!= $thisOptType){
+                    $thisOptType = $prod->optiontype_id;
+                    array_push($optTypeArray, $thisOptType);
+                    $optArray=array();
+                    array_push($optArray, $prod->option_id);
+                }else{
+                    array_push($optArray, $prod->option_id);
                 }
+            }
+        }
+        if($prod->optiontype_id!= $thisOptType){
+            array_push($optTypeArray, $thisOptType);
+        }
+        $prodLine = array($prod, $optTypeArray);
+        array_push($prodArray, $prodLine);
+
+
+
+        foreach($thisCompanyProducts as $thisProduct){
                 if ($thisProduct->option_id != $currentOptionId) {
                     $currentImages=$images;
                     $images=array();
@@ -157,7 +196,7 @@ class Company extends Model
                         $currentOptionTypeId = $thisProduct->optiontype_id;
                         if ($thisProduct->product_id != $currentProductId) {
                             $currentProductId = $thisProduct->product_id;
-                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0]);
+                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0], $thisProduct->price_q1, $thisProduct->price_q10);
                             array_push($results,$productRow);
                             $optionType=array();
                             $unsavedOptionTypes=0;
@@ -186,10 +225,11 @@ class Company extends Model
         }
         if($unsavedOptionTypes>0){
             array_push($options, $thisOptionSpecification);
+            $thisOptionTypeName = $thisProduct->optiontype_name;
             $optionType[$thisOptionTypeName] = $options;
         }
         if($unsavedCategories>0){
-            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0]);
+            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0], $thisProduct->price_q1, $thisProduct->price_q10);
             array_push($results,$productRow);
             $categories[$currentCategoryName] = $results;
         }

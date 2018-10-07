@@ -15,27 +15,30 @@
                 $thisOptionKeys = array_keys($thisProductOptions);
             @endphp
             @foreach($thisOptionKeys as $thisKey)
-                @php
-                    $thisOptions = $thisProductOptions[$thisKey];
-                @endphp
-                <span class="optionSelect">
-                    <select >
-                        <option value="0" selected >Please select: {{$thisKey}}</option>
-                        @foreach($thisOptions as $thisOpt)
-                            <option value="{{$thisOpt}}">{{$thisOpt}}</option>
-                        @endforeach
-                    </select>
-                </span>
+                @if($thisKey !='null')
+                    @php
+                        $thisOptions = $thisProductOptions[$thisKey];
+                    @endphp
+                    <span class="optionSelect">
+                        <select >
+                            <option value="0" selected >Please select: {{$thisKey}}</option>
+                            @foreach($thisOptions as $thisOpt)
+                                <option value="{{$thisOpt}}">{{$thisOpt}}</option>
+                            @endforeach
+                        </select>
+                    </span>
+                @endif
             @endforeach
         </div>
         <div class="orderArea">
             <span class="productPrices">
-                <span class="price">
-                    q1 - $xxx.xxx
-                </span>
-                <span class="price">
-                    q10 - $xxx.xxx
-                </span>
+                <div class="price">
+                    q1 price: ${{$thisCompanyItem[3]}}
+                </div>
+
+                <div class="price">
+                    q10 price  ${{$thisCompanyItem[4]}}
+                </div>
             </span>
             <span class="quantitySelect">
                 <select>
