@@ -3,27 +3,26 @@
 
     </div>
     <div>
-        <img src="{{$thisCompanyItem[2]}}"/>
+        <img src="{{$thisCompanyItem->getImageUrl()}}"/>
     </div>
     <div class="productName">
-        {{$thisCompanyItem[0]}}
+        {{$thisCompanyItem->getName()}}
     </div>
     <div class="productDetail">
         <div class="optionsArea">
             @php
-                $thisProductOptions = $thisCompanyItem[1];
-                $thisOptionKeys = array_keys($thisProductOptions);
+                $thisProductOptions = $thisCompanyItem->getOptionTypes();
             @endphp
-            @foreach($thisOptionKeys as $thisKey)
-                @if($thisKey !='null')
+            @foreach($thisProductOptions as $thisOptionType)
+                @if($thisOptionType->getName() !='null')
                     @php
-                        $thisOptions = $thisProductOptions[$thisKey];
+                        $thisOptions = $thisOptionType->getOptions();
                     @endphp
                     <span class="optionSelect">
                         <select >
-                            <option value="0" selected >Please select: {{$thisKey}}</option>
+                            <option value="0" selected >Please select: {{$thisOptionType->getName()}}</option>
                             @foreach($thisOptions as $thisOpt)
-                                <option value="{{$thisOpt}}">{{$thisOpt}}</option>
+                                <option value="{{$thisOpt->getId()}}">{{$thisOpt->getValue()}}</option>
                             @endforeach
                         </select>
                     </span>
@@ -33,11 +32,11 @@
         <div class="orderArea">
             <span class="productPrices">
                 <div class="price">
-                    q1 price: ${{$thisCompanyItem[3]}}
+                    q1 price: ${{$thisCompanyItem->getPriceQ1()}}
                 </div>
 
                 <div class="price">
-                    q10 price  ${{$thisCompanyItem[4]}}
+                    q10 price  ${{$thisCompanyItem->getPriceQ10()}}
                 </div>
             </span>
             <span class="quantitySelect">

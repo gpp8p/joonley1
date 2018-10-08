@@ -21,7 +21,7 @@ class compCategory
     function __construct($row){
         if(is_null($this->products)){
             $this->thisProduct = new compProduct($row);
-            $this->products = array($this->thisProduct);
+            $this->products = array();
             $this->productId = $row->product_id;
             $this->id = $row->type;
             $this->categoryName = $row->category;
@@ -32,6 +32,14 @@ class compCategory
         return $this->id;
     }
 
+    function getName(){
+        return $this->categoryName;
+    }
+
+    function getProducts(){
+        return $this->products;
+    }
+
     function processRow($row){
         if($row->product_id != $this->thisProduct->getId()){
             array_push($this->products, $this->thisProduct);
@@ -39,5 +47,13 @@ class compCategory
         }else{
             $this->thisProduct->processRow($row);
         }
+    }
+
+    function cleanUp(){
+        foreach($this->products as $p){
+            $p->cleanUp();
+        }
+        $this->thisProduct->cleanUp();
+        array_push($this->products, $this->thisProduct);
     }
 }

@@ -18,4 +18,12 @@ class compOption
         $this->optionId = $row->option_id;
         $this->optionValue = $row->option_specification;
     }
+
+    function getId(){
+        return $this->optionId;
+    }
+
+    function getValue(){
+        return $this->optionValue;
+    }
 }

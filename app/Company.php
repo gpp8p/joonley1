@@ -120,84 +120,16 @@ class Company extends Model
             "and company.id = ? order by type, product.id, optiontype.id, options.id, medialink.id " ;
 
         $thisCompanyProducts = DB::select($query, [$companyId]);
-        $optionType = array();
-        $options=array();
-        $productRow = array();
-        $results=array();
-        $images=array();
-        $categories = array();
-        $currentProductId = $thisCompanyProducts[0]->product_id;
-        $currentOptionTypeId = $thisCompanyProducts[0]->optiontype_id;
-        $currentOptionId = $thisCompanyProducts[0]->option_id;
-        $currentMediaLinkId = $thisCompanyProducts[0]->medialink_id;
-        $currentCategoryId = $thisCompanyProducts[0]->type;
-        $currentCategoryName = $thisCompanyProducts[0]->category;
-        $thisOptionSpecification="";
-        $thisOptionTypeName="";
-        $currentImages = array();
-        $unsavedOptions=0;
-        $unsavedImages=0;
 
         $thisShop = new compShop($thisCompanyProducts[0]);
-        for($i=1;$i<count($thisCompanyProducts);$i++){
-            $thisShop->processRow($thisCompanyProducts[$i]);
-        }
-
-
-
         foreach($thisCompanyProducts as $thisProduct){
-                if ($thisProduct->option_id != $currentOptionId) {
-                    $currentImages=$images;
-                    $images=array();
-                    array_push($options, $thisOptionSpecification);
-                    $unsavedOptions++;
-                    $currentOptionId = $thisProduct->option_id;
-                    $thisOptionSpecification = $thisProduct->option_specification;
-                    if ($thisProduct->optiontype_id != $currentOptionTypeId) {
-                        $optionType[$thisOptionTypeName] = $options;
-                        $options = array();
-                        $unsavedOptions=0;
-                        $currentOptionTypeId = $thisProduct->optiontype_id;
-                        if ($thisProduct->product_id != $currentProductId) {
-                            $currentProductId = $thisProduct->product_id;
-                            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0], $thisProduct->price_q1, $thisProduct->price_q10);
-                            array_push($results,$productRow);
-                            $optionType=array();
-                            $unsavedOptionTypes=0;
-                            if($thisProduct->type != $currentCategoryId){
-                                $categories[$currentCategoryName] = $results;
-                                $currentCategoryId = $thisProduct->type;
-                                $currentCategoryName = $thisProduct->category;
-                                $results=array();
-                            }else{
-                                $categories[$currentCategoryName] = $results;
-                                $unsavedCategories=0;
-                            }
-                        }
-                    } else {
-                        $thisOptionTypeName = $thisProduct->optiontype_name;
-                        $unsavedOptionTypes++;
-                    }
-                } else {
-                    $thisOptionSpecification = $thisProduct->option_specification;
-                }
-                array_push($images, $thisProduct->url);
-                $unsavedImages++;
+            $thisShop->processRow($thisProduct);
         }
-        if($unsavedImages>0){
-            $currentImages=$images;
-        }
-        if($unsavedOptionTypes>0){
-            array_push($options, $thisOptionSpecification);
-            $thisOptionTypeName = $thisProduct->optiontype_name;
-            $optionType[$thisOptionTypeName] = $options;
-        }
-        if($unsavedCategories>0){
-            $productRow = array( $thisProduct->product_name, $optionType, $currentImages[0], $thisProduct->price_q1, $thisProduct->price_q10);
-            array_push($results,$productRow);
-            $categories[$currentCategoryName] = $results;
-        }
-        return $categories;
+        $thisShop->cleanUp();
+
+
+
+        return $thisShop;
     }
 
     public function getCompanyIdForProduct($productId){

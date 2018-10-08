@@ -411,29 +411,28 @@ class productController extends Controller
         $inData = $request->all();
         $thisCompanyId = $inData['companyId'];
         $thisCompany = new Company;
-        $companyCategories = $thisCompany->getCompanyProductsWithOptionsImages($thisCompanyId);
-        $companyCategoryKeys = array_keys($companyCategories);
         $categoryCompanyProducts = array();
-        foreach($companyCategoryKeys as $thisCompanyCategoryKey){
-            $companyProducts = $companyCategories[$thisCompanyCategoryKey];
+        $categoryKeys= array();
+        $thisCompanyProducts = $thisCompany->getCompanyProductsWithOptionsImages($thisCompanyId);
+        foreach($thisCompanyProducts->getCategories() as $thisCategory){
             $col1 = array();
             $col2 = array();
             $col3 = array();
             $col4 = array();
             $col = 0;
-            foreach($companyProducts as $thisCompanyProduct){
+            foreach($thisCategory->getProducts() as $thisProduct){
                 switch($col){
                     case 0:
-                        array_push($col1, $thisCompanyProduct);
+                        array_push($col1, $thisProduct);
                         break;
                     case 1:
-                        array_push($col2, $thisCompanyProduct);
+                        array_push($col2, $thisProduct);
                         break;
                     case 2:
-                        array_push($col3, $thisCompanyProduct);
+                        array_push($col3, $thisProduct);
                         break;
                     case 3:
-                        array_push($col4, $thisCompanyProduct);
+                        array_push($col4, $thisProduct);
                         break;
                 }
                 if($col==3){
@@ -443,10 +442,14 @@ class productController extends Controller
                 }
             }
             $productData = array('col1'=>$col1, 'col2'=>$col2, 'col3'=>$col3, 'col4'=>$col4);
-            $categoryCompanyProducts[$thisCompanyCategoryKey]=$productData;
+            $categoryCompanyProducts[$thisCategory->getName()]=$productData;
+            array_push($categoryKeys, $thisCategory->getName());
+
         }
+
+
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
-        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'categoryCompanyProducts'=>$categoryCompanyProducts, 'categoryKeys'=>$companyCategoryKeys]);
+        return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'categoryCompanyProducts'=>$categoryCompanyProducts, 'categoryKeys'=>$categoryKeys]);
 
     }
 

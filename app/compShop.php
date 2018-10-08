@@ -17,7 +17,7 @@ class compShop
 
     function __construct($row){
         $this->thisCategory = new compCategory($row);
-        $this->categories = array($this->thisCategory);
+        $this->categories = array();
         $this->thisCategoryId = $row->type;
     }
 
@@ -28,6 +28,19 @@ class compShop
         }else{
             $this->thisCategory->processRow($row);
         }
+    }
+
+    function cleanUp(){
+        foreach($this->categories as $c){
+            $c->cleanUp();
+        }
+        $this->thisCategory->cleanUp();
+        array_push($this->categories, $this->thisCategory);
+
+    }
+
+    function getCategories(){
+        return $this->categories;
     }
 
 }
