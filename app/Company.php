@@ -147,14 +147,29 @@ class Company extends Model
         array_push($optTypeArray, $thisOptType);
 
         $optArray = array();
+        $optObjArray = array();
+        $optionsWaiting = 0;
         foreach($thisCompanyProducts as $thisProduct){
             if($thisProduct->product_id==32){
                 $b=0;
             }
             if($thisProduct->product_id != $prod->product_id){
-                $optArray=array();
-                $prodLine = array($prod, $optTypeArray);
-                array_push($prodArray, $prodLine);
+                if($optionsWaiting>0){
+                    $optObj = array($thisOptType, $optArray);
+                    array_push($optObjArray, $optObj);
+                    $optArray=array();
+                    $prodLine = array($prod, $optObjArray);
+                    $optObjArray = array();
+                    array_push($prodArray, $prodLine);
+                    $optionsWaiting=0;
+                }else{
+                    $optObj = array($prod->optiontype_id, $optArray);
+                    array_push($optObjArray, $optObj);
+                    $optArray=array();
+                    $prodLine = array($prod, $optObjArray);
+                    $optObjArray = array();
+                    array_push($prodArray, $prodLine);
+                }
                 $optTypeArray = array();
                 $prod = $thisProduct;
                 array_push($optArray, $prod->option_id);
@@ -164,7 +179,10 @@ class Company extends Model
                 $prod = $thisProduct;
 
                 if($prod->optiontype_id!= $thisOptType){
+                    $optObj = array($thisOptType, $optArray);
+                    array_push($optObjArray, $optObj);
                     $thisOptType = $prod->optiontype_id;
+                    $optionsWaiting=1;
                     array_push($optTypeArray, $thisOptType);
                     $optArray=array();
                     array_push($optArray, $prod->option_id);
@@ -176,7 +194,9 @@ class Company extends Model
         if($prod->optiontype_id!= $thisOptType){
             array_push($optTypeArray, $thisOptType);
         }
-        $prodLine = array($prod, $optTypeArray);
+        $optObj = array($prod->optiontype_id, $optArray);
+        array_push($optObjArray, $optObj);
+        $prodLine = array($prod, $optObjArray);
         array_push($prodArray, $prodLine);
 
 
