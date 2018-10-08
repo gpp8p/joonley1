@@ -135,69 +135,13 @@ class Company extends Model
         $thisOptionSpecification="";
         $thisOptionTypeName="";
         $currentImages = array();
-        $unsavedImages =1;
-        $unsavedOptionTypes = 1;
-        $unsavedOptions=1;
-        $unsavedCategories=1;
-        $prodArray = array();
-        $prod = $thisCompanyProducts[0];
+        $unsavedOptions=0;
+        $unsavedImages=0;
 
-        $optTypeArray = array();
-        $thisOptType = $prod->optiontype_id;
-        array_push($optTypeArray, $thisOptType);
-
-        $optArray = array();
-        $optObjArray = array();
-        $optionsWaiting = 0;
-        foreach($thisCompanyProducts as $thisProduct){
-            if($thisProduct->product_id==32){
-                $b=0;
-            }
-            if($thisProduct->product_id != $prod->product_id){
-                if($optionsWaiting>0){
-                    $optObj = array($thisOptType, $optArray);
-                    array_push($optObjArray, $optObj);
-                    $optArray=array();
-                    $prodLine = array($prod, $optObjArray);
-                    $optObjArray = array();
-                    array_push($prodArray, $prodLine);
-                    $optionsWaiting=0;
-                }else{
-                    $optObj = array($prod->optiontype_id, $optArray);
-                    array_push($optObjArray, $optObj);
-                    $optArray=array();
-                    $prodLine = array($prod, $optObjArray);
-                    $optObjArray = array();
-                    array_push($prodArray, $prodLine);
-                }
-                $optTypeArray = array();
-                $prod = $thisProduct;
-                array_push($optArray, $prod->option_id);
-                $thisOptType = $prod->optiontype_id;
-                array_push($optTypeArray, $thisOptType);
-            }else{
-                $prod = $thisProduct;
-
-                if($prod->optiontype_id!= $thisOptType){
-                    $optObj = array($thisOptType, $optArray);
-                    array_push($optObjArray, $optObj);
-                    $thisOptType = $prod->optiontype_id;
-                    $optionsWaiting=1;
-                    array_push($optTypeArray, $thisOptType);
-                    $optArray=array();
-                    array_push($optArray, $prod->option_id);
-                }else{
-                    array_push($optArray, $prod->option_id);
-                }
-            }
+        $thisShop = new compShop($thisCompanyProducts[0]);
+        for($i=1;$i<count($thisCompanyProducts);$i++){
+            $thisShop->processRow($thisCompanyProducts[$i]);
         }
-        if($prod->optiontype_id!= $thisOptType){
-            array_push($optTypeArray, $thisOptType);
-        }
-        $optObj = array($prod->optiontype_id, $optArray);
-        array_push($optObjArray, $optObj);
-        $prodLine = array($prod, $optObjArray);
-        array_push($prodArray, $prodLine);
 
 
 
