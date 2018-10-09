@@ -19,7 +19,7 @@
                         $thisOptions = $thisOptionType->getOptions();
                     @endphp
                     <span class="optionSelect">
-                        <select >
+                        <select id="opt_{{$thisCompanyItem->getId()}}_{{$thisOptionType->getId()}}">
                             <option value="0" selected >Please select: {{$thisOptionType->getName()}}</option>
                             @foreach($thisOptions as $thisOpt)
                                 <option value="{{$thisOpt->getId()}}">{{$thisOpt->getValue()}}</option>
@@ -57,10 +57,14 @@
 
                 </select>
             </span>
-
         </div>
     </div>
     <div class="ifooter">
-        <span class="heart"><i class="fa fa-heart"></i></span><span class="heart"><i class="fa fa-envelope-open fa-1x" aria-hidden="true"></i></span><span class="heart"><i class="fa fa-reply" aria-hidden="true"></i></span><span class="shop"><a href="#"  class="but1">Info</a></span><span class="shop" style="margin-left: 4px;"><a href="#"  class="but1">Add to Cart</a></span>
+        <span class="shop">
+            <a href="#"  class="but1">Details</a>
+        </span>
+        <span class="shop">
+            <a href="#"  onclick="submitData({{$thisCompanyItem->getId()}});return false;" class="but1">Add to Cart</a>
+        </span>
     </div>
 </div>

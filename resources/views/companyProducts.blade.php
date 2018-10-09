@@ -159,9 +159,8 @@
 
 
     .ifooter{
-        margin-left: 5%;
+        margin-left: 25%;
         margin-right: 5%;
-        padding-top: 15px;
 
     }
 
@@ -196,7 +195,7 @@
         font-family:Arial;
         font-size:12px;
         font-weight:bold;
-        padding:6px 16px;
+        padding:2px 12px;
         text-decoration:none;
         text-shadow:0px 1px 0px #1570cd;
     }
@@ -218,6 +217,14 @@
 
 </style>
 <script language='javascript' type='text/javascript'>
+
+        var submitData = function(dataId){
+            var selector = "[id^=opt_"+dataId+"]";
+            var productElements = $(selector);
+            for(i=0;i<productElements.length;i++){
+                var thisVal = productElements[i];
+            }
+        }
 
 
 </script>
