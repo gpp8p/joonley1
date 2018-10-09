@@ -214,6 +214,21 @@
         width:90%;
     }
 
+    .scLine {
+        display: grid;
+        grid-template-columns: 10% 10% 40% 20% 20%;
+    }
+    .shopingCartWrapper{
+        display: grid;
+        grid-template-rows: auto;
+        font-size: 12px;
+        margin-left: 4px;
+        visibility: hidden;
+    }
+    .itmHeader{
+        color:red;
+    }
+
 
 </style>
 <script language='javascript' type='text/javascript'>
@@ -221,10 +236,90 @@
         var submitData = function(dataId){
             var selector = "[id^=opt_"+dataId+"]";
             var productElements = $(selector);
-            for(i=0;i<productElements.length;i++){
-                var thisVal = productElements[i];
+            var optionElement = "";
+            var optionValueElement ="[";
+            $.each(productElements, function(){
+                var optionSelector = this.id;
+                var thisOptionValue = $("#"+optionSelector).val();
+                var thisOptionElements = thisOptionValue.split("_");
+                if(thisOptionElements[0]>0){
+                    optionElement+=thisOptionElements[1]+",";
+                }
+            });
+            $.each(productElements, function(){
+                var optionSelector = this.id;
+                var thisOptionValue = $("#"+optionSelector).val();
+                var thisOptionElements = thisOptionValue.split("_");
+                if(thisOptionElements[0]>0){
+                    optionValueElement+=thisOptionElements[0]+",";
+                }
+            });
+            optionValueElement += "]";
+
+            console.log(optionElement);
+            var quantity = $("#quan_"+dataId).val();
+            var q1Price = $("#priceq1_"+dataId).val();
+            var q10Price = $("#priceq10_"+dataId).val();
+            var thisPrice;
+            var thisTotal;
+            if(quantity>9){
+                thisPrice = formatter.format(q10Price);
+                thisTotal = formatter.format(q10Price*quantity);
+            }else{
+                thisPrice = formatter.format(q1Price);
+                thisTotal = formatter.format(q1Price*quantity);
             }
+            var elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
+            while($("#scl_"+elementIdentifier).length>0){
+                elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
+            }
+            var thisSubval = "["+optionValueElement+","+quantity+","+thisPrice+","+thisTotal+","+elementIdentifier+"]";
+            var thisScLine = makeScLine(optionElement, quantity, thisPrice, thisTotal, elementIdentifier, thisSubval);
+            console.log(thisScLine);
+
+            var nLines = $()
+            $("#scw_"+dataId).css('visibility', 'visible');
+            $("#scw_"+dataId).append(thisScLine);
         }
+
+        var makeScLine = function(optionElement, quantity, thisPrice, thisTotal, elemId, subVal){
+            var strVar="";
+            strVar += "        <div id=\"scl_"+elemId+"\" class=\"scLine\">";
+            strVar += "            <span>";
+            strVar += "                <i class=\"fa fa-window-close\" id=\"delScl_"+elemId+"\" onclick=\"removeScLine(this);return false;\" aria-hidden=\"true\"><\/i>";
+            strVar += "            <\/span>";
+            strVar += "            <span class=\"sclItem\">";
+            strVar += quantity;
+            strVar += "            <\/span>";
+            strVar += "            <span class=\"sclItem\">";
+            strVar += optionElement;
+            strVar += "            <\/span>";
+            strVar += "            <span class=\"sclItem\">";
+            strVar += thisPrice;
+            strVar += "            <\/span>";
+            strVar += "            <span class=\"sclItem\">";
+            strVar += thisTotal;
+            strVar += "            <\/span>";
+            strVar += " <input type=\"hidden\" id=\"subval_"+elemId+"\" name=\"subval_"+elemId+"\" value=\""+subVal+"\" \/>";
+            strVar += "        <\/div>";
+            strVar += "";
+            return strVar;
+
+        }
+        var removeScLine = function(elem){
+            var elementToRemove = "#scl_" + elem.id.substring(6);
+            $(elementToRemove).hide();
+
+        }
+
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            // the default value for minimumFractionDigits depends on the currency
+            // and is usually already 2
+        });
+
 
 
 </script>
