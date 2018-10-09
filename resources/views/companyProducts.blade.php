@@ -104,20 +104,25 @@
 
     }
     .quantitySelect{
-
+        margin-top: 10px;
     }
     .optionsArea {
         display:grid;
-        grid-template-rows: auto;
+        grid-template-rows: 30%;
         grid-row-gap: 0;
         margin-left: 5px;
     }
     .optionSelect{
-        height: 21px;
+
+
+    }
+    select{
+        width: 90%;
+        height: 20%;
     }
     .orderArea {
         display:grid;
-        grid-template-rows: auto;
+        grid-template-rows: 20px;
     }
 
     .optionTitle {
