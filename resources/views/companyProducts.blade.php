@@ -216,7 +216,7 @@
 
     .scLine {
         display: grid;
-        grid-template-columns: 10% 10% 40% 20% 20%;
+        grid-template-columns: 10% 10% 40% 20% 20% 20% 20%;
     }
     .shopingCartWrapper{
         display: grid;
@@ -227,6 +227,17 @@
     }
     .itmHeader{
         color:red;
+    }
+
+    .sclItemq1{
+        visibility: visible;
+    }
+    .sclItemq10{
+        visibility: hidden;
+    }
+
+    .sclItem{
+        visibility: visible;
     }
 
 
@@ -262,27 +273,47 @@
             var q10Price = $("#priceq10_"+dataId).val();
             var thisPrice;
             var thisTotal;
-            if(quantity>9){
-                thisPrice = formatter.format(q10Price);
-                thisTotal = formatter.format(q10Price*quantity);
-            }else{
-                thisPrice = formatter.format(q1Price);
-                thisTotal = formatter.format(q1Price*quantity);
-            }
+            thisPrice10 = formatter.format(q10Price);
+            thisTotal10 = formatter.format(q10Price*quantity);
+            thisPrice1 = formatter.format(q1Price);
+            thisTotal1 = formatter.format(q1Price*quantity);
             var elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
             while($("#scl_"+elementIdentifier).length>0){
                 elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
             }
             var thisSubval = "["+optionValueElement+","+quantity+","+thisPrice+","+thisTotal+","+elementIdentifier+"]";
-            var thisScLine = makeScLine(optionElement, quantity, thisPrice, thisTotal, elementIdentifier, thisSubval);
+            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubval);
             console.log(thisScLine);
 
             var nLines = $()
             $("#scw_"+dataId).css('visibility', 'visible');
             $("#scw_"+dataId).append(thisScLine);
+            var totalShoppingCartQuantity = 0;
+            var cartTotalElements = $("[id^=sctq_"+dataId+"]").each(function(index,elem){
+                totalShoppingCartQuantity+=parseInt(elem.value);
+            });
+            if(totalShoppingCartQuantity>9){
+                $("[id^=scItemp1_"+dataId+"]").each(function(index,elem){
+                    $(elem).removeClass('sclItem');
+                    $(elem).addClass('sclItemq10');
+                });
+                $("[id^=scItemt1_"+dataId+"]").each(function(index,elem){
+                    $(elem).removeClass('sclItem');
+                    $(elem).addClass('sclItemq10');
+                });
+                $("[id^=scItemp10_"+dataId+"]").each(function(index,elem){
+                    $(elem).removeClass('sclItem10');
+                    $(elem).addClass('sclItem');
+                });
+                $("[id^=scItemt10_"+dataId+"]").each(function(index,elem){
+                    $(elem).removeClass('sclItem10');
+                    $(elem).addClass('sclItem');
+                });
+
+            }
         }
 
-        var makeScLine = function(optionElement, quantity, thisPrice, thisTotal, elemId, subVal){
+        var makeScLine = function(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10,elemId, subVal){
             var strVar="";
             strVar += "        <div id=\"scl_"+elemId+"\" class=\"scLine\">";
             strVar += "            <span>";
@@ -294,13 +325,24 @@
             strVar += "            <span class=\"sclItem\">";
             strVar += optionElement;
             strVar += "            <\/span>";
-            strVar += "            <span class=\"sclItem\">";
-            strVar += thisPrice;
+
+            strVar += "            <span id=\"scItemp1_"+elemId+"\" class=\"sclItem\">";
+            strVar += thisPrice1;
             strVar += "            <\/span>";
-            strVar += "            <span class=\"sclItem\">";
-            strVar += thisTotal;
+            strVar += "            <span id=\"scItemt1_"+elemId+"\" class=\"sclItem\">";
+            strVar += thisTotal1;
             strVar += "            <\/span>";
+
+            strVar += "            <span id=\"scItemp10_"+elemId+"\" class=\"sclItemq10\">";
+            strVar += thisPrice10;
+            strVar += "            <\/span>";
+            strVar += "            <span id=\"scItemt10_"+elemId+"\" class=\"sclItemq10\">";
+            strVar += thisTotal10;
+            strVar += "            <\/span>";
+
+
             strVar += " <input type=\"hidden\" id=\"subval_"+elemId+"\" name=\"subval_"+elemId+"\" value=\""+subVal+"\" \/>";
+            strVar += " <input type=\"hidden\" id=\"sctq_"+elemId+"\" name=\"sctq_"+elemId+"\" value=\""+quantity+"\" \/>";
             strVar += "        <\/div>";
             strVar += "";
             return strVar;
