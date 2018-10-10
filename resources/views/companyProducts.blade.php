@@ -307,8 +307,8 @@
 
         }
         var removeScLine = function(elem){
-            var elementToRemove = "#scl_" + elem.id.substring(6);
-            $(elementToRemove).hide();
+            var elementToRemove = "#scl" + elem.id.substring(6);
+            $(elementToRemove).remove();
 
         }
 
