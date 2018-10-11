@@ -96,6 +96,8 @@ Route::post('/feedPreview', 'FeedController@showFeedPreview')->name('feedPreview
 Route::post('/previewBack', 'ProductController@showOneProduct')->name('previewBack');
 Route::post('/cancelFeedAdd', 'ProductController@getProductsForLoggedInUser')->name('previewCancel');
 
+Route::post('/orderConfirm', 'OrdersController@orderConfirm')->name('orderConfirm');
+
 Route::get('/createCategory', 'NestedCategoryController@showCategoryEdit')->name('createCategory');
 Route::post('/createSubCategory', 'NestedCategoryController@createSubCategory')->name('createSubCategory');
 

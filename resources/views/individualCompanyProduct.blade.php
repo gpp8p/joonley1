@@ -79,4 +79,5 @@
         </span>
 
     </div>
+    <input type="hidden" id="subvalImg_{{$thisCompanyItem->getId()}}" val="{{$thisCompanyItem->getImageUrl()}}" />
 </div>

@@ -244,6 +244,11 @@
 </style>
 <script language='javascript' type='text/javascript'>
 
+        var submitForm = function(){
+            $("#companyProductForm").submit();
+            return false;
+        }
+
         var submitData = function(dataId){
             var selector = "[id^=opt_"+dataId+"]";
             var productElements = $(selector);
@@ -377,36 +382,42 @@
 
 
 </script>
-<div class="fillFrame">
-    @foreach($categoryKeys as $thisCategoryKey)
-        @php
-            $companyProducts = $categoryCompanyProducts[$thisCategoryKey];
-        @endphp
-        <div class="categoryTitle">
-            {{$thisCategoryKey}}
-        </div>
+    <div class="fillFrame">
+        <form id = "companyProductForm" method="POST" action="{{ url('/orderConfirm') }}" />
+        {{ csrf_field() }}
+        <span class="shop">
+            <a href="#"  onclick="submitForm();return false;" class="but1">Confirm Order</a>
+        </span>
+        @foreach($categoryKeys as $thisCategoryKey)
+            @php
+                $companyProducts = $categoryCompanyProducts[$thisCategoryKey];
+            @endphp
+            <div class="categoryTitle">
+                {{$thisCategoryKey}}
+            </div>
 
-        <div class="feedWrapper">
-            <div class="col1">
-                @foreach($companyProducts['col1'] as $thisCompanyItem)
-                    @include('individualCompanyProduct')
-                @endforeach
+            <div class="feedWrapper">
+                <div class="col1">
+                    @foreach($companyProducts['col1'] as $thisCompanyItem)
+                        @include('individualCompanyProduct')
+                    @endforeach
+                </div>
+                <div class="col2">
+                    @foreach($companyProducts['col2'] as $thisCompanyItem)
+                        @include('individualCompanyProduct')
+                    @endforeach
+                </div>
+                <div class="col3">
+                    @foreach($companyProducts['col3'] as $thisCompanyItem)
+                        @include('individualCompanyProduct')
+                    @endforeach
+                </div>
+                <div class="col4">
+                    @foreach($companyProducts['col4'] as $thisCompanyItem)
+                        @include('individualCompanyProduct')
+                    @endforeach
+                </div>
             </div>
-            <div class="col2">
-                @foreach($companyProducts['col2'] as $thisCompanyItem)
-                    @include('individualCompanyProduct')
-                @endforeach
-            </div>
-            <div class="col3">
-                @foreach($companyProducts['col3'] as $thisCompanyItem)
-                    @include('individualCompanyProduct')
-                @endforeach
-            </div>
-            <div class="col4">
-                @foreach($companyProducts['col4'] as $thisCompanyItem)
-                    @include('individualCompanyProduct')
-                @endforeach
-            </div>
-        </div>
-    @endforeach
-</div>
+        @endforeach
+        </form>
+    </div>
