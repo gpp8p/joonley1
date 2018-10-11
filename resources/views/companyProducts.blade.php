@@ -216,7 +216,7 @@
 
     .scLine {
         display: grid;
-        grid-template-columns: 10% 10% 40% 20% 20% 20% 20%;
+        grid-template-columns: 10% 10% 40% 20% 20%;
     }
     .shopingCartWrapper{
         display: grid;
@@ -281,35 +281,54 @@
             while($("#scl_"+elementIdentifier).length>0){
                 elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
             }
-            var thisSubval = "["+optionValueElement+","+quantity+","+thisPrice+","+thisTotal+","+elementIdentifier+"]";
-            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubval);
+//            var thisSubval = "["+optionValueElement+","+quantity+","+q1Price+","+q10Price+","+elementIdentifier+"]";
+            var thisSubvalJ = {options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier};
+
+            var thisSubvalJson = JSON.stringify(thisSubvalJ);
+
+            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson);
             console.log(thisScLine);
 
             var nLines = $()
             $("#scw_"+dataId).css('visibility', 'visible');
             $("#scw_"+dataId).append(thisScLine);
+            adjustPrices(dataId);
+
+        }
+
+        var adjustPrices = function(dataId){
             var totalShoppingCartQuantity = 0;
-            var cartTotalElements = $("[id^=sctq_"+dataId+"]").each(function(index,elem){
-                totalShoppingCartQuantity+=parseInt(elem.value);
+            var cartTotalElements = $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+                var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                totalShoppingCartQuantity+=parseInt(thisLineData.quan);
             });
             if(totalShoppingCartQuantity>9){
-                $("[id^=scItemp1_"+dataId+"]").each(function(index,elem){
-                    $(elem).removeClass('sclItem');
-                    $(elem).addClass('sclItemq10');
+                $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+                    var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                    var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                    elem.innerText = formatter.format(thisLineData.q10P);
                 });
-                $("[id^=scItemt1_"+dataId+"]").each(function(index,elem){
-                    $(elem).removeClass('sclItem');
-                    $(elem).addClass('sclItemq10');
+                $("[id^=scItemt_"+dataId+"]").each(function(index,elem){
+                    var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                    var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                    var thisPrice = thisLineData.q10P
+                    var thisQuan = parseInt(thisLineData.quan);
+                    elem.innerText = formatter.format(thisQuan*thisPrice);
                 });
-                $("[id^=scItemp10_"+dataId+"]").each(function(index,elem){
-                    $(elem).removeClass('sclItem10');
-                    $(elem).addClass('sclItem');
+            }else{
+                $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+                    var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                    var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                    elem.innerText = formatter.format(thisLineData.q1P);
                 });
-                $("[id^=scItemt10_"+dataId+"]").each(function(index,elem){
-                    $(elem).removeClass('sclItem10');
-                    $(elem).addClass('sclItem');
+                $("[id^=scItemt_"+dataId+"]").each(function(index,elem){
+                    var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                    var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                    var thisPrice = thisLineData.q1P
+                    var thisQuan = parseInt(thisLineData.quan);
+                    elem.innerText = formatter.format(thisQuan*thisPrice);
                 });
-
             }
         }
 
@@ -326,23 +345,14 @@
             strVar += optionElement;
             strVar += "            <\/span>";
 
-            strVar += "            <span id=\"scItemp1_"+elemId+"\" class=\"sclItem\">";
+            strVar += "            <span id=\"scItemp_"+elemId+"\" class=\"sclItem\">";
             strVar += thisPrice1;
             strVar += "            <\/span>";
-            strVar += "            <span id=\"scItemt1_"+elemId+"\" class=\"sclItem\">";
+            strVar += "            <span id=\"scItemt_"+elemId+"\" class=\"sclItem\">";
             strVar += thisTotal1;
             strVar += "            <\/span>";
 
-            strVar += "            <span id=\"scItemp10_"+elemId+"\" class=\"sclItemq10\">";
-            strVar += thisPrice10;
-            strVar += "            <\/span>";
-            strVar += "            <span id=\"scItemt10_"+elemId+"\" class=\"sclItemq10\">";
-            strVar += thisTotal10;
-            strVar += "            <\/span>";
-
-
-            strVar += " <input type=\"hidden\" id=\"subval_"+elemId+"\" name=\"subval_"+elemId+"\" value=\""+subVal+"\" \/>";
-            strVar += " <input type=\"hidden\" id=\"sctq_"+elemId+"\" name=\"sctq_"+elemId+"\" value=\""+quantity+"\" \/>";
+            strVar += " <input type='hidden' id='subval_"+elemId+"' name='subval_"+elemId+"' value='"+subVal+"' \/>";
             strVar += "        <\/div>";
             strVar += "";
             return strVar;
@@ -351,6 +361,8 @@
         var removeScLine = function(elem){
             var elementToRemove = "#scl" + elem.id.substring(6);
             $(elementToRemove).remove();
+            thisDataId = elem.id.split("_")[1];
+            adjustPrices(thisDataId);
 
         }
 
