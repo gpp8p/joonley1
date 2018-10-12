@@ -272,7 +272,7 @@
             });
             optionValueElement += "]";
 
-            console.log(optionElement);
+
             var quantity = $("#quan_"+dataId).val();
             var q1Price = $("#priceq1_"+dataId).val();
             var q10Price = $("#priceq10_"+dataId).val();
@@ -291,12 +291,16 @@
 
             var thisSubvalJson = JSON.stringify(thisSubvalJ);
 
-            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson);
+            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson, dataId);
             console.log(thisScLine);
 
-            var nLines = $()
+            var nlines = $("#scw_"+dataId).children().length;
+            if(nlines=1){
+                var idLIne = " <input type='hidden' id='productId_\"+dataId+\"' name='productId_"+dataId+"'  value='"+dataId+"' \/>";
+                $("#scw_"+dataId).append(thisScLine);
+            }
             $("#scw_"+dataId).css('visibility', 'visible');
-            $("#scw_"+dataId).append(thisScLine);
+            $("#scw_"+dataId).append(idLIne);
             adjustPrices(dataId);
 
         }
@@ -368,6 +372,12 @@
             $(elementToRemove).remove();
             thisDataId = elem.id.split("_")[1];
             adjustPrices(thisDataId);
+            var nlines = $("#scw_"+dataId).children().length;
+            if(nlines=1){
+                var idLIne = " <input type='hidden' id='productId_\"+dataId+\"' name='productId_"+dataId+"'  value='"+dataId+"' \/>";
+                $("#productId_"+dataId).remove();
+            }
+
 
         }
 

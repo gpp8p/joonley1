@@ -15,10 +15,16 @@ class OrdersController extends Controller
 
     public function orderConfirm(Request $request){
         $inData = $request->all();
+        $dataIds = array();
         $dataKeys = array_keys($inData);
         foreach($dataKeys as $thisDataKey){
             if($this->startsWith($thisDataKey, "subval")){
                 $thisOrderData = $inData[$thisDataKey];
+                $thisOrder = json_decode($thisOrderData);
+            }
+            if($this->startsWith($thisDataKey, "productId")){
+                $thisItemId = $inData[$thisDataKey];
+                array_push($thisItemId);
             }
         }
 

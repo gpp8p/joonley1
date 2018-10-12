@@ -447,7 +447,6 @@ class productController extends Controller
 
         }
 
-
         $adminView =User::hasAccess(['\'admin-dashboard\'']);
         return view('jframe',['adminView'=>$adminView,'sidebar'=>'products', 'contentWindow'=>'companyProducts', 'categoryCompanyProducts'=>$categoryCompanyProducts, 'categoryKeys'=>$categoryKeys]);
 

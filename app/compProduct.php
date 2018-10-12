@@ -8,8 +8,9 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 
-class compProduct
+class compProduct extends Model
 {
     var $images;
     var $medialinkId;

@@ -9,7 +9,9 @@
 namespace App;
 
 
-class compOption
+use Illuminate\Database\Eloquent\Model;
+
+class compOption extends Model
 {
     var $optionId;
     var $optionValue;
