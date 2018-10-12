@@ -116,6 +116,9 @@
                 @case('companyProducts')
                     @include('companyProducts')
                 @break
+                @case('ordersConfirm')
+                    @include('ordersConfirm')
+                @break
 
 
             @endswitch

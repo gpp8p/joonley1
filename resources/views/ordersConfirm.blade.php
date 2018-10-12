@@ -245,4 +245,211 @@
 <script language='javascript' type='text/javascript'>
 
 
+    $( document ).ready(function() {
+        @php
+            $lineItemKeys = array_keys($lineItems);
+        @endphp
+        @foreach($lineItemKeys as $thisLineItemKey)
+            @php
+                $lineItemData = $lineItems[$thisLineItemKey];
+            @endphp
+            @foreach($lineItemData as $thisLineItemData)
+var thisSubvalJ = {optionLabel:{{$thisLineItemData->optionLabel}}, options:{{$thisLineItemData->options}},quan:{{$thisLineItemData->quan}},q1P:{{$thisLineItemData->q1P}},q10P:{{$thisLineItemData->q10P}},elemId:{{$thisLineItemData->elemId}}, dataId:{{$thisLineItemData->dataId}}};
+var thisSubvalJson = JSON.stringify(thisSubvalJ);
+var tl1 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q1P}};
+var tl0 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q10P}};
+var thisScLine = makeScLine({{$thisLineItemData->options}}, {{$thisLineItemData->quan}}, {{$thisLineItemData->q1P}}, tl1, {{$thisLineItemData->q10P}}, tl10, {{$thisLineItemData->elemId}}, thisSubvalJson);
+            @endforeach
+        @endforeach
+    }
+
+    var submitForm = function(){
+        $("#companyProductForm").submit();
+        return false;
+    }
+
+    var submitData = function(dataId){
+        var selector = "[id^=opt_"+dataId+"]";
+        var productElements = $(selector);
+        var optionElement = "";
+        var optionValueElement ="[";
+        $.each(productElements, function(){
+            var optionSelector = this.id;
+            var thisOptionValue = $("#"+optionSelector).val();
+            var thisOptionElements = thisOptionValue.split("_");
+            if(thisOptionElements[0]>0){
+                optionElement+=thisOptionElements[1]+",";
+            }
+        });
+        $.each(productElements, function(){
+            var optionSelector = this.id;
+            var thisOptionValue = $("#"+optionSelector).val();
+            var thisOptionElements = thisOptionValue.split("_");
+            if(thisOptionElements[0]>0){
+                optionValueElement+=thisOptionElements[0]+",";
+            }
+        });
+        optionValueElement += "]";
+
+
+        var quantity = $("#quan_"+dataId).val();
+        var q1Price = $("#priceq1_"+dataId).val();
+        var q10Price = $("#priceq10_"+dataId).val();
+        var thisPrice;
+        var thisTotal;
+        thisPrice10 = formatter.format(q10Price);
+        thisTotal10 = formatter.format(q10Price*quantity);
+        thisPrice1 = formatter.format(q1Price);
+        thisTotal1 = formatter.format(q1Price*quantity);
+        var elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
+        while($("#scl_"+elementIdentifier).length>0){
+            elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
+        }
+//            var thisSubval = "["+optionValueElement+","+quantity+","+q1Price+","+q10Price+","+elementIdentifier+"]";
+        var thisSubvalJ = {options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier, dataId:dataId};
+
+        var thisSubvalJson = JSON.stringify(thisSubvalJ);
+
+        var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson);
+        console.log(thisScLine);
+
+        var nlines = $("#scw_"+dataId).children().length;
+        if(nlines=1){
+            var idLIne = " <input type='hidden' id='productId_\"+dataId+\"' name='productId_"+dataId+"'  value='"+dataId+"' \/>";
+            $("#scw_"+dataId).append(thisScLine);
+        }
+        $("#scw_"+dataId).css('visibility', 'visible');
+        $("#scw_"+dataId).append(idLIne);
+        adjustPrices(dataId);
+
+    }
+
+    var adjustPrices = function(dataId){
+        var totalShoppingCartQuantity = 0;
+        var cartTotalElements = $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+            var thisElementIdentifier = "#subval"+elem.id.substr(7);
+            var thisLineData = JSON.parse($(thisElementIdentifier).val());
+            totalShoppingCartQuantity+=parseInt(thisLineData.quan);
+        });
+        if(totalShoppingCartQuantity>9){
+            $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+                var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                elem.innerText = formatter.format(thisLineData.q10P);
+            });
+            $("[id^=scItemt_"+dataId+"]").each(function(index,elem){
+                var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                var thisPrice = thisLineData.q10P
+                var thisQuan = parseInt(thisLineData.quan);
+                elem.innerText = formatter.format(thisQuan*thisPrice);
+            });
+        }else{
+            $("[id^=scItemp_"+dataId+"]").each(function(index,elem){
+                var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                elem.innerText = formatter.format(thisLineData.q1P);
+            });
+            $("[id^=scItemt_"+dataId+"]").each(function(index,elem){
+                var thisElementIdentifier = "#subval"+elem.id.substr(7);
+                var thisLineData = JSON.parse($(thisElementIdentifier).val());
+                var thisPrice = thisLineData.q1P
+                var thisQuan = parseInt(thisLineData.quan);
+                elem.innerText = formatter.format(thisQuan*thisPrice);
+            });
+        }
+    }
+
+    var makeScLine = function(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10,elemId, subVal){
+        var strVar="";
+        strVar += "        <div id=\"scl_"+elemId+"\" class=\"scLine\">";
+        strVar += "            <span>";
+        strVar += "                <i class=\"fa fa-window-close\" id=\"delScl_"+elemId+"\" onclick=\"removeScLine(this);return false;\" aria-hidden=\"true\"><\/i>";
+        strVar += "            <\/span>";
+        strVar += "            <span class=\"sclItem\">";
+        strVar += quantity;
+        strVar += "            <\/span>";
+        strVar += "            <span class=\"sclItem\">";
+        strVar += optionElement;
+        strVar += "            <\/span>";
+
+        strVar += "            <span id=\"scItemp_"+elemId+"\" class=\"sclItem\">";
+        strVar += thisPrice1;
+        strVar += "            <\/span>";
+        strVar += "            <span id=\"scItemt_"+elemId+"\" class=\"sclItem\">";
+        strVar += thisTotal1;
+        strVar += "            <\/span>";
+
+        strVar += " <input type='hidden' id='subval_"+elemId+"' name='subval_"+elemId+"' value='"+subVal+"' \/>";
+        strVar += "        <\/div>";
+        strVar += "";
+        return strVar;
+
+    }
+    var removeScLine = function(elem){
+        var elementToRemove = "#scl" + elem.id.substring(6);
+        $(elementToRemove).remove();
+        thisDataId = elem.id.split("_")[1];
+        adjustPrices(thisDataId);
+        var nlines = $("#scw_"+dataId).children().length;
+        if(nlines=1){
+            var idLIne = " <input type='hidden' id='productId_\"+dataId+\"' name='productId_"+dataId+"'  value='"+dataId+"' \/>";
+            $("#productId_"+dataId).remove();
+        }
+
+
+    }
+
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        // the default value for minimumFractionDigits depends on the currency
+        // and is usually already 2
+    });
+
+
+
 </script>
+
+
+<div class="fillFrame">
+    <form id = "companyProductForm" method="POST" action="{{ url('/orderConfirm') }}" />
+    {{ csrf_field() }}
+    <span class="shop">
+            <a href="#"  onclick="submitForm();return false;" class="but1">Confirm Order</a>
+        </span>
+    @foreach($categoryKeys as $thisCategoryKey)
+        @php
+            $companyProducts = $categoryCompanyProducts[$thisCategoryKey];
+        @endphp
+        <div class="categoryTitle">
+            {{$thisCategoryKey}}
+        </div>
+
+        <div class="feedWrapper">
+            <div class="col1">
+                @foreach($companyProducts['col1'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col2">
+                @foreach($companyProducts['col2'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col3">
+                @foreach($companyProducts['col3'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+            <div class="col4">
+                @foreach($companyProducts['col4'] as $thisCompanyItem)
+                    @include('individualCompanyProduct')
+                @endforeach
+            </div>
+        </div>
+    @endforeach
+    <input type="hidden" name="companyId" id="companyId" value="{{$companyId}}" />
+    </form>
+</div>

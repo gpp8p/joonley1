@@ -8,9 +8,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
-class compShop extends Model
+
+class compShop
 {
     var $categories;
     var $thisCategoryId;

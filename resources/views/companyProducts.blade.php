@@ -287,11 +287,11 @@
                 elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
             }
 //            var thisSubval = "["+optionValueElement+","+quantity+","+q1Price+","+q10Price+","+elementIdentifier+"]";
-            var thisSubvalJ = {options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier};
+            var thisSubvalJ = {optionLabel: optionElement, options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier, dataId:dataId};
 
             var thisSubvalJson = JSON.stringify(thisSubvalJ);
 
-            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson, dataId);
+            var thisScLine = makeScLine(optionElement, quantity, thisPrice1, thisTotal1, thisPrice10, thisTotal10, elementIdentifier, thisSubvalJson);
             console.log(thisScLine);
 
             var nlines = $("#scw_"+dataId).children().length;
@@ -429,5 +429,6 @@
                 </div>
             </div>
         @endforeach
+        <input type="hidden" name="companyId" id="companyId" value="{{$companyId}}" />
         </form>
     </div>

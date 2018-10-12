@@ -8,10 +8,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 
 
-class compOptionType extends Model
+
+class compOptionType
 {
     var $options;
     var $thisOption;
