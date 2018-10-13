@@ -253,6 +253,7 @@
             var selector = "[id^=opt_"+dataId+"]";
             var productElements = $(selector);
             var optionElement = "";
+            var optEl = "";
             var optionValueElement ="[";
             $.each(productElements, function(){
                 var optionSelector = this.id;
@@ -260,8 +261,12 @@
                 var thisOptionElements = thisOptionValue.split("_");
                 if(thisOptionElements[0]>0){
                     optionElement+=thisOptionElements[1]+",";
+                    optEl+= '"'+thisOptionElements[1]+'"'+',';
                 }
             });
+            optionElement = optionElement.substring(0, (optionElement.length-1));
+            optEl = optEl.substring(0, (optEl.length-1));
+            optEl = '['+optEl+']';
             $.each(productElements, function(){
                 var optionSelector = this.id;
                 var thisOptionValue = $("#"+optionSelector).val();
@@ -270,7 +275,12 @@
                     optionValueElement+=thisOptionElements[0]+",";
                 }
             });
-            optionValueElement += "]";
+            if(optionValueElement=='['){
+                optionValueElement = '[]';
+            }else{
+                optionValueElement = optionValueElement.substring(0, (optionValueElement.length-1));
+                optionValueElement += "]";
+            }
 
 
             var quantity = $("#quan_"+dataId).val();
@@ -287,7 +297,8 @@
                 elementIdentifier = dataId+"_"+Math.floor((Math.random() * 100) + 1);
             }
 //            var thisSubval = "["+optionValueElement+","+quantity+","+q1Price+","+q10Price+","+elementIdentifier+"]";
-            var thisSubvalJ = {optionLabel: optionElement, options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier, dataId:dataId};
+            var dId = "\""+elementIdentifier+"\"";
+            var thisSubvalJ = {optionLabel: optEl, options:optionValueElement,quan:quantity,q1P:q1Price,q10P:q10Price,elemId:elementIdentifier, dataId:dataId};
 
             var thisSubvalJson = JSON.stringify(thisSubvalJ);
 
