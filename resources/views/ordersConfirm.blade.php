@@ -244,25 +244,30 @@
 </style>
 <script language='javascript' type='text/javascript'>
 
-
     $( document ).ready(function() {
-        @php
-            $lineItemKeys = array_keys($lineItems);
-        @endphp
-        @foreach($lineItemKeys as $thisLineItemKey)
-            @php
-                $lineItemData = $lineItems[$thisLineItemKey];
-            @endphp
-            @foreach($lineItemData as $thisLineItemData)
-var thisOptionVals = {{$thisLineItemData->options}};
-var thisSubvalJ = {"optionLabel":"{{$thisLineItemData->optionLabel}}", "options":"{{$thisLineItemData->options}}","quan":"{{$thisLineItemData->quan}}","q1P":"{{$thisLineItemData->q1P}}","q10P":"{{$thisLineItemData->q10P}}","elemId":"{{$thisLineItemData->elemId}}", "dataId":"{{$thisLineItemData->dataId}}"};
-var thisSubvalJson = JSON.stringify(thisSubvalJ);
-var tl1 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q1P}};
-var tl10 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q10P}};
-var thisScLine = makeScLine(thisOptionVals, {{$thisLineItemData->quan}}, {{$thisLineItemData->q1P}}, tl1, {{$thisLineItemData->q10P}}, tl10, "{{$thisLineItemData->elemId}}", thisSubvalJson);
-            @endforeach
+                @php
+                    $lineItemKeys = array_keys($lineItems);
+                @endphp
+                @foreach($lineItemKeys as $thisLineItemKey)
+                @php
+                    $lineItemData = $lineItems[$thisLineItemKey];
+                @endphp
+                @foreach($lineItemData as $thisLineItemData)
+        var thisOptionVals = {{$thisLineItemData->options}};
+        var thisSubvalJ = {"optionLabel":"{{$thisLineItemData->optionLabel}}", "options":"{{$thisLineItemData->options}}","quan":"{{$thisLineItemData->quan}}","q1P":"{{$thisLineItemData->q1P}}","q10P":"{{$thisLineItemData->q10P}}","elemId":"{{$thisLineItemData->elemId}}", "dataId":"{{$thisLineItemData->dataId}}"};
+        var thisSubvalJson = JSON.stringify(thisSubvalJ);
+        var thisOptionLabels = "{{$thisLineItemData->optionLabel}}";
+        var tl1 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q1P}};
+        var tl10 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q10P}};
+        var thisScLine = makeScLine(thisOptionLabels, {{$thisLineItemData->quan}}, {{$thisLineItemData->q1P}}, tl1, {{$thisLineItemData->q10P}}, tl10, "{{$thisLineItemData->elemId}}", thisSubvalJson);
+        console.log(thisScLine);
+        $("#scw_{{$thisLineItemData->dataId}}").css('visibility', 'visible');
+        $("#scw_{{$thisLineItemData->dataId}}").append(thisScLine);
+        @endforeach
         @endforeach
     });
+
+
 
     var submitForm = function(){
         $("#companyProductForm").submit();
