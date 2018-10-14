@@ -254,14 +254,15 @@
                 $lineItemData = $lineItems[$thisLineItemKey];
             @endphp
             @foreach($lineItemData as $thisLineItemData)
-var thisSubvalJ = {optionLabel:{{$thisLineItemData->optionLabel}}, options:{{$thisLineItemData->options}},quan:{{$thisLineItemData->quan}},q1P:{{$thisLineItemData->q1P}},q10P:{{$thisLineItemData->q10P}},elemId:{{$thisLineItemData->elemId}}, dataId:{{$thisLineItemData->dataId}}};
+var thisOptionVals = {{$thisLineItemData->options}};
+var thisSubvalJ = {"optionLabel":"{{$thisLineItemData->optionLabel}}", "options":"{{$thisLineItemData->options}}","quan":"{{$thisLineItemData->quan}}","q1P":"{{$thisLineItemData->q1P}}","q10P":"{{$thisLineItemData->q10P}}","elemId":"{{$thisLineItemData->elemId}}", "dataId":"{{$thisLineItemData->dataId}}"};
 var thisSubvalJson = JSON.stringify(thisSubvalJ);
 var tl1 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q1P}};
-var tl0 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q10P}};
-var thisScLine = makeScLine({{$thisLineItemData->options}}, {{$thisLineItemData->quan}}, {{$thisLineItemData->q1P}}, tl1, {{$thisLineItemData->q10P}}, tl10, {{$thisLineItemData->elemId}}, thisSubvalJson);
+var tl10 = {{$thisLineItemData->quan}} * {{$thisLineItemData->q10P}};
+var thisScLine = makeScLine(thisOptionVals, {{$thisLineItemData->quan}}, {{$thisLineItemData->q1P}}, tl1, {{$thisLineItemData->q10P}}, tl10, "{{$thisLineItemData->elemId}}", thisSubvalJson);
             @endforeach
         @endforeach
-    }
+    });
 
     var submitForm = function(){
         $("#companyProductForm").submit();
